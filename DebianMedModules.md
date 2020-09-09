@@ -15,3 +15,15 @@ Or if you did not use `umask`, add the write permissions after:
 ```
 chmod g+w file_name
 ```
+
+After creating a new module, if it is not seen by `ml av`, delete the cache:
+
+```
+rm -rf ~/.lmod.d/.cache
+```
+
+## TODO
+
+ - Parse description from Debian package
+ - Export man pages and add MANPATH to the Lua module.
+ - Blacklist R package or handle them separately.
