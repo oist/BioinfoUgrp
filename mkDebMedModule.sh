@@ -1,7 +1,7 @@
 #!/bin/bash
 ml singularity
 APP=$1
-MODROOT=/apps/unit/BioinfoUgrp/Debian-Med
+MODROOT=/apps/unit/BioinfoUgrp/Debian-Med/DebMed9
 APPDIR=$MODROOT/$APP
 VER=$(singularity exec $MODROOT/debmed.sif dpkg-query -W -f='${Version}' $APP)
 mkdir -p $APPDIR/$VER
@@ -15,7 +15,7 @@ LC_ALL=C singularity exec $MODROOT/debmed.sif $prog "\$@"
 __END__
 chmod 775 bin/$prog
 done
-cd /apps/.bioinfo-ugrp-modulefiles81/
+cd /apps/unit/BioinfoUgrp/Debian-Med/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
