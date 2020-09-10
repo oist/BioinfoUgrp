@@ -1,8 +1,9 @@
 #!/bin/bash -e
 ml singularity
 APP=$1
-MODROOT=/apps/unit/BioinfoUgrp/Debian-Med/DebMed9
-APPDIR=$MODROOT/$APP
+DebMedVersion=DebMed9
+MODROOT=/apps/unit/BioinfoUgrp/Debian-Med
+APPDIR=$MODROOT/$DebMedVersion/$APP
 VER=$(singularity exec $MODROOT/debmed.sif dpkg-query -W -f='${Version}' $APP)
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
