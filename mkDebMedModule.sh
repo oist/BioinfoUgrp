@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 ml singularity
 APP=$1
 MODROOT=/apps/unit/BioinfoUgrp/Debian-Med/DebMed9
