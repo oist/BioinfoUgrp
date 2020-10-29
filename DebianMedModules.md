@@ -1,3 +1,23 @@
+Debian Med modules
+==================
+
+The [Debian Med](https://www.debian.org/devel/debian-med/) project packages
+bioinformatics and other medically relevant software for the
+[Debian](https://www.debian.org/intro/about) operating system.  We collect
+many of them in a [Singularity](https://sylabs.io/) container and create one
+module per package on Deigo.
+
+For users
+---------
+
+
+For developers
+--------------
+
+### Creation of a new Singularity image
+
+### Misc commands
+
 To list all the packages in the `med-bio` metapackage:
 
 ```
