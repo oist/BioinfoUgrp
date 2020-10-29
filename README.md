@@ -1,6 +1,9 @@
 # BioinfoUgrp
 OIST Bioinfo user group
 
+## Finding modules
+Search with a keyword, for instance `ml key clustal`.
+
 ## Loading installed modules
 Execute `ml bioinfo-ugrp-modules` to make available the modules installed by the OIST Bioinfo user group. This line can be appended to your `~/.bashrc` to make them available by default.
 
