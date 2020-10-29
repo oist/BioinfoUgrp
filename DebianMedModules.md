@@ -16,6 +16,32 @@ For developers
 
 ### Creation of a new Singularity image
 
+This has to be run on a machine where one has administrator priviledges.
+(That is: not Deigo)
+
+```
+DEBVERSION=10.6
+# Select Debian version and installed packages
+cat > DebianMed_$DEBVERSION.def << __EOF__
+Bootstrap: docker
+From: debian:$DEBVERSION
+
+%post
+    apt -y update
+    apt -y install locales # Multilingual support
+    apt -y install med-bio bioperl python-biopython # Bioinfo packages
+    apt -y install rsync ncftp lftp # Small utilities
+    apt -y install perl-doc man-db # Documentation
+__EOF__
+
+# Build the image
+sudo singularity build DebianMed_$DEBVERSION.sif DebianMed_$DEBVERSION.def
+
+# Transfer it on Deigo
+scp deigo mkdir -p /apps/unit/BioinfoUgrp/DebianMed_$DEBVERSION
+scp DebianMed_$DEBVERSION.def DebianMed_$DEBVERSION.sif deigo:/apps/unit/BioinfoUgrp/DebianMed_$DEBVERSION
+```
+
 ### Misc commands
 
 To list all the packages in the `med-bio` metapackage:
