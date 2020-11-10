@@ -29,7 +29,7 @@ From: debian:$DEBVERSION
 %post
     apt -y update
     apt -y install locales # Multilingual support
-    apt -y install med-bio bioperl python-biopython # Bioinfo packages
+    apt -y install med-cloud bioperl python-biopython # Bioinfo packages
     apt -y install rsync ncftp lftp # Small utilities
     apt -y install perl-doc man-db # Documentation
 __EOF__
