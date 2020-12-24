@@ -14,7 +14,7 @@ To install a new latest version, update the `VER` variable below and run the com
 
 ```
 APP=Nextflow
-MODROOT=/apps/unit/BioinfoUgrp/
+MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 VER=20.10.0
 mkdir -p $APPDIR
@@ -22,7 +22,7 @@ cd $APPDIR
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
 cd $VER
-./bin/conda install -c bioconda nextflow 
+./bin/conda install -y -c bioconda nextflow 
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
