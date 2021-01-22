@@ -12,9 +12,9 @@ We autogenerate many modules from softwares packaged the Debian distribution. Mo
 
 ## Databases
 Widely used databases were installed locally. Upon request by users, we plan on upgrading databases (not more than once a year). After upgrading a specific database, users will be asked if the older database should still remain available (completion of projects,...): it will be deleted after 30 days except if still required. At one time, a maximum of two versions of the same database will be available.
-# Taxified NCBI NT & NR database release 238
+### Taxified NCBI NT & NR database release 238
 The database was constructed using the module `ncbi-blast/2.10.0+`. Use `ml XXX`, and `nt` or `nr` in the commands of your scripts.
-# Taxified DIAMOND databases (from NR database release 238)
+### Taxified DIAMOND databases
 Databases were constructed using `DIAMOND/2.0.4.142`. Diamond databases are available for the NCBI-NR database (release 238), Swiss-Prot (version XXX), and gtdb (version XXX). Use `ml XXX` to invoke it in your scripts.
 
 - UniRef
