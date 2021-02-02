@@ -29,8 +29,7 @@ Databases were constructed using the module `Other/DIAMOND/2.0.4.142`. Diamond d
 - Swiss-Prot (version XXX): `ml XXX`
 - UniRef90 (version XXX): `ml XXX`
 
-
-- UniRef.  Use `ml XXX` to invoke it in your scripts.
+### Other databases
 - InterProScan v5.46-81.0.  Use `ml XXX` to invoke it in your scripts.
 - Pfam.  Use `ml XXX` to invoke it in your scripts.
 
