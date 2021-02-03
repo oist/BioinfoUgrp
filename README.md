@@ -1,5 +1,4 @@
-# BioinfoUgrp
-OIST Bioinfo user group
+# OIST's bioinformatics user group
 
 ## Finding modules
 Search with a keyword, for instance `ml key clustal`.
