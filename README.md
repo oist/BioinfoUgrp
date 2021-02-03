@@ -10,6 +10,10 @@ Execute `ml bioinfo-ugrp-modules` to make available the modules installed by the
 ## Debian Med modules
 We autogenerate many modules from softwares packaged the Debian distribution. More information is available on the [DebianMedModules](DebianMedModules.md) page.
 
+## Nextflow pipelines
+
+We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml Other/Nextflow`) and regisered [OIST's profile](https://github.com/nf-core/configs/blob/master/docs/oist.md) to the [nf-core](https://nf-co.re/) community so that you can run their pipelines with the `-profile oist` option on _Deigo_.
+
 ## Databases
 Widely used databases were installed locally. Upon request by users, we plan on upgrading databases (not more than once a year). After upgrading a specific database, users will be asked if the older database should still remain available (completion of projects,...): it will be deleted after 30 days except if still required. At one time, a maximum of two versions of the same database will be available.
 ### Taxified NCBI NT & NR database release 238
