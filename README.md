@@ -21,7 +21,7 @@ We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml Other/Nextfl
 Widely used databases were installed locally. Upon request by users, we plan on upgrading databases (not more than once a year). After upgrading a specific database, users will be asked if the older database should still remain available (completion of projects,...): it will be deleted after 30 days except if still required. At one time, a maximum of two versions of the same database will be available.
 
 ### Taxified BLAST databases (from NCBI release 238)
-The following databases were constructed using `ncbi-blast/2.10.0+`. The module `ncbi-blast/2.10.0+` has to be loaded in order to use these databases.
+The following databases were constructed using ncbi-blast v2.10.0+. The module `ncbi-blast/2.10.0+` has to be loaded in order to use these databases.
 - NCBI NT and NR databases (`ml DB/blastDB/ncbi/238`). To be used with the arguments `nt` or `nr` supplied to `-db` in the commands of your scripts. Example script to get a taxified blast report:
 ```
 module load ncbi-blast/2.10.0+
@@ -36,7 +36,7 @@ blastn -task megablast -db nt -query $FASTA -num_threads ${SLURM_CPUS_PER_TASK} 
 - UniRef90 (version 2020_06): `ml DB/blastDB/uniref90/2020_06`
 
 ### Taxified DIAMOND databases
-The following databases were constructed using DIAMOND v2.0.4.142. The module `Other/DIAMOND/2.0.4.142` has to be loaded in order to use the above databases.
+The following databases were constructed using DIAMOND v2.0.4.142. The module `Other/DIAMOND/2.0.4.142` has to be loaded in order to use them.
 - the NCBI-NR database (release 238): `ml DB/diamondDB/ncbi/238`
 - Swiss-Prot (version 2020_06): `ml DB/diamondDB/sprot/2020_06`
 - UniRef90 (version 2020_06): `ml DB/diamondDB/uniref90/2020_06`
