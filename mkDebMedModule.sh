@@ -24,7 +24,7 @@ cat <<__END__ > $APP/$VER.lua
 local modroot    = "$MODROOT"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
+local apphome    = pathJoin(modroot, "modules", "$APP", appversion)
 
 -- Package information
 whatis("Name: "..appname)
