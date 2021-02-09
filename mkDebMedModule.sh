@@ -17,9 +17,9 @@ LC_ALL=C singularity exec $DEBMEDIMAGE $prog "\$@"
 __END__
 chmod 775 bin/$prog
 done
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<__END__ > $APP/$VER.lua
+mkdir -p $MODROOT/modulefiles/$APP
+cd $MODROOT/modulefiles/$APP
+cat <<__END__ > $VER.lua
 -- Default settings
 local modroot    = "$MODROOT"
 local appname    = myModuleName()
