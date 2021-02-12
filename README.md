@@ -49,7 +49,7 @@ The following databases were constructed using DIAMOND v2.0.4.142. The module `O
 We have some modules on _Saion_ for GPU-accelerated computations such as basecalling Nanopore data, that can not be run on _Deigo_.  Please remember that the _modules_ system on _Saion_ is older, so the `ml` shortcuts will not work.  To list the available modules, do:
 
 ```
-module use /apps/.bioinfo-ugrp-modulefiles/
+module load bioinfo-ugrp-modules
 module available
 ```
 
