@@ -44,5 +44,14 @@ The following databases were constructed using DIAMOND v2.0.4.142. The module `O
 ### Other databases
 - Pfam (version 34.0):  Use `ml DB/Pfam/34.0` to invoke it in your scripts.
 
+## Modules on Saion.
+
+We have some modules on _Saion_ for GPU-accelerated computations such as basecalling Nanopore data, that can not be run on _Deigo_.  Please remember that the _modules_ system on _Saion_ is older, so the `ml` shortcuts will not work.  To list the available modules, do:
+
+```
+module use /apps/.bioinfo-ugrp-modulefiles/
+module available
+```
+
 ## Communication channel
 Prioritized communication channel is on Microsoft Teams: [BioinfoUgrp](https://teams.microsoft.com/l/team/19%3a3183bd7fe2844138a49996a2bd376873%40thread.tacv2/conversations?groupId=cc78e114-c544-43e2-b4b1-29c7428aa305&tenantId=d8c0fb8d-bb56-44bb-9f4a-c58e7465652e).
