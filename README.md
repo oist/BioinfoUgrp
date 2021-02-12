@@ -7,7 +7,7 @@ Search with a keyword, for instance `ml key clustal`.
 Execute `ml bioinfo-ugrp-modules` to make available the modules installed by the OIST Bioinfo user group. This line can be appended to your `~/.bashrc` to make them available by default.
 
 ### Debian Med modules
-We autogenerate many modules from softwares packaged the Debian distribution. More information is available on the [DebianMedModules](DebianMedModules.md) page.
+We autogenerate many modules from softwares packaged the Debian distribution.  To see them, execute `ml bioinfo-ugrp-modules DebianMed`.  More information is available on the [DebianMedModules](DebianMedModules.md) page.
 
 ### Nextflow pipelines
 
