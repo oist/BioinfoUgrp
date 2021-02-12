@@ -22,7 +22,7 @@ Guppy
 Take home message: `srun` needs `-pgpu --gres gpu:1` and `guppy_basecaller` needs `--device auto`.
 
 ```
-module use /apps/.bioinfo-ugrp-modulefiles/
+module load bioinfo-ugrp-modules
 module load Guppy
 srun --time 2-0 --mem 20G -pgpu --gres gpu:1 --pty guppy_basecaller \
    -i <where FAST5 files are> \
