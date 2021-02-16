@@ -10,6 +10,8 @@ Installation on deigo
 
 See also <https://groups.oist.jp/scs/install-software-your-unit>.
 
+### Stable versions from bioconda (preferred)
+
 To install a new latest version, update the `VER` variable below and run the commands.
 
 ```
@@ -43,6 +45,47 @@ whatis("Keywords: ".."pipeline, SLURM")
 whatis("Description: ".." Data-driven computational pipelines.")
 
 help([[Nextflow installed with bioconda
+
+See https://www.nextflow.io/ for help.]])
+
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+### Edge versions from GitHub
+
+```
+APP=Nextflow
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+VER=21.02.0-edge
+mkdir -p $APPDIR/$VER/bin
+cd $APPDIR/$VER
+wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
+mv nextflow-${VER}-all bin/nextflow
+chmod 775 bin/nextflow
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp/"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+-- setenv("Nextflow_MOD_HOME", apphome)
+-- setenv("Nextflow_MOD_VERSION", appversion)
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/nextflow-io/nextflow/releases")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."pipeline, SLURM")
+whatis("Description: ".." Data-driven computational pipelines.")
+
+help([[Nextflow edge version downloaded from GitHub
 
 See https://www.nextflow.io/ for help.]])
 
