@@ -76,7 +76,10 @@ cd $APPDIR
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
 cd $VER
-./bin/conda install -y -c bioconda $APP 
+./bin/conda config --add channels defaults
+./bin/conda config --add channels bioconda
+./bin/conda config --add channels conda-forge
+./bin/conda install -y $APP 
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
