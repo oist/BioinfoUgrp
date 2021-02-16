@@ -76,7 +76,7 @@ cd $APPDIR
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
 cd $VER
-./bin/conda install -y -c bioconda nextflow 
+./bin/conda install -y -c bioconda $APP 
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -102,6 +102,7 @@ See https://nf-co.re/ for help.]])
 
 -- Package settings
 depends_on("singularity")
+depends_on("Other/Nextflow")
 prepend_path("PATH", apphome.."/bin")
 __END__
 ```
