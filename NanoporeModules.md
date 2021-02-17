@@ -10,12 +10,16 @@ Guppy
 
 ### Example module update on Saion
 
- - `cd /apps/unit/BioinfoUgrp/Guppy/`
- - Downloaded the RPM package `wget https://mirror.oxfordnanoportal.com/software/analysis/ont-guppy-4.4.0-1.el7.x86_64.rpm` (MD5 sum 07a74b887429769c3e511b8025c1c5d8) from the [Software Downloads](https://community.nanoporetech.com/downloads) page on the ONT website.
- - Unpacked it with `rpm2cpio ont-guppy-4.4.0-1.el7.x86_64.rpm | cpio -idmv`
- - Move the contents into `4.4.0`.
- - `cd /apps/.bioinfo-ugrp-modulefiles/Guppy`
- - Copied a previous [module file](https://groups.oist.jp/scs/install-software-your-unit) for this version.
+```
+VER=4.4.2
+cd /apps/unit/BioinfoUgrp/Guppy/
+wget https://mirror.oxfordnanoportal.com/software/analysis/ont-guppy-${VER}-1.el7.x86_64.rpm
+rpm2cpio ont-guppy-${VER}-1.el7.x86_64.rpm | cpio -idmv
+mkdir $VER
+mv opt $VER
+cd /apps/.bioinfo-ugrp-modulefiles/Guppy
+cp 2.3.5 $VER
+```
 
 ### Example commands for running Guppy on Saion
 
