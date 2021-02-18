@@ -64,6 +64,7 @@ cd rerio-GitHub
 git checkout $VER
 ./download_model.py
 cp -a basecall_models ../$VER
+cp /apps/unit/BioinfoUgrp/Guppy/4.4.0/ont/guppy/data/lambda_3.6kb.fasta ../$VER
 
 cd /apps/.bioinfo-ugrp-modulefiles/Rerio
 cat > 4.4.0 << '__END__'
