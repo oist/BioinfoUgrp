@@ -47,3 +47,69 @@ srun --time 2-0 --mem 20G -pgpu --gres gpu:1 --pty guppy_basecaller \
    --records_per_fastq 0 --qscore_filtering --min_qscore 7 --calib_detect \
    -s <where to write the output>
 ```
+
+Rerio
+-----
+
+ - Homepage: https://github.com/nanoporetech/rerio
+ - Source code: Proprietary (the GitHub repository is only a facility to dowload the models from ONT).
+
+### Notes on module creation on Saion
+
+```
+VER=4.4.0
+cd /apps/unit/BioinfoUgrp/Rerio/
+git clone https://github.com/nanoporetech/rerio rerio-GitHub
+cd rerio-GitHub
+git checkout $VER
+./download_model.py
+cp -a basecall_models ../$VER
+
+cd /apps/.bioinfo-ugrp-modulefiles/Rerio
+cat > 4.4.0 << '__END__'
+#%Module1.0##################################################################
+#
+set appname    [lrange [split [module-info name] {/}] 0 0]
+set appversion [lrange [split [module-info name] {/}] 1 1]
+set apphome    /apps/unit/BioinfoUgrp/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/nanoporetech/rerio
+
+## Short description of package:
+module-whatis   "research release basecalling models and configuration files"
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.  Non-path variables
+## can be set with "setenv VARIABLE value".
+setenv RERIO_MODELS $apphome
+
+## These lines are for logging module usage.  Don't remove them:
+set modulefile [lrange [split [module-info name] {/}] 0 0]
+set version    [lrange [split [module-info name] {/}] 1 1]
+set action     [module-info mode]
+system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\$\{SLURM_JOB_ID=NOJOB\},APP=$modulefile,VERSION=$version,ACTION=$action
+## Don't remove this line!  For some reason, it has to be here...
+__END__
+```
+
+### Example commands for running Guppy on Saion
+
+```
+module load bioinfo-ugrp-modules
+module load Guppy
+module load Rerio
+srun --time 2-0 --mem 20G -pgpu --gres gpu:1 --pty \
+  guppy_basecaller \
+    -i <fast5dir> \
+    --recursive \
+    -d $RERIO_MODELS \
+    -c res_dna_r941_min_crf_v031.cfg \
+    --num_callers 16 \
+    --records_per_fastq 0 \
+    --qscore_filtering --min_qscore 7 \
+    --calib_detect \
+    -s <outputdir>\
+    --device auto
+```
