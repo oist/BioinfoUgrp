@@ -8,14 +8,29 @@ Execute `ml bioinfo-ugrp-modules` to make available the modules installed by the
 
 ### Debian Med modules
 We autogenerate many modules from softwares packaged the Debian distribution.  To see them, execute `ml bioinfo-ugrp-modules DebianMed`.  More information is available on the [DebianMedModules](DebianMedModules.md) page.
+To load a module in DebianMed (an example for loading bcftools):
+```
+# load DebianMed module first
+module load DebianMed
+
+# now you can see the list of module installed in DebianMed.
+module avail
+
+# load module
+module load bcftools
+
+# check the installation
+bcftools --version
+
+```
 
 ### Nextflow pipelines
 
 We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml Other/Nextflow`) and regisered [OIST's profile](https://github.com/nf-core/configs/blob/master/docs/oist.md) to the [nf-core](https://nf-co.re/) community so that you can run their pipelines with the `-profile oist` option on _Deigo_.
 
 ### Other tools
-- DIAMOND (`ml Other/DIAMOND/2.0.4.142`)
-- InterProScan and its database (`ml Other/interproscan/5.48-83.0`)
+- DIAMOND (`ml DIAMOND/2.0.4.142`)
+- InterProScan and its database (`ml interproscan/5.48-83.0`)
 
 ## Databases
 Widely used databases were installed locally. Upon request by users, we plan on upgrading databases (not more than once a year). After upgrading a specific database, users will be asked if the older database should still remain available (completion of projects,...): it will be deleted after 30 days except if still required. At one time, a maximum of two versions of the same database will be available.
@@ -40,6 +55,21 @@ The following databases were constructed using DIAMOND v2.0.4.142. The module `O
 - the NCBI-NR database (release 238): `ml DB/diamondDB/ncbi/238`
 - Swiss-Prot (version 2020_06): `ml DB/diamondDB/sprot/2020_06`
 - UniRef90 (version 2020_06): `ml DB/diamondDB/uniref90/2020_06`
+Unlike ncbi-blast, DIAMOND requires full path of the databases. The database module automatically create an environment variable "DIAMONDDB" which specifies full path to the DIAMOND database. So you need to prepend `${DIAMONDDB}` to the name of database. 
+Example script to run diamond with the database module:
+```
+# load ncbi database for DIAMOND (proper version of DIAMOND is automatically loaded)
+module load DB/diamondDB/ncbi/238
+
+# check the loaded DIAMOND version and ${DIAMONDDB} variable
+diamond --version
+echo ${DIAMONDDB}
+
+# run diamond search
+WORKDIR="$PWD"
+FASTA=FULL/PATH/TO/YOUR/FASTA/FILE
+diamond blastp -db ${DIAMONDDB}/nr -q $FASTA -p ${SLURM_CPUS_PER_TASK} -out ${WORKDIR}/diamond.blastp.out -outfmt 6
+```
 
 ### Other databases
 - Pfam (version 34.0):  Use `ml DB/Pfam/34.0` to invoke it in your scripts.
