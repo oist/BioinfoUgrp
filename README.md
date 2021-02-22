@@ -55,6 +55,7 @@ The following databases were constructed using DIAMOND v2.0.4.142. The module `O
 - the NCBI-NR database (release 238): `ml DB/diamondDB/ncbi/238`
 - Swiss-Prot (version 2020_06): `ml DB/diamondDB/sprot/2020_06`
 - UniRef90 (version 2020_06): `ml DB/diamondDB/uniref90/2020_06`
+
 Unlike ncbi-blast, DIAMOND requires full path of the databases. The database module automatically create an environment variable "DIAMONDDB" which specifies full path to the DIAMOND database. So you need to prepend `${DIAMONDDB}` to the name of database. 
 Example script to run diamond with the database module:
 ```
