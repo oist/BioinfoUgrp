@@ -59,15 +59,15 @@ Rerio
 ```
 VER=4.4.0
 cd /apps/unit/BioinfoUgrp/Rerio/
-git clone https://github.com/nanoporetech/rerio rerio-GitHub
-cd rerio-GitHub
+git clone https://github.com/nanoporetech/rerio rerio-GitHub-$VER
+cd rerio-GitHub-$VER
 git checkout $VER
 ./download_model.py
 cp -a basecall_models ../$VER
 cp /apps/unit/BioinfoUgrp/Guppy/4.4.0/ont/guppy/data/lambda_3.6kb.fasta ../$VER
 
 cd /apps/.bioinfo-ugrp-modulefiles/Rerio
-cat > 4.4.0 << '__END__'
+cat > $VER<< '__END__'
 #%Module1.0##################################################################
 #
 set appname    [lrange [split [module-info name] {/}] 0 0]
