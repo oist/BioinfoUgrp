@@ -56,6 +56,12 @@ Rerio
 
 ### Notes on module creation on Saion
 
+Important: there are some additions and deletions of models without change
+of version number.  In that case I download and add the models by hand, without
+removing the old ones.
+
+2021/03: addition of v032 CRF models (https://github.com/nanoporetech/rerio/commit/3bc3a94c7a396a85026958e04a0be5a84c352397)
+
 ```
 VER=4.4.0
 cd /apps/unit/BioinfoUgrp/Rerio/
