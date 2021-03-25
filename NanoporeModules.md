@@ -120,3 +120,48 @@ srun --time 2-0 --mem 20G -pgpu --gres gpu:1 --pty \
     -s <outputdir>\
     --device auto
 ```
+
+ont-fast5-api
+-------------
+
+ - Homepage: https://pypi.org/project/ont-fast5-api/
+ - Sourcecode: https://github.com/nanoporetech/ont_fast5_api
+
+### Installation on Saion
+
+```
+module load python/3.7.3
+APP=ont_fast5_api
+MODROOT=/apps/unit/BioinfoUgrp/
+APPDIR=$MODROOT/$APP
+VER=3.3.0
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+PYTHONUSERBASE=$(pwd) pip3 install --user ont_fast5_api
+cd /apps/.bioinfo-ugrp-modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/LuscombeU/"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/nanoporetech/ont_fast5_api")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."Nanopore, sequence")
+whatis("Description: ".." Oxford Nanopore Technologies fast5 API software.")
+
+help([[ont_fast5_api installed with pip
+
+See https://github.com/nanoporetech/ont_fast5_api for help.]])
+
+-- Package settings
+depends_on("python/3.7.3")
+prepend_path("PATH", apphome.."/bin")
+prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
+__END__
+```
