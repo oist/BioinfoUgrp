@@ -122,12 +122,12 @@ cd $VER
 ./bin/conda config --add channels defaults
 ./bin/conda config --add channels bioconda
 ./bin/conda config --add channels conda-forge
-./bin/conda install -y $APP 
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
+./bin/conda install -y $APP
+mkdir -p $MODROOT/$APP/modulefiles/
+cd $MODROOT/$APP/modulefiles/
+cat <<'__END__' > $VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp/"
+local modroot    = "/apps/unit/BioinfoUgrp/Other"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
