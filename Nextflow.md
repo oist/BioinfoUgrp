@@ -113,7 +113,7 @@ To install a new latest version, update the `VER` variable below and run the com
 APP=nf-core
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=1.12.1-0
+VER=1.13.0-0
 mkdir -p $APPDIR
 cd $APPDIR
 curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
