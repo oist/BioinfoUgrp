@@ -21,7 +21,7 @@ APPDIR=$MODROOT/$APP
 VER=20.10.0
 mkdir -p $APPDIR
 cd $APPDIR
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
 cd $VER
 ./bin/conda install -y -c bioconda nextflow 
@@ -63,7 +63,7 @@ APPDIR=$MODROOT/$APP
 VER=21.02.0-edge
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
-wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
+curl -O https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
 mv nextflow-${VER}-all bin/nextflow
 chmod 775 bin/nextflow
 cd $MODROOT/modulefiles/
@@ -116,7 +116,7 @@ APPDIR=$MODROOT/$APP
 VER=1.12.1-0
 mkdir -p $APPDIR
 cd $APPDIR
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
 cd $VER
 ./bin/conda config --add channels defaults
