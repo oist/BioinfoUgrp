@@ -25,11 +25,11 @@ curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
 cd $VER
 ./bin/conda install -y -c bioconda nextflow 
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
+mkdir -p $MODROOT/$APP/modulefiles/
+cd $MODROOT/$APP/modulefiles/
+cat <<'__END__' > $VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp/"
+local modroot    = "/apps/unit/BioinfoUgrp/Other"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -66,11 +66,11 @@ cd $APPDIR/$VER
 curl -O https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
 mv nextflow-${VER}-all bin/nextflow
 chmod 775 bin/nextflow
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
+mkdir -p $MODROOT/$APP/modulefiles/
+cd $MODROOT/$APP/modulefiles/
+cat <<'__END__' > $VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp/"
+local modroot    = "/apps/unit/BioinfoUgrp/Other"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
