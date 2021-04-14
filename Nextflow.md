@@ -60,10 +60,10 @@ __END__
 APP=Nextflow
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=21.02.0-edge
+VER=21.04.0-edge
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
-curl -O https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
+wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
 mv nextflow-${VER}-all bin/nextflow
 chmod 775 bin/nextflow
 mkdir -p $MODROOT/$APP/modulefiles/
