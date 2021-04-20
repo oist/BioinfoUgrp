@@ -121,6 +121,55 @@ srun --time 2-0 --mem 20G -pgpu --gres gpu:1 --pty \
     --device auto
 ```
 
+Medaka
+------
+
+ - Homepage: https://github.com/nanoporetech/medaka
+ - Source code: MPL-2.0 License 
+
+```
+VER=1.3.2
+module load python/3.7.3
+module load ont-fast5-api
+APP=medaka
+MODROOT=/apps/unit/BioinfoUgrp/
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+PYTHONUSERBASE=$(pwd) pip3 install --user $APP --no-warn-script-location
+cd /apps/.bioinfo-ugrp-modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+#
+set modulehome /apps/unit/BioinfoUgrp
+set appname    [lrange [split [module-info name] {/}] 0 0]
+set appversion [lrange [split [module-info name] {/}] 1 1]
+set apphome    $modulehome/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://pypi.org/project/medaka/
+
+## Short description of package:
+module-whatis   "Tool to create consensus sequences and variant calls from nanopore sequencing data."
+
+## Load any needed modules:
+module load python/3.7.3
+
+## Modify as needed, removing any variables not needed.  Non-path variables
+## can be set with "setenv VARIABLE value".
+prepend-path    PATH            $apphome/bin
+prepend-path    PYTHONPATH      $apphome/lib/python3.7/site-packages/
+
+## These lines are for logging module usage.  Don't remove them:
+set modulefile [lrange [split [module-info name] {/}] 0 0]
+set version    [lrange [split [module-info name] {/}] 1 1]
+set action     [module-info mode]
+system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\$\{SLURM_JOB_ID=NOJOB\},APP=$modulefile,VERSION=$version,ACTION=$action
+## Don't remove this line!  For some reason, it has to be here...
+__END__
+```
+
 ont-fast5-api
 -------------
 
