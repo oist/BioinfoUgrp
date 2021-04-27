@@ -148,7 +148,7 @@ See https://nf-co.re/ for help.]])
 
 -- Package settings
 depends_on("singularity")
-depends_on("Other/Nextflow")
+depends_on("Nextflow")
 prepend_path("PATH", apphome.."/bin")
 __END__
 ```
