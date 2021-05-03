@@ -107,6 +107,8 @@ Installation on deigo
 
 See also <https://groups.oist.jp/scs/install-software-your-unit>.
 
+### Stable versions from bioconda
+
 To install a new latest version, update the `VER` variable below and run the commands.
 
 ```
@@ -145,6 +147,46 @@ whatis("Description: ".." Python package with helper tools for the nf-core commu
 help([[nf-core tools installed with bioconda
 
 See https://nf-co.re/ for help.]])
+
+-- Package settings
+depends_on("singularity")
+depends_on("Nextflow")
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+### Dev versions from GitHub
+
+```
+APP=nf-core
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+VER=0.dev_`date -u +%F`
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+pip3 install --user $APP git+https://github.com/nf-core/tools.git@dev
+mkdir -p $MODROOT/$APP/modulefiles/
+cd $MODROOT/$APP/modulefiles/
+cat <<'__END__' > $VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp/Other"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+-- setenv("Nextflow_MOD_HOME", apphome)
+-- setenv("Nextflow_MOD_VERSION", appversion)
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://bioconda.github.io/recipes/nf-core/README.html")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."pipeline, SLURM")
+whatis("Description: ".." Python package with helper tools for the nf-core community.")
+
+help([[nf-core tools (development version) installed with pip3 from GitHub
+
+See https://github.com/nf-core/tools for help.]])
 
 -- Package settings
 depends_on("singularity")
