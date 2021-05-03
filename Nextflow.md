@@ -164,7 +164,7 @@ APPDIR=$MODROOT/$APP
 VER=0.dev_`date -u +%F`
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
-pip3 install --user $APP git+https://github.com/nf-core/tools.git@dev
+PYTHONUSERBASE=$(pwd) pip3 install --user $APP git+https://github.com/nf-core/tools.git@dev
 mkdir -p $MODROOT/$APP/modulefiles/
 cd $MODROOT/$APP/modulefiles/
 cat <<'__END__' > $VER.lua
