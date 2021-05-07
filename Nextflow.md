@@ -192,5 +192,6 @@ See https://github.com/nf-core/tools for help.]])
 depends_on("singularity")
 depends_on("Nextflow")
 prepend_path("PATH", apphome.."/bin")
+prepend_path("PYTHONPATH", apphome.."/lib/python3.6/site-packages")
 __END__
 ```
