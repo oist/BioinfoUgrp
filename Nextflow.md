@@ -24,7 +24,7 @@ cd $APPDIR
 curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
 cd $VER
-./bin/conda install -y -c bioconda nextflow 
+./bin/conda install -y -c bioconda nextflow=$VER
 mkdir -p $MODROOT/$APP/modulefiles/
 cd $MODROOT/$APP/modulefiles/
 cat <<'__END__' > $VER.lua
