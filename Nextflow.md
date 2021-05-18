@@ -102,6 +102,8 @@ Python package with helper tools for the nf-core community.
 
 https://bioconda.github.io/recipes/nf-core/README.html
 
+As a convenience, the [pytest-workflow](https://pytest-workflow.readthedocs.io/) package is also installed.
+
 Installation on deigo
 ---------------------
 
@@ -125,6 +127,7 @@ cd $VER
 ./bin/conda config --add channels bioconda
 ./bin/conda config --add channels conda-forge
 ./bin/conda install -y $APP=$VER
+./bin/conda install -y pytest-workflow
 mkdir -p $MODROOT/$APP/modulefiles/
 cd $MODROOT/$APP/modulefiles/
 cat <<'__END__' > $VER.lua
