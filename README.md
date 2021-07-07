@@ -29,8 +29,12 @@ bcftools --version
 We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml Other/Nextflow`) and regisered [OIST's profile](https://github.com/nf-core/configs/blob/master/docs/oist.md) to the [nf-core](https://nf-co.re/) community so that you can run their pipelines with the `-profile oist` option on _Deigo_.
 
 ### Other tools
-- DIAMOND (`ml DIAMOND/2.0.4.142`)
-- InterProScan and its database (`ml interproscan/5.48-83.0`)
+
+We also provide some general bioinformatics tools (see [this](Other.md) page for more information):
+
+- DIAMOND (`ml Other/DIAMOND/2.0.4.142`)
+- InterProScan and its database (`ml Other/interproscan/5.48-83.0`)
+- hifiasm (`ml Other/hifiasm/0.15.4`)
 
 ## Databases
 Widely used databases were installed locally. Upon request by users, we plan on upgrading databases (not more than once a year). After upgrading a specific database, users will be asked if the older database should still remain available (completion of projects,...): it will be deleted after 30 days except if still required. At one time, a maximum of two versions of the same database will be available.
