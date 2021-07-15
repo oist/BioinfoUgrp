@@ -10,57 +10,13 @@ Installation on deigo
 
 See also <https://groups.oist.jp/scs/install-software-your-unit>.
 
-### Stable versions from bioconda (preferred)
-
-To install a new latest version, update the `VER` variable below and run the commands.
+### Release or edge versions from GitHub
 
 ```
 APP=Nextflow
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=21.04.1
-mkdir -p $APPDIR
-cd $APPDIR
-curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
-cd $VER
-./bin/conda install -y -c bioconda nextflow=$VER
-mkdir -p $MODROOT/$APP/modulefiles/
-cd $MODROOT/$APP/modulefiles/
-cat <<'__END__' > $VER.lua
--- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp/Other"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
--- setenv("Nextflow_MOD_HOME", apphome)
--- setenv("Nextflow_MOD_VERSION", appversion)
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://bioconda.github.io/recipes/nextflow/README.html")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."pipeline, SLURM")
-whatis("Description: ".." Data-driven computational pipelines.")
-
-help([[Nextflow installed with bioconda
-
-See https://www.nextflow.io/ for help.]])
-
--- Package settings
-depends_on("singularity")
-prepend_path("PATH", apphome.."/bin")
-__END__
-```
-
-### Edge versions from GitHub
-
-```
-APP=Nextflow
-MODROOT=/apps/unit/BioinfoUgrp/Other
-APPDIR=$MODROOT/$APP
-VER=21.04.0-edge
+VER=21.04.2
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
