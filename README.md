@@ -30,11 +30,12 @@ We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml Other/Nextfl
 
 ### Other tools
 
-We also provide some general bioinformatics tools (see [this](Other.md) page for more information):
+Under the `Other/` namespace, we also provide some general bioinformatics tools such as:
 
 - DIAMOND (`ml Other/DIAMOND/2.0.4.142`)
 - InterProScan and its database (`ml Other/interproscan/5.48-83.0`)
-- hifiasm (`ml Other/hifiasm/0.15.4`)
+
+See [this page](Other.md) for the full list of modules and for more information.
 
 ## Databases
 Widely used databases were installed locally. Upon request by users, we plan on upgrading databases (not more than once a year). After upgrading a specific database, users will be asked if the older database should still remain available (completion of projects,...): it will be deleted after 30 days except if still required. At one time, a maximum of two versions of the same database will be available.
