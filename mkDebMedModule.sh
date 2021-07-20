@@ -5,7 +5,7 @@ DEBVERSION=10.7
 MODROOT=/apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION
 DEBMEDIMAGE=$MODROOT/DebianMed_$DEBVERSION.sif
 APPDIR=$MODROOT/modules/$APP
-VER=$(singularity exec $DEBMEDIMAGE dpkg-query -W -f='${Version}' $APP)
+VER=$(singularity exec $DEBMEDIMAGE dpkg-query -W -f='${Version}' $APP | perl -pe 's/^.*?://')
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 mkdir -p bin
