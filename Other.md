@@ -564,8 +564,9 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
 wget -O - https://github.com/marbl/merqury/archive/refs/tags/v$VER.tar.gz | tar zxvf -
-mv $APP-$VER $VER
-cd $VER && mkdir -p lib/R && Rscript -e 'install.packages(c("argparse","ggplot2","scales"), lib="./lib/R")'
+mv $APP-$VER $VER && cd $VER
+sed -i 's/echo $?/echo 1/' util/util.sh
+mkdir -p lib/R && Rscript -e 'install.packages(c("argparse","ggplot2","scales"), lib="./lib/R")'
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -584,7 +585,7 @@ whatis("Keywords: ".."assembly")
 whatis("Description: ".."k-mer based assembly evaluation.")
 
 -- Package settings
-depends_on("R/4.0.4", "java-jdk/14", "samtools/1.12", "bedtools/v2.29.2", "Other/meryl/1.3")
+depends_on("samtools/1.12", "bedtools/v2.29.2", "Other/meryl/1.3")
 prepend_path("PATH", apphome)
 prepend_path("R_LIBS", apphome.."/lib/R")
 setenv("MERQURY", apphome)
@@ -979,7 +980,7 @@ git clone https://github.com/aidenlab/3d-dna
 mv 3d-dna $VER && cd $VER
 ln -sf run-asm-pipeline.sh 3d-dna
 ln -sf run-asm-pipeline-post-review.sh 3d-dna-post-review
-ln -sf visualize/run-assembly-visualizer.sh 3d-dna-run-assembly-visualizer
+cd visualize/ && ln -sf run-assembly-visualizer.sh 3d-dna-run-assembly-visualizer && cd ..
 CMD=3d-dna-fasta2assembly
 echo '#!/bin/sh' > $CMD && echo "awk -f $APPDIR/$VER/utils/generate-assembly-file-from-fasta.awk \$*" >> $CMD
 chmod +x *.sh */*.sh $CMD
@@ -1039,6 +1040,57 @@ We also provide a command `3d-dna-fasta2assembly`, which is an alias of `$ awk -
 module load Other/3d-dna
 srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
     3d-dna-fasta2assembly ${YOUR_ASSEMBLY}.fasta > ${YOUR_ASSEMBLY}.assembly
+```
+
+## hic2cool
+
+- Home page: https://github.com/4dn-dcic/hic2cool
+- Source code: https://github.com/4dn-dcic/hic2cool/releases
+
+### Installation on Deigo
+
+```bash
+module load python/3.7.3
+APP=hic2cool
+VER=0.8.3
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/4dn-dcic/hic2cool/archive/refs/tags/$VER.tar.gz | tar xzvf -
+mv $APP-$VER $VER && cd $VER
+mkdir -p lib/python3.7/site-packages
+PYTHONUSERBASE=$(pwd) python setup.py install --user
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/4dn-dcic/hic2cool")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."Hi-C")
+whatis("Description: ".."Lightweight converter between hic and cool contact matrices.")
+
+-- Package settings
+depends_on("python/3.7.3")
+prepend_path("PATH", apphome.."/bin")
+prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
+__END__
+```
+
+### Example commands for running hic2cool on Deigo
+
+```bash
+module load Other/hic2cool
+srun -p compute -c 128 --mem 500G -t 12:00:00 --pty \
+    hic2cool <arguments>
 ```
 
 ## purge_dups
@@ -1256,6 +1308,7 @@ whatis("Description: ".."Make a .bed file for telomeres in a contig/scaffold fil
 -- Package settings
 depends_on("python/3.7.3", "Other/trf")
 prepend_path("PATH", apphome.."/bin")
+prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
 __END__
 ```
 
