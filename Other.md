@@ -15,6 +15,8 @@ module load Other/<your-favorite-module>
 List of available modules:
 
 ```text
+Other/preseq/3.1.2
+Other/samblaster/0.1.26
 Other/3d-dna/180922
 Other/arima_pipeline/2019.02.08
 Other/asset/1.0.3
@@ -51,6 +53,98 @@ Other/smudgeplot/0.2.3
 Other/SPAdes/3.15.1
 Other/trf/4.09.1
 Other/winnowmap/2.03
+```
+## preseq
+
+- Home page: http://smithlabresearch.org/software/preseq/
+- Source code: https://github.com/smithlabcode/preseq
+
+### Installation on Deigo
+
+```bash
+APP=preseq
+VER=3.1.2
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR
+wget -O - https://github.com/smithlabcode/preseq/releases/download/v3.1.2/preseq-3.1.2.tar.gz | tar xzvf -
+mv $APP-$VER $VER
+cd $VER && mkdir build && cd build
+../configure --prefix=$APPDIR/$VER && make && make install && cd .. && rm -r $APP-$VER
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://smithlabresearch.org/software/preseq/")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."preseq")
+whatis("Description: ".."The preseq package is aimed at predicting and estimating the complexity of a genomic sequencing library, equivalent to predicting and estimating the number of redundant reads from a given sequencing depth and how many will be expected from additional sequencing using an initial sequencing experiment")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+### Example commands for running preseq on Deigo
+```bash
+module load Other/preseq
+srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
+    preseq c_curve -o output.txt input.sort.bed
+```
+
+## samblaster
+
+- Home page: https://academic.oup.com/bioinformatics/article/30/17/2503/2748175
+- Source code: https://github.com/GregoryFaust/samblaster
+
+### Installation on Deigo
+
+```bash
+APP=samblaster
+VER=0.1.26
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR
+wget -O - https://github.com/GregoryFaust/samblaster/releases/download/v.0.1.26/samblaster-v.0.1.26.tar.gz | tar xzvf -
+mv $APP-$VER $VER
+cd $VER && make
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/GregoryFaust/samblaster")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."samblaster")
+whatis("Description: ".."samblaster is a fast and flexible program for marking duplicates in read-id grouped paired-end SAM files")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+### Example commands for running preseq on Deigo
+```bash
+module load Other/preseq
+srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
+    bwa mem <idxbase> samp.r1.fq samp.r2.fq | samblaster | samtools view -Sb - > samp.out.bam
 ```
 
 ## GNU parallel
