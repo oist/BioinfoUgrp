@@ -66,12 +66,12 @@ APP=preseq
 VER=3.1.2
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR/$VER
+mkdir -p $APPDIR
 cd $APPDIR
 wget -O - https://github.com/smithlabcode/preseq/releases/download/v3.1.2/preseq-3.1.2.tar.gz | tar xzvf -
 mv $APP-$VER $VER
 cd $VER && mkdir build && cd build
-../configure --prefix=$APPDIR/$VER && make && make install && cd .. && rm -r $APP-$VER
+../configure --prefix=$APPDIR/$VER && make && make install && cd .. && rm -r build
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -95,6 +95,7 @@ __END__
 ```
 
 ### Example commands for running preseq on Deigo
+
 ```bash
 module load Other/preseq
 srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
@@ -113,10 +114,10 @@ APP=samblaster
 VER=0.1.26
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR/$VER
+mkdir -p $APPDIR
 cd $APPDIR
 wget -O - https://github.com/GregoryFaust/samblaster/releases/download/v.0.1.26/samblaster-v.0.1.26.tar.gz | tar xzvf -
-mv $APP-$VER $VER
+mv $APP-v.$VER $VER
 cd $VER && make
 cd $MODROOT/modulefiles/
 mkdir -p $APP
@@ -136,11 +137,12 @@ whatis("Keywords: ".."samblaster")
 whatis("Description: ".."samblaster is a fast and flexible program for marking duplicates in read-id grouped paired-end SAM files")
 
 -- Package settings
-prepend_path("PATH", apphome.."/bin")
+prepend_path("PATH", apphome)
 __END__
 ```
 
 ### Example commands for running preseq on Deigo
+
 ```bash
 module load Other/preseq
 srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
