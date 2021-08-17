@@ -66,12 +66,12 @@ APP=preseq
 VER=3.1.2
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR/$VER
+mkdir -p $APPDIR
 cd $APPDIR
 wget -O - https://github.com/smithlabcode/preseq/releases/download/v3.1.2/preseq-3.1.2.tar.gz | tar xzvf -
 mv $APP-$VER $VER
 cd $VER && mkdir build && cd build
-../configure --prefix=$APPDIR/$VER && make && make install && cd .. && rm -r $APP-$VER
+../configure --prefix=$APPDIR/$VER && make && make install && cd .. && rm -r build
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -95,6 +95,7 @@ __END__
 ```
 
 ### Example commands for running preseq on Deigo
+
 ```bash
 module load Other/preseq
 srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
@@ -113,10 +114,10 @@ APP=samblaster
 VER=0.1.26
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR/$VER
+mkdir -p $APPDIR
 cd $APPDIR
 wget -O - https://github.com/GregoryFaust/samblaster/releases/download/v.0.1.26/samblaster-v.0.1.26.tar.gz | tar xzvf -
-mv $APP-$VER $VER
+mv $APP-v.$VER $VER
 cd $VER && make
 cd $MODROOT/modulefiles/
 mkdir -p $APP
@@ -136,11 +137,12 @@ whatis("Keywords: ".."samblaster")
 whatis("Description: ".."samblaster is a fast and flexible program for marking duplicates in read-id grouped paired-end SAM files")
 
 -- Package settings
-prepend_path("PATH", apphome.."/bin")
+prepend_path("PATH", apphome)
 __END__
 ```
 
 ### Example commands for running preseq on Deigo
+
 ```bash
 module load Other/preseq
 srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
@@ -651,6 +653,7 @@ srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
 ### Installation on Deigo
 
 ```bash
+module load R/4.0.4
 APP=merqury
 VER=1.3
 MODROOT=/apps/unit/BioinfoUgrp/Other
@@ -660,7 +663,7 @@ cd $APPDIR
 wget -O - https://github.com/marbl/merqury/archive/refs/tags/v$VER.tar.gz | tar zxvf -
 mv $APP-$VER $VER && cd $VER
 sed -i 's/echo $?/echo 1/' util/util.sh
-mkdir -p lib/R && Rscript -e 'install.packages(c("argparse","ggplot2","scales"), lib="./lib/R")'
+mkdir -p lib/R && Rscript -e 'install.packages(c("argparse","R6","jsonlite","findpython","ggplot2","scales"), lib="./lib/R")'
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -679,7 +682,7 @@ whatis("Keywords: ".."assembly")
 whatis("Description: ".."k-mer based assembly evaluation.")
 
 -- Package settings
-depends_on("samtools/1.12", "bedtools/v2.29.2", "Other/meryl/1.3")
+depends_on("R/4.0.4", "samtools/1.12", "bedtools/v2.29.2", "Other/meryl/1.3")
 prepend_path("PATH", apphome)
 prepend_path("R_LIBS", apphome.."/lib/R")
 setenv("MERQURY", apphome)
@@ -1558,6 +1561,7 @@ See the [README](https://github.com/thegenemyers/FASTK) written by the developer
 ### Installation on Deigo
 
 ```bash
+module load R/4.0.4
 APP=genescope
 VER=2021.03.26
 MODROOT=/apps/unit/BioinfoUgrp/Other
@@ -1573,6 +1577,7 @@ install.packages('argparse', lib=local_lib_path)
 install.packages('.', repos=NULL, type="source", lib=local_lib_path)
 __END__
 Rscript install.R
+Rscript -e 'install.packages(c("R6", "jsonlite", "findpython"), lib="./lib/R")'
 mkdir -p bin && mv GeneScopeFK.R bin/
 cd $MODROOT/modulefiles/
 mkdir -p $APP
@@ -1592,7 +1597,7 @@ whatis("Keywords: ".."sequencing")
 whatis("Description: ".."A derivative of GenomeScope2.0 modified to work with FastK.")
 
 -- Package settings
-depends_on("Other/FASTK")
+depends_on("R/4.0.4", "Other/FASTK")
 prepend_path("PATH", apphome.."/bin")
 prepend_path("R_LIBS", apphome.."/lib/R")
 __END__
@@ -1669,6 +1674,7 @@ Visit the [GitHub page](https://github.com/tbenavi1/KMC) for details about how t
 ### Installation on Deigo
 
 ```bash
+module load R/4.0.4
 APP=genomescope
 VER=2.0
 MODROOT=/apps/unit/BioinfoUgrp/Other
@@ -1678,6 +1684,7 @@ cd $APPDIR
 git clone https://github.com/tbenavi1/genomescope2.0
 mv genomescope2.0 $VER && cd $VER
 mkdir -p lib/R && sed -i 's|local_lib_path = "~/R_libs/"|local_lib_path = "./lib/R"|' install.R && Rscript install.R
+Rscript -e 'install.packages(c("R6", "jsonlite", "findpython"), lib="./lib/R")'
 mkdir -p bin && mv genomescope.R bin/
 cd $MODROOT/modulefiles/
 mkdir -p $APP
@@ -1697,7 +1704,7 @@ whatis("Keywords: ".."sequencing")
 whatis("Description: ".."Reference-free profiling of polyploid genomes.")
 
 -- Package settings
-depends_on("Other/KMC/genomescope")
+depends_on("R/4.0.4", "Other/KMC/genomescope")
 prepend_path("PATH", apphome.."/bin")
 prepend_path("R_LIBS", apphome.."/lib/R")
 __END__
@@ -1719,6 +1726,7 @@ srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
 ### Installation on Deigo
 
 ```bash
+module load R/4.0.4
 APP=smudgeplot
 VER=0.2.3
 MODROOT=/apps/unit/BioinfoUgrp/Other
@@ -1727,8 +1735,9 @@ mkdir -p $APPDIR
 cd $APPDIR
 git clone https://github.com/KamilSJaron/smudgeplot
 mv smudgeplot $VER && cd $VER
-mkdir -p lib/R && Rscript -e 'install.packages(c("devtools"), lib="./lib/R")'
-sed -i '1ilocal_lib_path = "./lib/R"' install.R && sed -i 's|install.packages(".", repos = NULL, type="source")|install.packages(".", repos = NULL, type="source", lib=local_lib_path)|' install.R && Rscript install.R
+mkdir -p lib/R && Rscript -e 'install.packages(c("devtools","argparse","R6","jsonlite","findpython","viridis"), lib="./lib/R")'
+sed -i '1ilocal_lib_path = "./lib/R"' install.R && sed -i 's|install.packages(".", repos = NULL, type="source")|install.packages(".", repos = NULL, type="source", lib=local_lib_path)|' install.R
+R_LIBS=./lib/R Rscript install.R && unset R_LIBS
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -1747,7 +1756,7 @@ whatis("Keywords: ".."qc, sequencing")
 whatis("Description: ".."Inference of ploidy and heterozygosity structure using whole genome sequencing data.")
 
 -- Package settings
-depends_on("Other/KMC/genomescope", "Other/genomescope/2.0")
+depends_on("R/4.0.4", "Other/KMC/genomescope", "Other/genomescope/2.0")
 prepend_path("PATH", apphome.."/exec")
 prepend_path("R_LIBS", apphome.."/lib/R")
 __END__
