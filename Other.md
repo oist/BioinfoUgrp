@@ -15,6 +15,7 @@ module load Other/<your-favorite-module>
 List of available modules:
 
 ```text
+Other/pairtools/0.3.0
 Other/preseq/3.1.2
 Other/samblaster/0.1.26
 Other/3d-dna/180922
@@ -54,6 +55,57 @@ Other/SPAdes/3.15.1
 Other/trf/4.09.1
 Other/winnowmap/2.03
 ```
+## pairtools
+
+- Home page: https://pairtools.readthedocs.io/en/latest/
+- Source code: https://github.com/open2c/pairtools
+
+### Installation on Deigo
+
+```bash
+APP=pairtools
+VER=0.3.0
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/open2c/pairtools/archive/refs/tags/v0.3.0.tar.gz | tar xzvf -
+mv $APP-$VER $VER
+cd $VER
+mkdir -p lib/python3.7/site-packages
+PYTHONUSERBASE=$(pwd) python setup.py install --user
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://pairtools.readthedocs.io/en/latest/")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."pairtools")
+whatis("Description: ".."pairtools is a simple and fast command-line framework to process sequencing data from a Hi-C experiment.")
+
+-- Package settings
+depends_on("python/3.7.3 ", "sort", "samtools", "bgzip")
+prepend_path("PATH", apphome.."/bin")
+prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
+__END__
+```
+
+### Example commands for running pairtools on Deigo
+
+```bash
+module load Other/preseq
+srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
+    pairtools parse -c example.chrom.sizes -o example_R1.pairs.gz --drop-sam example_R1.bam 
+```
+
 ## preseq
 
 - Home page: http://smithlabresearch.org/software/preseq/
