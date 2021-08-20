@@ -101,7 +101,7 @@ __END__
 ### Example commands for running pairtools on Deigo
 
 ```bash
-module load Other/preseq
+module load Other/pairtools
 srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
     pairtools parse -c example.chrom.sizes -o example_R1.pairs.gz --drop-sam example_R1.bam 
 ```
