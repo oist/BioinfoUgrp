@@ -15,6 +15,8 @@ module load Other/<your-favorite-module>
 List of available modules:
 
 ```text
+Other/pbgzip/2016.08.04
+Other/bwa/0.7.17
 Other/pairtools/0.3.0
 Other/preseq/3.1.2
 Other/samblaster/0.1.26
@@ -55,6 +57,105 @@ Other/SPAdes/3.15.1
 Other/trf/4.09.1
 Other/winnowmap/2.03
 ```
+
+## pbgzip
+
+- Home page: https://github.com/nh13/pbgzip
+- Source code: https://github.com/nh13/pbgzip
+- 
+### Installation on Deigo
+
+```bash
+APP=pbgzip
+VER=20160804
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+git clone https://github.com/nh13/pbgzip
+mv pbgzip $VER && cd $VER 
+sh autogen.sh && ./configure --prefix=$APPDIR/$VER && make 
+make install
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/nh13/pbgzip")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."pbgzip")
+whatis("Description: ".."This tool and API implements parallel block gzip.")
+
+-- Package settings
+prepend_path("PATH", apphome)
+__END__
+```
+
+### Example commands for running pbgzip on Deigo
+
+```bash
+module load Other/pbgzip
+srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
+    pbgzip <arguments>
+```
+
+
+## BWA
+
+- Home page: https://github.com/lh3/bwa
+- Source code: https://github.com/lh3/bwa
+
+### Installation on Deigo
+
+```bash
+APP=bwa
+VER=0.7.17
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/lh3/bwa/releases/download/v0.7.17/bwa-0.7.17.tar.bz2 | tar xjvf -
+mv $APP-$VER $VER
+cd $VER
+make
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/lh3/bwa")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."bwa")
+whatis("Description: ".."BWA is a software package for mapping DNA sequences against a large reference genome, such as the human genome."
+
+-- Package settings
+prepend_path("PATH", apphome)
+__END__
+```
+
+### Example commands for running bwa on Deigo
+
+```bash
+module load Other/bwa
+srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
+    bwa mem <arguments>
+```
+
+
 ## pairtools
 
 - Home page: https://pairtools.readthedocs.io/en/latest/
@@ -92,7 +193,7 @@ whatis("Keywords: ".."pairtools")
 whatis("Description: ".."pairtools is a simple and fast command-line framework to process sequencing data from a Hi-C experiment.")
 
 -- Package settings
-depends_on("python/3.7.3 ", "sort", "samtools", "bgzip")
+depends_on("python/3.7.3 ", "samtools", "pbgzip", "htslib")
 prepend_path("PATH", apphome.."/bin")
 prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
 __END__
