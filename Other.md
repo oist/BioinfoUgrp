@@ -15,6 +15,7 @@ module load Other/<your-favorite-module>
 List of available modules:
 
 ```text
+Other/assembly_stats/1.0.1
 Other/pbgzip/2016.08.04
 Other/bwa/0.7.17
 Other/pairtools/0.3.0
@@ -56,6 +57,56 @@ Other/smudgeplot/0.2.3
 Other/SPAdes/3.15.1
 Other/trf/4.09.1
 Other/winnowmap/2.03
+```
+
+## assembly-stats
+
+- Home page: https://github.com/sanger-pathogens/assembly-stats
+- Source code: https://github.com/sanger-pathogens/assembly-stats
+- 
+### Installation on Deigo
+
+```bash
+APP=assembly-stats
+VER=1.0.1
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/sanger-pathogens/assembly-stats/archive/refs/tags/v1.0.1.tar.gz | tar xzvf -
+mv $APP-$VER $VER
+cd $VER && mkdir build && cd build
+cmake -DINSTALL_DIR:PATH=$APPDIR/$VER ..
+make test
+make install
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/sanger-pathogens/assembly-stats")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."assembly-stats")
+whatis("Description: ".."Get assembly statistics from FASTA and FASTQ files.")
+
+-- Package settings
+prepend_path("PATH", apphome)
+__END__
+```
+
+### Example commands for running assembly-stats on Deigo
+
+```bash
+ml Other/assembly-stats
+srun -p compute -c 1 --mem 10G -t 00:10:00 --pty \
+    assembly-stats contigs.fasta
 ```
 
 ## pbgzip
