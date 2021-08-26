@@ -20,7 +20,7 @@ This has to be run on a machine where one has administrator priviledges.
 (That is: not Deigo)
 
 ```
-DEBVERSION=10.7
+DEBVERSION=11.0
 # Select Debian version and installed packages
 cat > DebianMed_$DEBVERSION.def << __EOF__
 Bootstrap: docker
@@ -29,7 +29,7 @@ From: debian:$DEBVERSION
 %post
     apt -y update
     apt -y install locales # Multilingual support
-    DEBIAN_FRONTEND=noninteractive apt -y install med-cloud bioperl python-biopython # Bioinfo packages
+    DEBIAN_FRONTEND=noninteractive apt -y install med-cloud bioperl python3-biopython # Bioinfo packages
     apt -y install rsync ncftp lftp # Small utilities
     apt -y install perl-doc man-db # Documentation
 __EOF__
@@ -38,7 +38,7 @@ __EOF__
 sudo singularity build DebianMed_$DEBVERSION.sif DebianMed_$DEBVERSION.def
 
 # Transfer it on Deigo
-scp deigo mkdir -p /apps/unit/BioinfoUgrp/DebianMed_$DEBVERSION
+ssh deigo mkdir -p /apps/unit/BioinfoUgrp/DebianMed_$DEBVERSION
 scp DebianMed_$DEBVERSION.def DebianMed_$DEBVERSION.sif deigo:/apps/unit/BioinfoUgrp/DebianMed_$DEBVERSION
 ```
 
