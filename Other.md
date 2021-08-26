@@ -140,7 +140,7 @@ whatis("Version: "..appversion)
 whatis("URL: ".."https://github.com/lh3/bwa")
 whatis("Category: ".."bioinformatics")
 whatis("Keywords: ".."bwa")
-whatis("Description: ".."BWA is a software package for mapping DNA sequences against a large reference genome, such as the human genome."
+whatis("Description: ".."BWA is a software package for mapping DNA sequences against a large reference genome, such as the human genome.")
 
 -- Package settings
 prepend_path("PATH", apphome)
