@@ -40,7 +40,7 @@ Other/interproscan/5.48-83.0
 Other/juicer/1.6
 Other/k8/0.2.5
 Other/KMC/genomescope
-Other/make_telomere_bed/2021.04.23
+Other/make_telomere_bed/2021.05.20
 Other/merqury/1.3
 Other/meryl/1.3
 Other/minimap2/2.20
@@ -53,6 +53,7 @@ Other/pbipa/1.3.2
 Other/peregrine/1.6.3
 Other/purge_dups/1.2.5
 Other/SALSA/2.3
+Other/seqkit/2.0.0
 Other/smudgeplot/0.2.3
 Other/SPAdes/3.15.1
 Other/trf/4.09.1
@@ -215,6 +216,7 @@ srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
 ### Installation on Deigo
 
 ```bash
+module load python/3.7.3
 APP=pairtools
 VER=0.3.0
 MODROOT=/apps/unit/BioinfoUgrp/Other
@@ -345,12 +347,57 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
-### Example commands for running preseq on Deigo
+### Example commands for running samblaster on Deigo
 
 ```bash
-module load Other/preseq
+module load Other/samblaster
 srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
     bwa mem <idxbase> samp.r1.fq samp.r2.fq | samblaster | samtools view -Sb - > samp.out.bam
+```
+
+## seqkit
+
+- Home page: https://bioinf.shenwei.me/seqkit/
+- Source code: https://github.com/shenwei356/seqkit
+
+### Installation on Deigo
+
+```bash
+APP=seqkit
+VER=2.0.0
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP/$VER
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/shenwei356/seqkit/releases/download/v$VER/seqkit_linux_amd64.tar.gz | tar xzvf -
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/shenwei356/seqkit")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."fasta, fastq, sequence analysis")
+whatis("Description: ".."A cross-platform and ultrafast toolkit for FASTA/Q file manipulation in Golang")
+
+-- Package settings
+prepend_path("PATH", apphome)
+__END__
+```
+
+### Example commands for running seqkit on Deigo
+
+```bash
+module load Other/seqkit
+srun -p compute -c 1 --mem 40G -t 24:00:00 --pty \
+    seqkit <subcommand> <arguments>
 ```
 
 ## GNU parallel
@@ -867,6 +914,7 @@ cd $APPDIR
 wget -O - https://github.com/marbl/merqury/archive/refs/tags/v$VER.tar.gz | tar zxvf -
 mv $APP-$VER $VER && cd $VER
 sed -i 's/echo $?/echo 1/' util/util.sh
+for FILE in plot/*.R; do sed -i 's|#!/usr/bin/env Rscript|#!/usr/bin/env -S Rscript --vanilla|'
 mkdir -p lib/R && Rscript -e 'install.packages(c("argparse","R6","jsonlite","findpython","ggplot2","scales"), lib="./lib/R")'
 cd $MODROOT/modulefiles/
 mkdir -p $APP
@@ -1361,7 +1409,9 @@ cd $APPDIR
 wget -O - https://github.com/4dn-dcic/hic2cool/archive/refs/tags/$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER && cd $VER
 mkdir -p lib/python3.7/site-packages
+sed -i 's|    name = "hic2cool",|    name = "hic2cool",\n    zip_safe = False,|' setup.py
 PYTHONUSERBASE=$(pwd) python setup.py install --user
+PYTHONUSERBASE=$(pwd) pip install -r requirements.txt --force-reinstall --user
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -1580,7 +1630,7 @@ srun -p compute -c 1 --mem 40G -t 10:00:00 --pty \
 ```bash
 module load python/3.7.3
 APP=make_telomere_bed
-VER=2021.04.23
+VER=2021.05.20
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -1782,6 +1832,7 @@ install.packages('.', repos=NULL, type="source", lib=local_lib_path)
 __END__
 Rscript install.R
 Rscript -e 'install.packages(c("R6", "jsonlite", "findpython"), lib="./lib/R")'
+sed -i 's|#!/usr/bin/env Rscript|#!/usr/bin/env -S Rscript --vanilla|' GeneScopeFK.R
 mkdir -p bin && mv GeneScopeFK.R bin/
 cd $MODROOT/modulefiles/
 mkdir -p $APP
@@ -1889,6 +1940,7 @@ git clone https://github.com/tbenavi1/genomescope2.0
 mv genomescope2.0 $VER && cd $VER
 mkdir -p lib/R && sed -i 's|local_lib_path = "~/R_libs/"|local_lib_path = "./lib/R"|' install.R && Rscript install.R
 Rscript -e 'install.packages(c("R6", "jsonlite", "findpython"), lib="./lib/R")'
+sed -i 's|#!/usr/bin/env Rscript|#!/usr/bin/env -S Rscript --vanilla|' genomescope.R
 mkdir -p bin && mv genomescope.R bin/
 cd $MODROOT/modulefiles/
 mkdir -p $APP
@@ -1942,6 +1994,7 @@ mv smudgeplot $VER && cd $VER
 mkdir -p lib/R && Rscript -e 'install.packages(c("devtools","argparse","R6","jsonlite","findpython","viridis"), lib="./lib/R")'
 sed -i '1ilocal_lib_path = "./lib/R"' install.R && sed -i 's|install.packages(".", repos = NULL, type="source")|install.packages(".", repos = NULL, type="source", lib=local_lib_path)|' install.R
 R_LIBS=./lib/R Rscript install.R && unset R_LIBS
+sed -i 's|#!/usr/bin/env Rscript|#!/usr/bin/env -S Rscript --vanilla|' exec/smudgeplot_plot.R
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
