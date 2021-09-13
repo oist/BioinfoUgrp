@@ -1,13 +1,23 @@
 #!/bin/bash -e
 ml singularity
 APP=$1
-DEBVERSION=10.7
+if [ -z $DEBVERSION ]
+then
+	printf 'Error: $DEBVERSION is not set and exported\n'
+	exit 1
+fi
+
+printf "==== $APP ====\n"
+
 MODROOT=/apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION
 DEBMEDIMAGE=$MODROOT/DebianMed_$DEBVERSION.sif
 APPDIR=$MODROOT/modules/$APP
 VER=$(singularity exec $DEBMEDIMAGE dpkg-query -W -f='${Version}' $APP)
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
+
+printf "   creating module in $APPDIR/$VER\n"
+
 mkdir -p bin
 for prog in $($DEBMEDIMAGE dpkg -L $APP | grep /bin/ | xargs basename -a)
 do
@@ -19,6 +29,9 @@ chmod 775 bin/$prog
 done
 mkdir -p $MODROOT/modulefiles/$APP
 cd $MODROOT/modulefiles/$APP
+
+printf "   creating modulefile $VER in $MODROOT/modulefiles/$APP\n"
+
 cat <<__END__ > $VER.lua
 -- Default settings
 local modroot    = "$MODROOT"
