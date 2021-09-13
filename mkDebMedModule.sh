@@ -12,14 +12,14 @@ printf "==== $APP ====\n"
 MODROOT=/apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION
 DEBMEDIMAGE=$MODROOT/DebianMed_$DEBVERSION.sif
 APPDIR=$MODROOT/modules/$APP
-VER=$(singularity exec $DEBMEDIMAGE dpkg-query -W -f='${Version}' $APP)
+VER=$(singularity exec $DEBMEDIMAGE dpkg-query -W -f='${Version}' $APP | perl -pe 's/^.*?://')
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 
 printf "   creating module in $APPDIR/$VER\n"
 
 mkdir -p bin
-for prog in $($DEBMEDIMAGE dpkg -L $APP | grep /bin/ | xargs basename -a)
+for prog in $($DEBMEDIMAGE dpkg -L $APP | grep -v -e 'package diverts' -e 'diverted by' | grep /bin/ | xargs basename -a)
 do
 cat <<__END__ > bin/$prog
 #!/bin/sh
