@@ -9,7 +9,7 @@ VER=$(singularity exec $DEBMEDIMAGE dpkg-query -W -f='${Version}' $APP | perl -p
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 mkdir -p bin
-for prog in $($DEBMEDIMAGE dpkg -L $APP | grep /bin/ | xargs basename -a)
+for prog in $($DEBMEDIMAGE dpkg -L $APP | grep -v -e 'package diverts' -e 'diverted by' | grep /bin/ | xargs basename -a)
 do
 cat <<__END__ > bin/$prog
 #!/bin/sh
