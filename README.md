@@ -82,6 +82,9 @@ diamond blastp -db ${DIAMONDDB}/nr -q $FASTA -p ${SLURM_CPUS_PER_TASK} -out ${WO
 
 ## Modules on Saion.
 
+### Alpha Fold
+We have a very basic implementation of Alpha fold 2.0 within the user group modules. You can find (in time) a verbose documentation [here](AlphaFold.md). However, for a basic usage, you can try to do something similar to the example script in: /apps/unit/BioinfoUgrp/alphafold/2.0.0/bin/alphafold_example_script.sh
+### Others
 We have some modules on _Saion_ for GPU-accelerated computations such as [basecalling Nanopore](NanoporeModules.md) data, that can not be run on _Deigo_.  Please remember that the _modules_ system on _Saion_ is older, so the `ml` shortcuts will not work.  To list the available modules, do:
 
 ```
