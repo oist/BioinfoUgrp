@@ -26,7 +26,7 @@ bcftools --version
 
 ### Nextflow pipelines
 
-We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml Other/Nextflow`) and regisered [OIST's profile](https://github.com/nf-core/configs/blob/master/docs/oist.md) to the [nf-core](https://nf-co.re/) community so that you can run their pipelines with the `-profile oist` option on _Deigo_.
+We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml bioinfo-ugrp-modules Nextflow`) and regisered [OIST's profile](https://github.com/nf-core/configs/blob/master/docs/oist.md) to the [nf-core](https://nf-co.re/) community so that you can run their pipelines with the `-profile oist` option on _Deigo_.  A _nf-core_ module is also available (`ml bioinfo-ugrp-modules nf-core`).
 
 ### Other tools
 
@@ -34,6 +34,7 @@ Under the `Other/` namespace, we also provide some general bioinformatics tools 
 
 - DIAMOND (`ml Other/DIAMOND/2.0.4.142`)
 - InterProScan and its database (`ml Other/interproscan/5.48-83.0`)
+- … and more !
 
 See [this page](Other.md) for the full list of modules and for more information.
 
@@ -84,6 +85,7 @@ diamond blastp -db ${DIAMONDDB}/nr -q $FASTA -p ${SLURM_CPUS_PER_TASK} -out ${WO
 
 ### Alpha Fold
 We have a very basic implementation of Alpha fold 2.0 within the user group modules. You can find (in time) a verbose documentation [here](AlphaFold.md). However, for a basic usage, you can try to do something similar to the example script in: /apps/unit/BioinfoUgrp/alphafold/2.0.0/bin/alphafold_example_script.sh
+
 ### Others
 We have some modules on _Saion_ for GPU-accelerated computations such as [basecalling Nanopore](NanoporeModules.md) data, that can not be run on _Deigo_.  Please remember that the _modules_ system on _Saion_ is older, so the `ml` shortcuts will not work.  To list the available modules, do:
 
