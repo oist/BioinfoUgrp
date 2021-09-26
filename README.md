@@ -14,17 +14,16 @@ We autogenerate many modules from softwares packaged the Debian distribution.  T
 To load a module in DebianMed (an example for loading bcftools):
 ```
 # load DebianMed module first
-module load DebianMed
+ml bioinfo-ugrp-modules DebianMed
 
 # now you can see the list of module installed in DebianMed.
-module avail
+ml avail
 
 # load module
-module load bcftools
+ml bcftools
 
 # check the installation
 bcftools --version
-
 ```
 
 ### Nextflow pipelines
