@@ -83,15 +83,18 @@ diamond blastp -db ${DIAMONDDB}/nr -q $FASTA -p ${SLURM_CPUS_PER_TASK} -out ${WO
 ### Other databases
 - Pfam (version 34.0):  Use `ml DB/Pfam/34.0` to invoke it in your scripts.
 
-## Modules on Saion.
+## Modules on Saion
 
-### Alpha Fold
-We have a very basic implementation of Alpha fold 2.0 within the user group modules. You can find (in time) a verbose documentation [here](AlphaFold.md). However, for a basic usage, you can try to do something similar to the example script in: /apps/unit/BioinfoUgrp/alphafold/2.0.0/bin/alphafold_example_script.sh
-
-### Others
-We have some modules on _Saion_ for GPU-accelerated computations such as [basecalling Nanopore](NanoporeModules.md) data, that can not be run on _Deigo_.  Please remember that the _modules_ system on _Saion_ is older, so the `ml` shortcuts will not work.  To list the available modules, do:
+We have some modules on _Saion_ for GPU-accelerated computations such that can not be run on _Deigo_.  Please remember that the _modules_ system on _Saion_ is older, so the `ml` shortcuts will not work.  To list the available modules, do:
 
 ```
 module load bioinfo-ugrp-modules
 module available
 ```
+
+### Alpha Fold
+We have a very basic implementation of Alpha fold 2.0 within the user group modules. You can find (in time) a verbose documentation [here](AlphaFold.md). However, for a basic usage, you can try to do something similar to the example script in: /apps/unit/BioinfoUgrp/alphafold/2.0.0/bin/alphafold_example_script.sh
+
+### Nanopore
+
+We have modules for [basecalling Nanopore](NanoporeModules.md) data, in particular for _Guppy_ and _Rerio_.
