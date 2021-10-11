@@ -3,7 +3,7 @@
 *Disclaimer: this implementation was made for general use with the help of Jan Moren of SCS. I do take no responsibility for bugs or errors, but if you could report them, I will gladly try to fix on my extra time. Nonetheless, the AF2 predictions appear to be working. Feel free but not obligated to acknowledge me or at least the SCS if this work was helpful for your research.*
 
 In order to use AF2, you need [SAION access](https://oist.service-now.com/sp?id=sc_category&sys_id=9c71871fdbcdeb806885f00ebf961928) and have basic knowledge of the [terminal](https://groups.oist.jp/scs/basic-linux-commands) and [slurm submission commands](https://groups.oist.jp/scs/use-slurm).  
-AF2 is part of the OIST [Bioinfo User group] (https://github.com/oist/BioinfoUgrp).  
+AF2 is part of the OIST [Bioinfo User group](https://github.com/oist/BioinfoUgrp).  
 AF2 was implemented using the [docker image](https://hub.docker.com/r/uvarc/alphafold) made by the University of Virginia, that here we gratefully acknowledge.
 ## AF2 content
 * 'alphafold_2.0.0.sif': singularity image created from the previously mentioned docker file
