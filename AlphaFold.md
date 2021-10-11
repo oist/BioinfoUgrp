@@ -13,7 +13,7 @@ AF2 was implemented using the [docker image](https://hub.docker.com/r/uvarc/alph
 
 
 ## Example run
-Assume to have a folder in /work with the input single protein sequence: example.fasta and a test output folder: test_out/ .  
+Assume to have a folder in /work with the input single protein sequence: example.fasta and a test output folder: test_out/.  
 Copy the example script:
 > cp /apps/unit/BioinfoUgrp/alphafold/2.0.0/bin/alphafold_example_script.sh .  
 
@@ -52,7 +52,7 @@ For convenience, we report here the example script content.
 > run_alphafold.sh --fasta_paths nvec_nrxn.fa --output_dir test_output  
 
 ## Attrib file
-If you use Chimera to visualize the pdb file, you might be interested to per-residue plddt coloring. plddt is the self-evaluated confidence measure of the prediction of alphafold2. It goes from 0 (low confidence) to 100 (high confidence). A low value indicates either badly predicted regions or disordered regions.   
+If you use Chimera to visualize the pdb file, you might be interested in per-residue plddt coloring. plddt is the self-evaluated confidence measure of the prediction of alphafold2. It goes from 0 (low confidence) to 100 (high confidence). A low value indicates either badly predicted regions or disordered regions.   
 To automatically generate a chimera attribute file for coloring by plddt, you can use the python script I made:
 > python /apps/unit/BioinfoUgrp/alphafold/2.0.0/bin/get_plddt_attribfile.py <result_model_X.pkl> <outfile.txt>   
 The text file generated can be used in Chimera (Tools > Structure Analysis > Define Attribute) after opening the same pdb model.   
