@@ -54,6 +54,7 @@ For convenience, we report here the example script content.
 ## Attrib file
 If you use Chimera to visualize the pdb file, you might be interested in per-residue plddt coloring. plddt is the self-evaluated confidence measure of the prediction of alphafold2. It goes from 0 (low confidence) to 100 (high confidence). A low value indicates either badly predicted regions or disordered regions.   
 To automatically generate a chimera attribute file for coloring by plddt, you can use the python script I made:
+> module load python/3.7.3   
 > python /apps/unit/BioinfoUgrp/alphafold/2.0.0/bin/get_plddt_attribfile.py <result_model_X.pkl> <outfile.txt>   
 The text file generated can be used in Chimera (Tools > Structure Analysis > Define Attribute) after opening the same pdb model.   
 
