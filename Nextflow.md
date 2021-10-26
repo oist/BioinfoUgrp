@@ -70,10 +70,12 @@ See also <https://groups.oist.jp/scs/install-software-your-unit>.
 To install a new latest version, update the `VER` variable below and run the commands.
 
 ```
+ml purge
+ml bioinfo-ugrp-modules Nextflow
 APP=nf-core
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=1.14
+VER=2.1
 mkdir -p $APPDIR
 cd $APPDIR
 curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
