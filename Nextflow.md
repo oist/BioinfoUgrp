@@ -121,6 +121,7 @@ __END__
 ```
 NFMODULE=Nextflow/21.04.3  # Change the LUA file too !!
 ml bioinfo-ugrp-modules $NFMODULE
+ml python/3.7.3
 APP=nf-core
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
@@ -153,6 +154,7 @@ See https://github.com/nf-core/tools for help.]])
 
 -- Package settings
 depends_on("singularity")
+depends_on(" python/3.7.3")
 depends_on("Nextflow/21.04.3")
 prepend_path("PATH", apphome.."/bin")
 prepend_path("PYTHONPATH", apphome.."/lib/python3.8/site-packages")
