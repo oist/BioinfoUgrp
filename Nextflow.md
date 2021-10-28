@@ -119,16 +119,22 @@ __END__
 ### Dev versions from GitHub
 
 ```
-ml python/3.7.3  # Check depends_on and prepend_path in the the LUA file too !!
 NFMODULE=Nextflow/21.04.3  # Change the LUA file too !!
 ml bioinfo-ugrp-modules $NFMODULE
 APP=nf-core
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 VER=0.dev_`date -u +%F`
-mkdir -p $APPDIR/$VER
-cd $APPDIR/$VER
-PYTHONUSERBASE=$(pwd) pip3 install --upgrade --force-reinstall git+https://github.com/nf-core/tools.git@dev
+mkdir -p $APPDIR
+cd $APPDIR
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
+cd $VER
+./bin/conda config --add channels defaults
+./bin/conda config --add channels bioconda
+./bin/conda config --add channels conda-forge
+./bin/conda install -y pytest-workflow
+PYTHONUSERBASE=$(pwd) ./bin/pip install --upgrade --force-reinstall git+https://github.com/nf-core/tools.git@dev
 mkdir -p $MODROOT/$APP/modulefiles/
 cd $MODROOT/$APP/modulefiles/
 cat <<'__END__' > $VER.lua
@@ -156,7 +162,6 @@ See https://github.com/nf-core/tools for help.]])
 depends_on("singularity")
 depends_on("Nextflow/21.04.3")
 prepend_path("PATH", apphome.."/bin")
-depends_on("python/3.7.3")
-prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
+prepend_path("PYTHONPATH", apphome.."/lib/python3.9/site-packages")
 __END__
 ```
