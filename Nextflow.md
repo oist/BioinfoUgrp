@@ -118,6 +118,9 @@ __END__
 
 ### Dev versions from GitHub
 
+Development versions are provided "as is",
+with an arbitrary version number to not interfere with stable versions.
+
 ```
 NFMODULE=Nextflow/21.04.3  # Change the LUA file too !!
 ml bioinfo-ugrp-modules $NFMODULE
