@@ -40,8 +40,8 @@ __EOF__
 sudo singularity build DebianMed_$DEBVERSION.sif DebianMed_$DEBVERSION.def
 
 # Transfer it on Deigo
-ssh deigo mkdir -p /apps/unit/BioinfoUgrp/DebianMed_$DEBVERSION
-scp DebianMed_$DEBVERSION.def DebianMed_$DEBVERSION.sif deigo:/apps/unit/BioinfoUgrp/DebianMed_$DEBVERSION
+ssh deigo mkdir -p /apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION
+scp DebianMed_$DEBVERSION.def DebianMed_$DEBVERSION.sif deigo:/apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION
 ```
 
 ### Misc commands
