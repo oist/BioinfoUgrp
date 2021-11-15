@@ -56,7 +56,7 @@ ml singularity
 Command to generate all the modules:
 
 ```
-for package in $(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud | grep Recommends | cut -d' ' -f2- | sed -e 's/, /\n/g' -e 's/|.*//' | sort -u | grep -v -e r-cran -e r-bioc -e r-other)
+for package in $(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud | grep Recommends | cut -d' ' -f2- | sed -e 's/, /\n/g' -e 's/|.*//' | sort -u | grep -v -e r-cran -e r-bioc -e r-other) ncftp lftp p7zip
 do
   ../../BioinfoUgrp/mkDebMedModule.sh $package
 done
