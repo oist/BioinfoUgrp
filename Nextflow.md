@@ -16,7 +16,7 @@ See also <https://groups.oist.jp/scs/install-software-your-unit>.
 APP=Nextflow
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=21.04.3
+VER=21.10.0
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
