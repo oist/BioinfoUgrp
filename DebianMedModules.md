@@ -46,17 +46,29 @@ scp DebianMed_$DEBVERSION.def DebianMed_$DEBVERSION.sif deigo:/apps/unit/Bioinfo
 
 ### Misc commands
 
-To list all the packages in the `med-bio` metapackage:
+To see all the packages that the `med-bio` metapackage `Recommends`:
 
 ```
 ml singularity
-./DebianMed_$DEBVERSION.sif apt show med-bio | grep Recommends | cut -d' ' -f2-
+./DebianMed_$DEBVERSION.sif apt show med-bio | grep Recommends
 ```
 
-Command to generate all the modules:
+To generate a list of all the bioinformatics packages recommended by the med-bio and med-cloud metapackages:
 
 ```
-for package in $(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud | grep Recommends | cut -d' ' -f2- | sed -e 's/, /\n/g' -e 's/|.*//' | sort -u | grep -v -e r-cran -e r-bioc -e r-other) ncftp lftp p7zip
+PKGLIST=$(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud |
+  grep Recommends                   | 
+  sed 's/ |/,/'g                    |  # Sanitize pipe symbols representive alternatives
+  cut -d' ' -f2-                    |  # Remove 'Recommends: '
+  sed -e 's/, /\n/g'                |  # Make it a space-separated pacakge list 
+  sort -u                           |  # Remove duplicates and in the next command, remove R packages
+  grep -v -e r-cran -e r-bioc -e r-other )
+```
+
+Command to generate all the modules, with a few extra goodies:
+
+```
+for package in $PKGLIST ncftp lftp p7zip
 do
   ../../BioinfoUgrp/mkDebMedModule.sh $package
 done
