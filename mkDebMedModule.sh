@@ -1,7 +1,7 @@
 #!/bin/bash -e
 ml singularity
 APP=$1
-if [ -z $DEBVERSION ]
+if [ -z "$DEBVERSION" ]
 then
 	printf 'Error: $DEBVERSION is not set and exported\n'
 	exit 1
@@ -13,13 +13,19 @@ MODROOT=/apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION
 DEBMEDIMAGE=$MODROOT/DebianMed_$DEBVERSION.sif
 APPDIR=$MODROOT/modules/$APP
 VER=$(singularity exec $DEBMEDIMAGE dpkg-query -W -f='${Version}' $APP | perl -pe 's/^.*?://')
-mkdir -p $APPDIR/$VER
-cd $APPDIR/$VER
+PROGLIST=$($DEBMEDIMAGE dpkg -L $APP | grep -v -e 'package diverts' -e 'diverted by' | grep /bin/) || true
+if [ -z "$PROGLIST" ]
+then
+	printf "Module not created: package $APP has no executables\n"
+	exit 0
+fi
 
 printf "   creating module in $APPDIR/$VER\n"
 
-mkdir -p bin
-for prog in $($DEBMEDIMAGE dpkg -L $APP | grep -v -e 'package diverts' -e 'diverted by' | grep /bin/ | xargs basename -a)
+mkdir -p $APPDIR/$VER/bin
+cd $APPDIR/$VER
+
+for prog in $(basename -a $PROGLIST)
 do
 cat <<__END__ > bin/$prog
 #!/bin/sh
