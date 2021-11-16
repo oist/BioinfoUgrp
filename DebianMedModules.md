@@ -124,7 +124,7 @@ help([[This module runs from Singularity image of Debian Med.
 Please contact the Bioinfo user group for details.]])
 
 -- Package settings
-depends_on("singularity", "source-highlight")
+depends_on("singularity")
 
 -- Adatpted from /usr/share/doc/biosyntax-less/rc_append.txt
 
