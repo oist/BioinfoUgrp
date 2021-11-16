@@ -160,4 +160,3 @@ __END__
 
  - Parse description from Debian package
  - Export man pages and add MANPATH to the Lua module.
- - Blacklist R package or handle them separately.
