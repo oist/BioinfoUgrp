@@ -156,6 +156,18 @@ set_alias("flagstat-less", "source-highlight -f esc --lang-def=$HIGHLIGHT/flagst
 __END__
 ```
 
+### Finally make the modules available
+
+Test them before !
+
+```
+cat > /apps/.bioinfo-ugrp-modulefiles81/DebianMed/$DEBVERSION.lua <<__END__
+-- Setup Modulepath for packages built by this compiler
+-- local mroot = os.getenv("MODULEPATH_ROOT")
+prepend_path("MODULEPATH", "/apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION/modulefiles")
+__END__
+```
+
 ## TODO
 
  - Parse description from Debian package
