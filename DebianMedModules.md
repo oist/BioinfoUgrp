@@ -105,7 +105,7 @@ LC_ALL=C singularity exec /apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION/DebianMed
 __END__
 chmod 775 src-hilite-lesspipe-bio.sh
 mkdir -p /apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION/modulefiles/biosyntax-less/
-cat > /apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION/modulefiles/biosyntax-less/1.0.0b-2.lua <<'__END__'
+cat > /apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION/modulefiles/biosyntax-less/1.0.0b-2.lua <<__END__
 -- Default settings
 local modroot    = "/apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION"
 local appname    = myModuleName()
@@ -140,19 +140,19 @@ set_alias("less", "less -NSi -# 10")
 -- Explicit call of  <file format>-less for piping data
 -- i.e:  samtools view -h aligned_hits.bam | sam-less
 -- Core syntaxes (default)
-set_alias("clustal-less", "source-highlight -f esc --lang-def=$HIGHLIGHT/clustal.lang --outlang-def=$HIGHLIGHT/bioSyntax.outlang     --style-file=$HIGHLIGHT/fasta.style | less")
-set_alias("bed-less", "source-highlight     -f esc --lang-def=$HIGHLIGHT/bed.lang     --outlang-def=$HIGHLIGHT/bioSyntax.outlang     --style-file=$HIGHLIGHT/sam.style   | less")
-set_alias("fa-less", "source-highlight      -f esc --lang-def=$HIGHLIGHT/fasta.lang   --outlang-def=$HIGHLIGHT/bioSyntax.outlang     --style-file=$HIGHLIGHT/fasta.style | less")
-set_alias("fq-less", "source-highlight      -f esc --lang-def=$HIGHLIGHT/fastq.lang   --outlang-def=$HIGHLIGHT/bioSyntax.outlang     --style-file=$HIGHLIGHT/fasta.style | less")
-set_alias("gtf-less", "source-highlight     -f esc --lang-def=$HIGHLIGHT/gtf.lang     --outlang-def=$HIGHLIGHT/bioSyntax-vcf.outlang --style-file=$HIGHLIGHT/vcf.style   | less")
-set_alias("pdb-less", "source-highlight     -f esc --lang-def=$HIGHLIGHT/pdb.lang     --outlang-def=$HIGHLIGHT/bioSyntax-vcf.outlang --style-file=$HIGHLIGHT/pdb.style   | less")
-set_alias("sam-less", "source-highlight     -f esc --lang-def=$HIGHLIGHT/sam.lang     --outlang-def=$HIGHLIGHT/bioSyntax.outlang     --style-file=$HIGHLIGHT/sam.style   | less")
-set_alias("vcf-less", "source-highlight     -f esc --lang-def=$HIGHLIGHT/vcf.lang     --outlang-def=$HIGHLIGHT/bioSyntax-vcf.outlang --style-file=$HIGHLIGHT/vcf.style   | less")
+set_alias("clustal-less", "source-highlight -f esc --lang-def=\$HIGHLIGHT/clustal.lang --outlang-def=\$HIGHLIGHT/bioSyntax.outlang     --style-file=\$HIGHLIGHT/fasta.style | less")
+set_alias("bed-less", "source-highlight     -f esc --lang-def=\$HIGHLIGHT/bed.lang     --outlang-def=\$HIGHLIGHT/bioSyntax.outlang     --style-file=\$HIGHLIGHT/sam.style   | less")
+set_alias("fa-less", "source-highlight      -f esc --lang-def=\$HIGHLIGHT/fasta.lang   --outlang-def=\$HIGHLIGHT/bioSyntax.outlang     --style-file=\$HIGHLIGHT/fasta.style | less")
+set_alias("fq-less", "source-highlight      -f esc --lang-def=\$HIGHLIGHT/fastq.lang   --outlang-def=\$HIGHLIGHT/bioSyntax.outlang     --style-file=\$HIGHLIGHT/fasta.style | less")
+set_alias("gtf-less", "source-highlight     -f esc --lang-def=\$HIGHLIGHT/gtf.lang     --outlang-def=\$HIGHLIGHT/bioSyntax-vcf.outlang --style-file=\$HIGHLIGHT/vcf.style   | less")
+set_alias("pdb-less", "source-highlight     -f esc --lang-def=\$HIGHLIGHT/pdb.lang     --outlang-def=\$HIGHLIGHT/bioSyntax-vcf.outlang --style-file=\$HIGHLIGHT/pdb.style   | less")
+set_alias("sam-less", "source-highlight     -f esc --lang-def=\$HIGHLIGHT/sam.lang     --outlang-def=\$HIGHLIGHT/bioSyntax.outlang     --style-file=\$HIGHLIGHT/sam.style   | less")
+set_alias("vcf-less", "source-highlight     -f esc --lang-def=\$HIGHLIGHT/vcf.lang     --outlang-def=\$HIGHLIGHT/bioSyntax-vcf.outlang --style-file=\$HIGHLIGHT/vcf.style   | less")
 set_alias("bam-less", "sam-less")
 
 -- Auxillary syntaxes (uncomment to activate)
-set_alias("fai-less", "source-highlight      -f esc --lang-def=$HIGHLIGHT/faidx.lang    --outlang-def=$HIGHLIGHT/bioSyntax.outlang   --style-file=$HIGHLIGHT/sam.style   | less")
-set_alias("flagstat-less", "source-highlight -f esc --lang-def=$HIGHLIGHT/flagstat.lang --outlang-def=$HIGHLIGHT/bioSyntax.outlang   --style-file=$HIGHLIGHT/sam.style   | less")
+set_alias("fai-less", "source-highlight      -f esc --lang-def=\$HIGHLIGHT/faidx.lang    --outlang-def=\$HIGHLIGHT/bioSyntax.outlang   --style-file=\$HIGHLIGHT/sam.style   | less")
+set_alias("flagstat-less", "source-highlight -f esc --lang-def=\$HIGHLIGHT/flagstat.lang --outlang-def=\$HIGHLIGHT/bioSyntax.outlang   --style-file=\$HIGHLIGHT/sam.style   | less")
 __END__
 ```
 
