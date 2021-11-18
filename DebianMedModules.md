@@ -68,7 +68,7 @@ PKGLIST=$(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud |
 Command to generate all the modules, with a few extra goodies:
 
 ```
-for package in $PKGLIST ncftp lftp p7zip
+for package in $PKGLIST ncftp lftp p7zip source-highlight
 do
   ../../BioinfoUgrp/mkDebMedModule.sh $package
 done
@@ -124,7 +124,7 @@ help([[This module runs from Singularity image of Debian Med.
 Please contact the Bioinfo user group for details.]])
 
 -- Package settings
-depends_on("singularity")
+depends_on("singularity", "source-highlight")
 
 -- Adatpted from /usr/share/doc/biosyntax-less/rc_append.txt
 
