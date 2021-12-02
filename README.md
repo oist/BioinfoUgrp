@@ -29,7 +29,7 @@ bcftools --version
 
 ### Nextflow pipelines
 
-We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml bioinfo-ugrp-modules Nextflow`) and regisered [OIST's profile](https://github.com/nf-core/configs/blob/master/docs/oist.md) to the [nf-core](https://nf-co.re/) community so that you can run their pipelines with the `-profile oist` option on _Deigo_.  A _nf-core_ module is also available (`ml bioinfo-ugrp-modules nf-core`).
+We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml bioinfo-ugrp-modules Nextflow`) and regisered [OIST's profile](https://github.com/nf-core/configs/blob/master/docs/oist.md) to the [nf-core](https://nf-co.re/) community so that you can run their pipelines with the `-profile oist` option on _Deigo_.  A _nf-core_ [module](https://github.com/nf-core/modules) is also available (`ml bioinfo-ugrp-modules nf-core`).
 
 ### Other tools
 
