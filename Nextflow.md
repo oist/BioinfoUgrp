@@ -16,7 +16,7 @@ See also <https://groups.oist.jp/scs/install-software-your-unit>.
 APP=Nextflow
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=21.10.4
+VER=21.10.6
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
@@ -122,7 +122,7 @@ Development versions are provided "as is",
 with an arbitrary version number to not interfere with stable versions.
 
 ```
-NFMODULE=Nextflow/21.10.4  # Change the LUA file too !!
+NFMODULE=Nextflow/21.10.6  # Change the LUA file too !!
 ml bioinfo-ugrp-modules $NFMODULE
 APP=nf-core
 MODROOT=/apps/unit/BioinfoUgrp/Other
@@ -163,7 +163,7 @@ See https://github.com/nf-core/tools for help.]])
 
 -- Package settings
 depends_on("singularity")
-depends_on("Nextflow/21.10.4")
+depends_on("Nextflow/21.10.6")
 prepend_path("PATH", apphome.."/bin")
 prepend_path("PYTHONPATH", apphome.."/lib/python3.9/site-packages")
 __END__
