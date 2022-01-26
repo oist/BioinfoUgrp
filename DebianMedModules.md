@@ -22,7 +22,7 @@ This has to be run on a machine where one has administrator priviledges.
 (That is: not Deigo)
 
 ```
-DEBVERSION=11.1
+DEBVERSION=11.2
 # Select Debian version and installed packages
 cat > DebianMed_$DEBVERSION.def << __EOF__
 Bootstrap: docker
