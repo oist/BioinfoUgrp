@@ -32,7 +32,7 @@ From: debian:$DEBVERSION
     apt -y update
     apt -y install locales # Multilingual support
     DEBIAN_FRONTEND=noninteractive apt -y install med-cloud med-bio bioperl python3-biopython # Bioinfo packages
-    apt -y install rsync ncftp lftp p7zip-full rename magic-wormhole # Small utilities
+    apt -y install rsync ncftp lftp p7zip-full rename magic-wormhole datamash # Small utilities
     apt -y install perl-doc man-db # Documentation
 __EOF__
 
@@ -68,7 +68,7 @@ PKGLIST=$(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud |
 Command to generate all the modules, with a few extra goodies:
 
 ```
-for package in $PKGLIST ncftp lftp p7zip source-highlight rename magic-wormhole
+for package in $PKGLIST ncftp lftp p7zip source-highlight rename magic-wormhole datamash
 do
   ../../BioinfoUgrp/mkDebMedModule.sh $package
 done
