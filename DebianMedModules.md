@@ -32,7 +32,7 @@ From: debian:$DEBVERSION
     apt -y update
     apt -y install locales # Multilingual support
     DEBIAN_FRONTEND=noninteractive apt -y install med-cloud med-bio bioperl python3-biopython # Bioinfo packages
-    apt -y install rsync ncftp lftp p7zip-full rename magic-wormhole datamash # Small utilities
+    apt -y install rsync ncftp lftp filezilla p7zip-full rename magic-wormhole datamash # Small utilities
     apt -y install perl-doc man-db # Documentation
 __EOF__
 
