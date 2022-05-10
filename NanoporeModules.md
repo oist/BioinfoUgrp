@@ -24,7 +24,7 @@ Guppy
 ### Example module update on Saion
 
 ```
-VER=6.1.1
+VER=6.1.2
 cd /apps/unit/BioinfoUgrp/Guppy/
 wget https://mirror.oxfordnanoportal.com/software/analysis/ont-guppy-${VER}-1.el7.x86_64.rpm
 rpm2cpio ont-guppy-${VER}-1.el7.x86_64.rpm | cpio -idmv
