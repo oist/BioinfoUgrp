@@ -308,3 +308,53 @@ system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\$\{
 ## Don't remove this line!  For some reason, it has to be here...
 __END__
 ```
+
+vbz compression plugin
+----------------------
+
+ - Homepage: https://github.com/nanoporetech/vbz_compression
+ - Sourcecode: https://github.com/nanoporetech/vbz_compression
+
+See also:
+
+ - https://www.biostars.org/p/9504758/
+ - https://github.com/nanoporetech/vbz_compression
+ - https://portal.hdfgroup.org/display/support/HDF5+Filter+Plugins
+
+### Installation on Deigo
+
+```
+APP=vbz_compression
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+VER=1.0.2
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+wget https://github.com/nanoporetech/vbz_compression/releases/download/1.0.2/ont-vbz-hdf-plugin_${VER}-1.focal_amd64.deb
+mkdir hdf_plugin
+dpkg --fsys-tarfile ont-vbz-hdf-plugin_${VER}-1.focal_amd64.deb | tar xOf - ./usr/local/hdf5/lib/plugin/libvbz_hdf_plugin.so > hdf_plugin/libvbz_hdf_plugin.so
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/LuscombeU/"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/nanoporetech/vbz_compression")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."Nanopore, sequence")
+whatis("Description: ".." Oxford Nanopore Technologies vbz HDF5 plugin.")
+
+help([[ont_fast5_api installed with pip
+
+See [https://github.com/nanoporetech/ont_fast5_api](https://github.com/nanoporetech/vbz_compression) for help.]])
+
+-- Package settings
+setenv("HDF5_PLUGIN_PATH", apphome.."/hdf_plugin")
+__END__
+```
