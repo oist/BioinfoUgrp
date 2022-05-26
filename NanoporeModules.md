@@ -275,7 +275,8 @@ APPDIR=$MODROOT/$APP
 VER=0.0.15
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
-PYTHONUSERBASE=$(pwd) pip3 install --user $APP
+PYTHONUSERBASE=$(pwd) pip3 install --user --upgrade pip
+PYTHONUSERBASE=$(pwd) bin/pip3 install --user --upgrade $APP
 cd /apps/.bioinfo-ugrp-modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER
