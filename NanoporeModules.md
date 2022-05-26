@@ -337,7 +337,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/LuscombeU/"
+local modroot    = "/apps/unit/BioinfoUgrp/Other"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
