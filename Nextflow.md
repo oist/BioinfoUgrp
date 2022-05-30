@@ -1,9 +1,18 @@
 Nextflow
 ========
 
-A DSL for data-driven computational pipelines <http://nextflow.io>
+A DSL for data-driven computational pipelines <http://nextflow.io>.
 
-https://github.com/nextflow-io/nextflow
+In 2022, _Nextflow_ had a backwards-incompatible change that depreacated an old
+syntax called _DSL1_ in favor of the _DSL2_ syntax.  We still provide the old
+version `21.10.6` in the `Nextflow` module on _deigo_.  Newer versions are in
+the `Nextflow2` module.  To use a _DSL1_ pipeline with the `Nextflow2` module,
+pass the `-dsl1` flag to the `nextflow` program.
+
+The `Nextflow2` module also limits the use of memory by setting the environment
+variable `NXF_OPTS` to `-Xms500M -Xmx2G`.  Please contact us or open an issue
+if you hit the limit.
+
 
 Installation on deigo
 ---------------------
@@ -12,11 +21,13 @@ See also <https://groups.oist.jp/scs/install-software-your-unit>.
 
 ### Release or edge versions from GitHub
 
+Source: https://github.com/nextflow-io/nextflow
+
 ```
-APP=Nextflow
+APP=Nextflow2
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=21.10.6
+VER=22.04.3
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-all
@@ -30,8 +41,6 @@ local modroot    = "/apps/unit/BioinfoUgrp/Other"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
--- setenv("Nextflow_MOD_HOME", apphome)
--- setenv("Nextflow_MOD_VERSION", appversion)
 
 -- Package information
 whatis("Name: "..appname)
@@ -41,12 +50,14 @@ whatis("Category: ".."bioinformatics")
 whatis("Keywords: ".."pipeline, SLURM")
 whatis("Description: ".." Data-driven computational pipelines.")
 
-help([[Nextflow edge version downloaded from GitHub
+help([[Nextflow version downloaded from GitHub
 
 See https://www.nextflow.io/ for help.]])
 
 -- Package settings
 depends_on("singularity")
+depends_on("java-jdk/14")
+setenv("NXF_OPTS", "-Xms500M -Xmx2G")
 prepend_path("PATH", apphome.."/bin")
 __END__
 ```
