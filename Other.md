@@ -32,11 +32,13 @@ Other/DAZZ_DB/2021.03.30
 Other/deepvariant/1.1.0
 Other/DIAMOND/2.0.4.142
 Other/FASTK/2021.05.27
+Other/fasttree/2.1.11
 Other/genescope/2021.03.26
 Other/genomescope/2.0
 Other/gfatools/0.5
 Other/hifiasm/0.15.4
 Other/interproscan/5.48-83.0
+Other/iqtree/2.2.0
 Other/juicer/1.6
 Other/k8/0.2.5
 Other/KMC/genomescope
@@ -2025,4 +2027,84 @@ __END__
 module load Other/smudeplot
 srun -p compute -c 1 --mem 100G -t 24:00:00 --pty \
     smudgeplot.py <arguments>
+```
+
+## iqtree2
+- Home page: http://www.iqtree.org
+- Source code: https://github.com/iqtree/iqtree2/releases
+
+### Installation on Deigo
+
+```bash
+DIS=iqtree2
+APP=iqtree
+VER=2.2.0
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/iqtree/iqtree2/archive/refs/tags/v2.2.0.tar.gz | tar xzvf -
+mv $DIS-$VER $VER
+cd $VER && mkdir build && cd build
+cmake ..
+make -j
+cd $MODROOT/$APP/$VER
+ln -s build/iqtree2 .
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://www.iqtree.org")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."iqtree")
+whatis("Description: ".."A fast and effective stochastic algorithm to infer phylogenetic trees by maximum likelihood")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+## FastTree
+- Home page: http://www.microbesonline.org/fasttree/
+- Source code: http://www.microbesonline.org/fasttree/#Install
+
+### Installation on Deigo
+
+```bash
+APP=fasttree
+VER=2.1.11
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+wget -O - http://www.microbesonline.org/fasttree/FastTreeMP > fasttree
+chmod a+x fasttree
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://www.microbesonline.org/fasttree/")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."fasttree")
+whatis("Description: ".."FastTree infers approximately-maximum-likelihood phylogenetic trees from alignments of nucleotide or protein sequences.")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
 ```
