@@ -2049,7 +2049,9 @@ cd $VER && mkdir build && cd build
 cmake ..
 make -j
 cd $MODROOT/$APP/$VER
-ln -s build/iqtree2 .
+mkdir -p bin
+cd bin
+ln -s $MODROOT/$APP/$VER/build/iqtree2 .
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -2083,8 +2085,8 @@ APP=fasttree
 VER=2.1.11
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR/$VER
-cd $APPDIR/$VER
+mkdir -p $APPDIR/$VER/bin
+cd $APPDIR/$VER/bin
 wget -O - http://www.microbesonline.org/fasttree/FastTreeMP > fasttree
 chmod a+x fasttree
 cd $MODROOT/modulefiles/
