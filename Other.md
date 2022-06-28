@@ -2110,3 +2110,42 @@ whatis("Description: ".."FastTree infers approximately-maximum-likelihood phylog
 prepend_path("PATH", apphome.."/bin")
 __END__
 ```
+
+## SAMtools
+- Home page: http://www.htslib.org
+- Source code: https://github.com/samtools/samtools/releases/download/1.15.1/samtools-1.15.1.tar.bz2
+
+### Installation on Deigo
+
+```bash
+APP=samtools
+VER=1.15.1
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/samtools/samtools/releases/download/1.15.1/samtools-1.15.1.tar.bz2 | tar xjvf -
+mv $APP-$VER $VER
+cd $VER
+./configure --prefix=$APPDIR/$VER && make && make install
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://www.htslib.org")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."samtools")
+whatis("Description: ".."mpileup and other tools for handling SAM, BAM, CRAM.")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
