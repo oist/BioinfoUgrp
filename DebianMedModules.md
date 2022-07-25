@@ -68,7 +68,7 @@ PKGLIST=$(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud |
 Command to generate all the modules, with a few extra goodies:
 
 ```
-for package in $PKGLIST ncftp lftp p7zip source-highlight rename magic-wormhole datamash
+for package in $PKGLIST gitk ncftp lftp p7zip source-highlight rename magic-wormhole datamash
 do
   ../../BioinfoUgrp/mkDebMedModule.sh $package
 done
