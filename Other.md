@@ -53,6 +53,7 @@ Other/nf-core/1.12.1-0
 Other/parallel/20210622
 Other/pbipa/1.3.2
 Other/peregrine/1.6.3
+Other/prokka/1.14.5
 Other/purge_dups/1.2.5
 Other/SALSA/2.3
 Other/seqkit/2.0.0
@@ -2186,3 +2187,42 @@ whatis("Description: ".."contains all the vcf* commands which previously lived i
 prepend_path("PATH", apphome.."/bin")
 __END__
 ```
+
+## prokka
+- Home page: https://github.com/tseemann/prokka
+- Source code: https://hub.docker.com/r/staphb/prokka
+
+### Installation on Deigo
+```bash
+module load singularity
+APP=prokka
+VER=1.14.5
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP/$VER
+mkdir -p $APPDIR
+cd $APPDIR
+singularity build prokka.sif docker://staphb/prokka:${VER}
+echo '#!/bin/sh' > prokka && echo "singularity exec $APPDIR/prokka.sif prokka \$*" >> prokka && chmod +x prokka
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://hub.docker.com/r/staphb/prokka")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."annotation")
+whatis("Description: ".."rapid prokaryotic genome annotation")
+
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome)
+__END__
+```
+
