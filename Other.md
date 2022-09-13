@@ -1,6 +1,6 @@
 # A collection of general bioinformatics modules
 
-## TODO
+## TO DO
 - Better to categorize modules into smaller subsets?
 
 ## Usage
@@ -13,18 +13,14 @@ module load Other/<your-favorite-module>
 List of available modules:
 
 ```text
-Other/assembly_stats/1.0.1
-Other/pbgzip/2016.08.04
-Other/bwa/0.7.17
-Other/pairtools/0.3.0
-Other/preseq/3.1.2
-Other/samblaster/0.1.26
 Other/3d-dna/180922
 Other/arima_pipeline/2019.02.08
+Other/assembly_stats/1.0.1
 Other/asset/1.0.3
 Other/BEAST/1.10.4
 Other/bioawk/1.0
 Other/BUSCO/5.1.3
+Other/bwa/0.7.17
 Other/canu/2.1.1
 Other/DAZZ_DB/2021.03.30
 Other/deepvariant/1.1.0
@@ -48,18 +44,24 @@ Other/mosdepth/0.3.1
 Other/Nextflow/20.10.0
 Other/Nextflow/21.02.0-edge
 Other/nf-core/1.12.1-0
+Other/pairtools/0.3.0
 Other/parallel/20210622
+Other/pbgzip/2016.08.04
 Other/pbipa/1.3.2
 Other/peregrine/1.6.3
+Other/preseq/3.1.2
 Other/prokka/1.14.5
 Other/purge_dups/1.2.5
 Other/SALSA/2.3
+Other/samblaster/0.1.26
 Other/seqkit/2.0.0
 Other/smudgeplot/0.2.3
 Other/SPAdes/3.15.1
 Other/trf/4.09.1
 Other/winnowmap/2.03
 ```
+
+# Installation
 
 ## assembly-stats
 
