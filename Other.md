@@ -2,7 +2,7 @@
 
 ## TODO
 
-- Write descriptions for BEAST, DIAMOND, SPAdes, bioawk, interproscan (who installed?)
+- Write descriptions for DIAMOND, SPAdes, bioawk, interproscan (who installed?)
 - Better to categorize modules into smaller subsets?
 
 ## Usage
@@ -2226,3 +2226,44 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
+## BEAST1
+- Home page: https://beast.community/index.html
+- Source code: https://github.com/beast-dev/beast-mcmc/releases/download/v1.10.4/BEASTv1.10.4.tgz
+
+### Installation on Deigo
+```bash
+APP=BEAST
+VER=1.10.4
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/beast-dev/beast-mcmc/releases/download/v1.10.4/BEASTv1.10.4.tgz | tar xzvf -
+mv ${APP}v${VER} $VER
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://beast.community
+
+## Short description of package:
+module-whatis  "BEAST is a cross-platform program for Bayesian analysis of molecular sequences using MCMC."
+
+## Load any needed modules:
+module load java-jdk/1.8.0_20
+module load beagle/3.1.2
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome
+prepend-path    PATH            $apphome/bin
+setenv			JAVA_HOME		/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el8_1.x86_64
+setenv			JRE_HOME		/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el8_1.x86_64/jre
+__END__
+```
