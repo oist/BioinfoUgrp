@@ -1,8 +1,6 @@
 # A collection of general bioinformatics modules
 
 ## TODO
-
-- Write descriptions for DIAMOND, SPAdes, bioawk, interproscan (who installed?)
 - Better to categorize modules into smaller subsets?
 
 ## Usage
@@ -2265,5 +2263,181 @@ prepend-path    PATH            $apphome
 prepend-path    PATH            $apphome/bin
 setenv			JAVA_HOME		/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el8_1.x86_64
 setenv			JRE_HOME		/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.252.b09-2.el8_1.x86_64/jre
+__END__
+```
+
+## DIAMOND
+- Home page: https://github.com/bbuchfink/diamond
+- Source code: https://github.com/bbuchfink/diamond/releases/download/v2.0.15/diamond-linux64.tar.gz
+
+### Installation on Deigo
+```bash
+APP=DIAMOND
+VER=2.0.15.153
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+mkdir $VER
+cd $APPDIR/$VER
+wget -O - https://github.com/bbuchfink/diamond/releases/download/v2.0.15/diamond-linux64.tar.gz | tar xzvf -
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/bbuchfink/diamond
+
+## Short description of package:
+module-whatis  "DIAMOND is a sequence aligner for protein and translated DNA searches, designed for high performance analysis of big sequence data."
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome
+__END__
+```
+
+## SPAdes
+- Home page: https://github.com/ablab/spades
+- Source code: http://cab.spbu.ru/files/release3.15.1/SPAdes-3.15.1-Linux.tar.gz
+
+### Installation on Deigo
+```bash
+APP=SPAdes
+VER=3.15.1
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - http://cab.spbu.ru/files/release3.15.1/SPAdes-3.15.1-Linux.tar.gz | tar xzvf -
+mv $APP-$VER-Linux $VER
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/ablab/spades
+
+## Short description of package:
+module-whatis  "SPAdes is an assembly toolkit containing various assembly pipelines."
+
+## Load any needed modules:
+module load python/3.7.3
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome
+prepend-path    PATH            $apphome/bin
+__END__
+```
+
+## bioawk
+- Home page: https://github.com/lh3/bioawk
+- Source code: https://github.com/lh3/bioawk
+
+### Installation on Deigo
+```bash
+APP=bioawk
+VER=1.0
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+git clone https://github.com/lh3/bioawk.git && mv $APP $VER && cd $VER
+make
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/lh3/bioawk
+
+## Short description of package:
+module-whatis  "Bioawk is an extension to Brian Kernighan's awk, adding the support of several common biological data formats, including optionally gzip'ed BED, GFF, SAM, VCF, FASTA/Q and TAB-delimited formats with column names."
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome
+__END__
+```
+
+## InterProScan
+- Home page: https://interproscan-docs.readthedocs.io/en/latest/index.html
+- Source code: 
+
+### Installation on Deigo
+```bash
+APP=interproscan
+VER=5.48-83.0
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+#################################### MISSING INSTALLATION
+#################################### TO BE COMPLETED DURING NEXT UPDATE?
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0
+#
+# InterProScan software and databases  
+#
+
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+
+## set/prepend environment valiable
+if { [ info exist env(IPRDIR) ] } then {
+  prepend-path  IPRDIR     $apphome
+} else {
+  setenv        IPRDIR     $apphome 
+}
+
+## URL of application homepage:
+set appurl     "https://interproscan-docs.readthedocs.io/en/latest/index.html"
+
+## Short description of package:
+module-whatis  "InterproScan to run the scanning algorithms from the InterPro database in an integrated way."
+
+## Load dependencies
+module load python/3.7.3
+module load java-jdk/14
+
+## Note
+if {[ module-info mode load ]} then {
+  puts stderr {
+  An environment variable "IPRDIR" has been set to InterProScan directory.
+  InterProScan software has been installed.
+
+  USAGE EXAMPLE:
+    ${IPRDIR}/interproscan.sh -i input.fasta --output-file-base IPRresult -cpu 4
+
+  }
+}
+
+## prepend pathes
+#prepend-path    PATH            $apphome
+
+#EOF
 __END__
 ```
