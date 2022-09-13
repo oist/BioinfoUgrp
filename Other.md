@@ -7,6 +7,7 @@
 
 ```bash
 module load bioinfo-ugrp-modules
+ml av Other
 module load Other/<your-favorite-module>
 ```
 
