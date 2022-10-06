@@ -69,13 +69,88 @@ cd /apps/.bioinfo-ugrp-modulefiles/Dorado
 cp 0.0.1 $VER
 ```
 
-### Example commands for running Guppy on Saion
+The config file contains:
+
+```
+#%Module1.0##################################################################
+#
+set appname    [lrange [split [module-info name] {/}] 0 0]
+set appversion [lrange [split [module-info name] {/}] 1 1]
+set apphome    /apps/unit/BioinfoUgrp/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/nanoporetech/dorado
+
+## Short description of package:
+module-whatis   "A LibTorch Basecaller for Oxford Nanopore Reads"
+
+## Load any needed modules:
+module load Dorado-models
+
+## Modify as needed, removing any variables not needed.  Non-path variables
+## can be set with "setenv VARIABLE value".
+prepend-path    PATH            $apphome/bin
+prepend-path    LD_LIBRARY_PATH $apphome/lib
+
+## These lines are for logging module usage.  Don't remove them:
+set modulefile [lrange [split [module-info name] {/}] 0 0]
+set version    [lrange [split [module-info name] {/}] 1 1]
+set action     [module-info mode]
+system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\$\{SLURM_JOB_ID=NOJOB\},APP=$modulefile,VERSION=$version,ACTION=$action
+## Don't remove this line!  For some reason, it has to be here...
+```
+
+### Dorado models
+
+The basecall models are distributed separately and can be downloaded
+with the `dorado` command.  They are also available as a `Dorado-models`
+module that exports their path to the `$DORADO_MODELS` environment
+variable, and which is loaded by the `Dorado` module.
+
+At the moment the contents of the `Dorado-models/latest` module are
+downloaded by hand in `/apps/unit/BioinfoUgrp/Dorado-models/latest/`
+with the `srun -p gpu dorado download` command.  Note it needs to
+run on a GPU node because the `dorado` binary crashes otherwise, but
+it is not needed to book a GPU.
+
+The module config file contains:
+
+```
+#%Module1.0##################################################################
+#
+set appname    [lrange [split [module-info name] {/}] 0 0]
+set appversion [lrange [split [module-info name] {/}] 1 1]
+set apphome    /apps/unit/BioinfoUgrp/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/nanoporetech/dorado
+
+## Short description of package:
+module-whatis   "Basecalling models and configuration files for Dorado"
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.  Non-path variables
+## can be set with "setenv VARIABLE value".
+setenv DORADO_MODELS $apphome
+
+## These lines are for logging module usage.  Don't remove them:
+set modulefile [lrange [split [module-info name] {/}] 0 0]
+set version    [lrange [split [module-info name] {/}] 1 1]
+set action     [module-info mode]
+system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\$\{SLURM_JOB_ID=NOJOB\},APP=$modulefile,VERSION=$version,ACTION=$action
+## Don't remove this line!  For some reason, it has to be here...
+```
+
+### Example commands for running Dorado on Saion
 
 ```
 module load bioinfo-ugrp-modules
 module load Dorado
 # See the help:
 srun -pgpu dorado basecaller -h
+# Note that Dorado does not work with the P100 cards.
+srun -pgpu -gres gpu:V100:1 --pty --mem 20G dorado basecaller $DORADO_MODELS/the_model_you_want path_to_POD5_or_FAST5_files
 ```
 
 Rerio
