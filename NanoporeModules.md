@@ -48,6 +48,36 @@ srun --time 2-0 --mem 20G -pgpu --gres gpu:1 --pty guppy_basecaller \
    -s <where to write the output>
 ```
 
+Dorado
+------
+
+ - Homepage: <https://github.com/nanoporetech/dorado>
+ - License: Oxford Nanopore Technologies PLC. Public License Version 1.0
+
+### Example module update on Saion
+
+```
+VER=0.0.1
+cd /apps/unit/BioinfoUgrp/Dorado/
+# The file name below needs to be updated by hand.
+FILE_TO_DOWNLOAD=h8eqc9htxk938jzpl4fch2rqlm48yeb0.gz
+wget https://nanoporetech.box.com/shared/static/$FILE_TO_DOWNLOAD 
+tar xvfz $FILE_TO_DOWNLOAD
+rm $FILE_TO_DOWNLOAD
+mv dorado-${VER}* $VER
+cd /apps/.bioinfo-ugrp-modulefiles/Dorado
+cp 0.0.1 $VER
+```
+
+### Example commands for running Guppy on Saion
+
+```
+module load bioinfo-ugrp-modules
+module load Dorado
+# See the help:
+srun -pgpu dorado basecaller -h
+```
+
 Rerio
 -----
 
