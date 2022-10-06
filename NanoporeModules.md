@@ -302,7 +302,7 @@ module load python/3.7.3
 APP=pod5-format-tools
 MODROOT=/apps/unit/BioinfoUgrp/
 APPDIR=$MODROOT/$APP
-VER=0.0.15
+VER=0.0.23
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 PYTHONUSERBASE=$(pwd) pip3 install --user --upgrade pip
