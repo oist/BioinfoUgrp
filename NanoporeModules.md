@@ -150,7 +150,7 @@ module load Dorado
 # See the help:
 srun -pgpu dorado basecaller -h
 # Note that Dorado does not work with the P100 cards.
-srun -pgpu -gres gpu:V100:1 --pty --mem 20G dorado basecaller $DORADO_MODELS/the_model_you_want path_to_POD5_or_FAST5_files
+srun -pgpu --gres gpu:V100:1 --pty --mem 20G dorado basecaller $DORADO_MODELS/the_model_you_want path_to_POD5_or_FAST5_files
 ```
 
 Rerio
