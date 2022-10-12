@@ -22,7 +22,7 @@ This has to be run on a machine where one has administrator priviledges.
 (That is: not Deigo)
 
 ```
-DEBVERSION=11.2
+DEBVERSION=11.5
 # Select Debian version and installed packages
 cat > DebianMed_$DEBVERSION.def << __EOF__
 Bootstrap: docker
@@ -32,7 +32,7 @@ From: debian:$DEBVERSION
     apt -y update
     apt -y install locales # Multilingual support
     DEBIAN_FRONTEND=noninteractive apt -y install med-cloud med-bio bioperl python3-biopython # Bioinfo packages
-    apt -y install colordiff rsync ncftp lftp filezilla p7zip-full rename magic-wormhole datamash # Small utilities
+    apt -y install colordiff rsync ncftp lftp filezilla p7zip-full rename magic-wormhole datamash pigz libsixel-bin # Small utilities
     apt -y install perl-doc man-db # Documentation
 __EOF__
 
