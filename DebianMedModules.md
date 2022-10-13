@@ -32,7 +32,7 @@ From: debian:$DEBVERSION
     apt -y update
     apt -y install locales # Multilingual support
     DEBIAN_FRONTEND=noninteractive apt -y install med-cloud med-bio bioperl python3-biopython # Bioinfo packages
-    apt -y install colordiff rsync ncftp lftp filezilla p7zip-full rename magic-wormhole datamash pigz libsixel-bin # Small utilities
+    apt -y install gitk colordiff rsync ncftp lftp filezilla p7zip-full rename magic-wormhole datamash pigz libsixel-bin source-highlight # Small utilities
     apt -y install perl-doc man-db # Documentation
 __EOF__
 
@@ -65,10 +65,10 @@ PKGLIST=$(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud |
   grep -v -e r-cran -e r-bioc -e r-other )
 ```
 
-Command to generate all the modules, with a few extra goodies:
+Command to generate all the modules, with a few extra goodies.  Note that the goodie list must be the same as in the singularity definition file above.
 
 ```
-for package in $PKGLIST gitk ncftp lftp p7zip source-highlight rename magic-wormhole datamash
+for package in $PKGLIST gitk colordiff rsync ncftp lftp filezilla p7zip-full rename magic-wormhole datamash pigz libsixel-bin source-highlight
 do
   ../../BioinfoUgrp/mkDebMedModule.sh $package
 done
