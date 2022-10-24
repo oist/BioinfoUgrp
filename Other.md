@@ -2054,6 +2054,7 @@ cd $MODROOT/$APP/$VER
 mkdir -p bin
 cd bin
 ln -s $MODROOT/$APP/$VER/build/iqtree2 .
+ln -s iqtree2 iqtree
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
