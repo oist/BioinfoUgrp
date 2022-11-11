@@ -60,8 +60,8 @@ Dorado
 VER=0.0.2
 cd /apps/unit/BioinfoUgrp/Dorado/
 # The file name below needs to be updated by hand.
-FILE_TO_DOWNLOAD=h8eqc9htxk938jzpl4fch2rqlm48yeb0.gz
-wget https://nanoporetech.box.com/shared/static/$FILE_TO_DOWNLOAD 
+FILE_TO_DOWNLOAD=dorado-0.0.2-linux-x64.tar.gz
+wget https://cdn.oxfordnanoportal.com/software/analysis/$FILE_TO_DOWNLOAD 
 tar xvfz $FILE_TO_DOWNLOAD
 rm $FILE_TO_DOWNLOAD
 mv dorado-${VER}* $VER
