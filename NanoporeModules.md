@@ -57,7 +57,7 @@ Dorado
 ### Example module update on Saion
 
 ```
-VER=0.0.1
+VER=0.0.2
 cd /apps/unit/BioinfoUgrp/Dorado/
 # The file name below needs to be updated by hand.
 FILE_TO_DOWNLOAD=h8eqc9htxk938jzpl4fch2rqlm48yeb0.gz
