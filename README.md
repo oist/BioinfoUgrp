@@ -81,8 +81,15 @@ FASTA=FULL/PATH/TO/YOUR/FASTA/FILE
 diamond blastp -db ${DIAMONDDB}/nr -q $FASTA -p ${SLURM_CPUS_PER_TASK} -out ${WORKDIR}/diamond.blastp.out -outfmt 6
 ```
 
-### Other databases
-- Pfam (version 34.0):  Use `ml DB/Pfam/34.0` to invoke it in your scripts.
+### Pfam
+
+Version 34.0:  Use `ml DB/Pfam/34.0` to invoke it in your scripts.
+
+### Dfam
+
+Version 3.6 downloaded from <https://www.dfam.org/releases/Dfam_3.6/families/Dfam.h5.gz>.
+
+The command `ml DB/Dfam/3.6` will expose an environment variable `$BioinfoUgrp_Dfam` containing the path to the directory containing the database files, that can be passed to RepeatMasker through its `-libdir` argument.
 
 ## Modules on Saion
 
