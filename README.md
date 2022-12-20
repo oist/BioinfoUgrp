@@ -91,6 +91,19 @@ Version 3.6 downloaded from <https://www.dfam.org/releases/Dfam_3.6/families/Dfa
 
 The command `ml DB/Dfam/3.6` will expose an environment variable `$BioinfoUgrp_Dfam` containing the path to the directory containing the database files, that can be passed to RepeatMasker through its `-libdir` argument.
 
+### Dfam for RepeatMasker
+
+The command `ml DB/Dfam_RepeatMasker/3.6__4.1.3` will set an environmental variable that changes the behaviour of the `repeatmodeler` module, so that it will use the full Dfam database provided by us instead of the “_curated only_” version provided by default.
+
+#### Developer details
+
+The RepeatMasker program does not follow symbolic links and the Dfam database is large (160 Gb), so I had to use hard links to the files of the `Dfam` module instead.  Also, the modulefile contains:
+
+```
+setenv("BioinfoUgrp_Dfam_Rmsk_4_1_3", apphome.."/RepeatMasker_4.1.3/Libraries")
+setenv("SINGULARITY_BINDPATH", apphome.."/Libraries:/opt/RepeatMasker/Libraries")
+```
+
 ## Modules on Saion
 
 We have some modules on _Saion_ for GPU-accelerated computations such that can not be run on _Deigo_.  Please remember that the _modules_ system on _Saion_ is older, so the `ml` shortcuts will not work.  To list the available modules, do:
