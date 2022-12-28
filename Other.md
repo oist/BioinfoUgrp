@@ -2394,9 +2394,11 @@ APP=interproscan
 VER=5.60-92.0
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR
-cd $APPDIR
-#################################### MISSING INSTALLATION
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+wget https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${VER}/interproscan-${VER}-64-bit.tar.gz
+wget https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${VER}/interproscan-${VER}-64-bit.tar.gz.md5
+md5sum -c interproscan-${VER}-64-bit.tar.gz.md5
 #################################### TO BE COMPLETED DURING NEXT UPDATE?
 cd $MODROOT/modulefiles/
 mkdir -p $APP
