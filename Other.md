@@ -2394,14 +2394,15 @@ APP=interproscan
 VER=5.60-92.0
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR/$VER
-cd $APPDIR/$VER
+mkdir -p $APPDIR
+cd $APPDIR
 wget https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${VER}/interproscan-${VER}-64-bit.tar.gz
 wget https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/${VER}/interproscan-${VER}-64-bit.tar.gz.md5
 md5sum -c interproscan-${VER}-64-bit.tar.gz.md5
 tar -pxvzf interproscan-${VER}-64-bit.tar.gz
 chmod -R g+w interproscan-${VER}
-cd interproscan-${VER}
+mv interproscan-${VER} ${VER}
+cd ${VER}
 srun -pshort python3 setup.py interproscan.properties
 #################################### TO BE COMPLETED DURING NEXT UPDATE?
 cd $MODROOT/modulefiles/
