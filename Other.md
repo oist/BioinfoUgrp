@@ -2406,7 +2406,7 @@ cd ${VER}
 # Index HMMs, see https://interproscan-docs.readthedocs.io/en/latest/HowToDownload.html#index-hmm-models
 srun -pshort python3 setup.py interproscan.properties
 # Fix prosite binaries, see https://interproscan-docs.readthedocs.io/en/latest/KnownIssues.html?highlight=prosite#prosite-pfsearchv3-errors
-sed -i.bak -e '/binary.prosite.pfscanv3.path/s/pfscanV3$/pfscanV3.noaf/' -e '/binary.prosite.pfsearchv3.path/s/pfsearchV3$/pfsearchV3.noaf/' interproscan.properties
+sed -i.bak -e '/binary.prosite.pfscanv3.path/s/pfscanV3$/altbin\/pfscanV3.noaf/' -e '/binary.prosite.pfsearchv3.path/s/pfsearchV3$/altbin\/pfsearchV3.noaf/' interproscan.properties
 #################################### TO BE COMPLETED DURING NEXT UPDATE?
 cd $MODROOT/modulefiles/
 mkdir -p $APP
