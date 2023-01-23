@@ -31,6 +31,7 @@ Other/fasttree/2.1.11
 Other/genescope/2021.03.26
 Other/genomescope/2.0
 Other/gfatools/0.5
+Other/hal/2.2
 Other/hifiasm/0.15.4
 Other/interproscan/5.48-83.0
 Other/interproscan/5.60-92.0
@@ -607,6 +608,51 @@ __END__
 module load Other/gfatools
 srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
     gfatools <arguments>
+```
+
+## hal
+
+ - Homepage: https://github.com/ComparativeGenomicsToolkit/hal
+ - Source code: https://github.com/ComparativeGenomicsToolkit/hal/releases
+
+### Installation on Deigo
+
+```bash
+APP=hal
+VER=2.2
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/${VER}
+cd $APPDIR/${VER}
+wget https://github.com/ComparativeGenomicsToolkit/hal/archive/refs/tags/release-V${VER}.tar.gz
+tar xvfz release-V${VER}.tar.gz
+git clone https://github.com/ComparativeGenomicsToolkit/sonLib.git
+pushd sonLib
+git checkout a4d45c46c6b9ee580fbac89db10894bac8844fd9 # As of January 23 2023
+make
+popd
+cd hal-release-V${VER}
+make
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/ComparativeGenomicsToolkit/hal")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."hal, assembly, cactus")
+whatis("Description: ".."Tools for manipulating sequence graphs in the HAL formats.")
+
+-- Package settings
+prepend_path("PATH", apphome.."/hal-release-V"..appversion.."/bin")
+__END__
 ```
 
 ## k8 (Javascript shell)
