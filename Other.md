@@ -22,6 +22,7 @@ Other/BEAST/1.10.4
 Other/bioawk/1.0
 Other/BUSCO/5.1.3
 Other/bwa/0.7.17
+Other/cactus/2.4.0
 Other/canu/2.1.1
 Other/DAZZ_DB/2021.03.30
 Other/deepvariant/1.1.0
@@ -2427,6 +2428,43 @@ module-whatis  "Bioawk is an extension to Brian Kernighan's awk, adding the supp
 ## Modify as needed, removing any variables not needed.
 ## Non-path variables can be set with "setenv VARIABLE value"
 prepend-path    PATH            $apphome
+__END__
+```
+## cactus
+- Home page: [https://github.com/lh3/bioawk](https://github.com/ComparativeGenomicsToolkit/cactus)
+- Source code: quay.io/comparative-genomics-toolkit/cactus:v2.4.0
+
+### Installation on Deigo
+```
+module load singularity
+APP=cactus
+VER=2.4.0
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP/$VER
+mkdir -p $APPDIR
+cd $APPDIR
+singularity build $APP.sif docker:quay.io/comparative-genomics-toolkit/${APP}:v${VER}
+echo '#!/bin/sh' > $APP && echo "singularity exec $APPDIR/$APP.sif $APP \$*" >> $APP && chmod +x $APP
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/ComparativeGenomicsToolkit/cactus")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."alignment")
+whatis("Description: ".."reference-free whole-genome alignment program")
+
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome)
 __END__
 ```
 
