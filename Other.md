@@ -45,6 +45,7 @@ Other/merqury/1.3
 Other/meryl/1.3
 Other/minimap2/2.20
 Other/mosdepth/0.3.1
+Other/mugsy/1r2.2
 Other/Nextflow/20.10.0
 Other/Nextflow/21.02.0-edge
 Other/nf-core/1.12.1-0
@@ -2465,6 +2466,46 @@ whatis("Description: ".."reference-free whole-genome alignment program")
 -- Package settings
 depends_on("singularity")
 prepend_path("PATH", apphome)
+__END__
+```
+
+## mugsy
+- Home page: https://mugsy.sourceforge.net
+- Source code: https://sourceforge.net/projects/mugsy/files/
+
+### Installation on Deigo
+```
+APP=mugsy
+VER=1r2.2
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://sourceforge.net/projects/mugsy/files/${APP}_x86-64-v${VER}.tgz | tar xzvf - && mv ${APP}_x86-64-v${VER} ${VER} && cd ${VER}
+sed -i 's/export MUGSY_INSTALL/#export MUGSY_INSTALL/g' mugsyenv.sh
+echo "export MUGSY_INSTALL=$PWD" >> mugsyenv.sh
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://mugsy.sourceforge.net
+
+## Short description of package:
+module-whatis  "Mugsy is a multiple whole genome aligner."
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome
+prepend-path    PATH            $apphome/MUMmer3.20
+eval [exec /usr/bin/env -i /usr/share/Modules/bin/createmodule.sh $apphome/mugsyenv.sh]
 __END__
 ```
 
