@@ -122,7 +122,7 @@ See https://nf-co.re/ for help.]])
 
 -- Package settings
 depends_on("singularity")
-depends_on("Nextflow")
+depends_on("Nextflow2")
 prepend_path("PATH", apphome.."/bin")
 __END__
 ```
@@ -174,7 +174,7 @@ See https://github.com/nf-core/tools for help.]])
 
 -- Package settings
 depends_on("singularity")
-depends_on("Nextflow/21.10.6")
+depends_on("Nextflow2")
 prepend_path("PATH", apphome.."/bin")
 prepend_path("PYTHONPATH", apphome.."/lib/python3.9/site-packages")
 __END__
