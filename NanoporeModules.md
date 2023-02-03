@@ -364,20 +364,22 @@ system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\$\{
 __END__
 ```
 
-pod5-format-tools
------------------
+POD5 Python Package
+-------------------
 
- - Homepage: https://pypi.org/project/pod5-format-tools/
+Appears to be the successor of `pod5-format-tools`
+
+ - Homepage: https://pypi.org/project/pod5/
  - Sourcecode: https://github.com/nanoporetech/pod5-file-format
 
 ### Installation on Saion
 
 ```
 module load python/3.7.3
-APP=pod5-format-tools
+APP=pod5
 MODROOT=/apps/unit/BioinfoUgrp/
 APPDIR=$MODROOT/$APP
-VER=0.0.41
+VER=0.1.5
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 PYTHONUSERBASE=$(pwd) pip3 install --user --upgrade pip
