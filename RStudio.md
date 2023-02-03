@@ -114,3 +114,10 @@ The server needs to run under your user name.  For instance you can pass `--serv
 You need to pick a port number that is a) higher than 1024 and
 b) not used by somebody else on the same node.  Pass it to `rserver` with the
 `--www-port` option.
+
+Example command
+---------------
+
+Run for the home directory.
+
+    ./RStudio_2022.12.0-353.sif /usr/lib/rstudio-server/bin/rserver --server-working-dir $(pwd)/deletemRstudi --server-data-dir $(pwd)/deletemRstudi --database-config-file $(pwd)/rsdb.conf --server-user=$(whoami) --www-port=9797
