@@ -2581,3 +2581,48 @@ if {[ module-info mode load ]} then {
 #EOF
 __END__
 ```
+
+## OceanParcels
+
+Module created for the mini course on Particle Tracking Simulation using Ocean Parcels (<https://groups.oist.jp/grad/mini-course-particle-tracking-simulation-using-ocean-parcels>)
+
+```
+APP=parcels
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+VER=2.4.0
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
+cd $VER
+./bin/conda create -n $APP
+./bin/conda install --yes -n $APP -c conda-forge $APP
+./bin/conda install --yes -n $APP jupyter
+./bin/conda install --yes -n $APP cmocean
+./bin/conda install --yes -n $APP cartopy
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://oceanparcels.org/")
+whatis("Category: ".."Marine sciences")
+whatis("Keywords: ".."Simulator")
+whatis("Description: ".." Probably A Really Computationally Efficient Lagrangian Simulator.")
+
+help([[OceanParcels installed with conda.
+
+See https://oceanparcels.org/ for help.]])
+
+-- Package settings
+prepend_path("PATH", apphome.."/envs/parcels/bin")
+prepend_path("PYTHONPATH", apphome.."/envs/parcels/lib/python3.10/site-packages")
+__END__
