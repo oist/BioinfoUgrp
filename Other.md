@@ -2623,6 +2623,7 @@ help([[OceanParcels installed with conda.
 See https://oceanparcels.org/ for help.]])
 
 -- Package settings
+setenv("JUPYTER_CONFIG_DIR", "/apps/free81/python/3.7.3/share/jupyter")
 prepend_path("PATH", apphome.."/envs/parcels/bin")
 prepend_path("PYTHONPATH", apphome.."/envs/parcels/lib/python3.10/site-packages")
 __END__
