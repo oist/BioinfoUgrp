@@ -62,6 +62,7 @@ Other/samblaster/0.1.26
 Other/seqkit/2.0.0
 Other/smudgeplot/0.2.3
 Other/SPAdes/3.15.1
+Other/TCSF_IMRA/2.7.3
 Other/trf/4.09.1
 Other/winnowmap/2.03
 ```
@@ -2506,6 +2507,47 @@ module-whatis  "Mugsy is a multiple whole genome aligner."
 prepend-path    PATH            $apphome
 prepend-path    PATH            $apphome/MUMmer3.20
 eval [exec /usr/bin/env -i /usr/share/Modules/bin/createmodule.sh $apphome/mugsyenv.sh]
+__END__
+```
+
+## TCSF_IMRA
+- Home page: https://github.com/Yukihirokinjo/TCSF_IMRA
+
+### Installation on Deigo
+```
+APP=TCSF_IMRA
+VER=2.7.3
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+git clone https://github.com/Yukihirokinjo/TCSF_IMRA.git
+mv $APP $VER && cd $VER
+chmod u+x *.bash
+chmod u+x *.R
+echo '#!/bin/sh' > tcsf && echo "TCSF-$VER.bash \$*" >> tcsf && chmod +x tcsf
+echo '#!/bin/sh' > imra && echo "IMRA-$VER.bash \$*" >> imra && chmod +x imra
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/Yukihirokinjo/TCSF_IMRA")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."TCSF_IMRA")
+whatis("Description: ".."tools developed for improving de novo assembly of endosymbiont genomes")
+
+-- Package settings
+depends_on("seqtk/1.3", "R/4.2.1", "ncbi-blast/2.10.0+", "bowtie2/2.2.6", "samtools/1.12", "SPAdes/3.13.0", "idba/1.1.3-7")
+prepend_path("PATH", apphome, apphome.."/Rlib")
+setenv("TCSF_IMRA", apphome)
 __END__
 ```
 
