@@ -50,6 +50,9 @@ From: debian:sid
     apt install -y r-base-dev git libssl-dev libclang-dev libxml2-dev \
       libcurl4-openssl-dev libssl-dev libfftw3-dev libtiff-dev libgsl-dev\
       libfontconfig1-dev libharfbuzz-dev libfribidi-dev
+    apt install -y libproj-dev # For proj4, for ggmsa
+    apt install -y libboost-all-dev # For GenomicBreaks and other packages
+    apt install -y cmake
     
     # Install software needed for vignette building and package checks
     apt install -y pandoc qpdf texlive
@@ -72,9 +75,9 @@ From: debian:sid
     R -e 'install.packages("remotes")'
     R -e 'install.packages("rmarkdown")'
 
-
     # Use home directory outside image to install more packages
-    printf 'R_LIBS=~/R/library/RStudio-2022.12.0-353\n' | tee -a /etc/R/Renviron.site >/dev/null
+    printf 'R_LIBS_SITE="/usr/local/lib/R/site-library:/usr/lib/R/library"\n' | tee -a /etc/R/Renviron.site >/dev/null
+    printf 'R_LIBS_USER="~/R/library/RStudio-2022.12.0-353"\n'                | tee -a /etc/R/Renviron.site >/dev/null
 
     # Clean downoladed package cache.  Yes I know about /var/libs.
     apt clean
