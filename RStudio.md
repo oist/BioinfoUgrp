@@ -53,7 +53,7 @@ From: debian:sid
     apt install -y libproj-dev # For proj4, for ggmsa
     apt install -y libboost-all-dev # For GenomicBreaks and other packages
     apt install -y cmake
-    apt install -y libv8-dev libudunits2-dev # in case one wants to install concaveman for ggforce
+    apt install -y libv8-dev libudunits2-dev libgdal-dev # in case one wants to install concaveman for ggforce
     
     # Install software needed for vignette building and package checks
     apt install -y pandoc qpdf texlive
