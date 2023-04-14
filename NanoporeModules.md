@@ -57,10 +57,9 @@ Dorado
 ### Example module update on Saion
 
 ```
-VER=0.0.2
+VER=0.2.4
 cd /apps/unit/BioinfoUgrp/Dorado/
-# The file name below needs to be updated by hand.
-FILE_TO_DOWNLOAD=dorado-0.0.2-linux-x64.tar.gz
+FILE_TO_DOWNLOAD=dorado-${VER}-linux-x64.tar.gz
 wget https://cdn.oxfordnanoportal.com/software/analysis/$FILE_TO_DOWNLOAD 
 tar xvfz $FILE_TO_DOWNLOAD
 rm $FILE_TO_DOWNLOAD
