@@ -82,7 +82,7 @@ To install a new latest version, update the `VER` variable below and run the com
 
 ```
 ml purge
-ml bioinfo-ugrp-modules Nextflow
+ml bioinfo-ugrp-modules Nextflow2
 APP=nf-core
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
