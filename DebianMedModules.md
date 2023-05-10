@@ -16,6 +16,11 @@ Enjoy !
 For developers
 --------------
 
+### Docker image
+
+See [oist/BioinfoUgrp](https://github.com/oist/BioinfoUgrp_DebianMed_Images)
+on how to create a Docker image with GitHub actions.
+
 ### Creation of a new Singularity image
 
 This has to be run on a machine where one has administrator priviledges.
