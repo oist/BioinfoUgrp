@@ -26,7 +26,7 @@ needed by RMarkdown and `R CMD check`.
 Lastly, let's install the latest tidyverse, as everybody wants it.
 
 ```sh
-cat <<__SINGULARITY__ > RStudio_2022.12.0-353.def
+cat <<__SINGULARITY__ > RStudio_2023.03.1-446.def
 Bootstrap: docker
 From: debian:sid
 
@@ -65,8 +65,8 @@ From: debian:sid
     apt install -y psmisc procps systemctl sudo lsb-release libgl1 libnss3 libasound2 libxdamage1
     
     # Install RStudio server
-    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2022.12.0-353-amd64.deb
-    apt --fix-broken -y install ./rstudio-server-2022.12.0-353-amd64.deb
+    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.03.1-446-amd64.deb
+    apt --fix-broken -y install ./rstudio-server-2023.03.1-446-amd64.deb
     rm rstudio-*-amd64.deb
     
     # Install R packages of general intetest
@@ -78,7 +78,7 @@ From: debian:sid
 
     # Use home directory outside image to install more packages
     printf 'R_LIBS_SITE="/usr/local/lib/R/site-library:/usr/lib/R/library"\n' | tee -a /etc/R/Renviron.site >/dev/null
-    printf 'R_LIBS_USER="~/R/library/RStudio-2022.12.0-353"\n'                | tee -a /etc/R/Renviron.site >/dev/null
+    printf 'R_LIBS_USER="~/R/library/RStudio-2023.03.1-446"\n'                | tee -a /etc/R/Renviron.site >/dev/null
 
     # Clean downoladed package cache.  Yes I know about /var/libs.
     apt clean
@@ -87,7 +87,7 @@ __SINGULARITY__
 
 Then build the image:
 
-    sudo singularity build RStudio_2022.12.0-353.sif RStudio_2022.12.0-353.def
+    sudo singularity build RStudio_2023.03.1-446.sif RStudio_2023.03.1-446.def
 
 Write access on _deigo_
 -----------------------
