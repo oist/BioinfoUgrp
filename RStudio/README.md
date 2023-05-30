@@ -16,8 +16,9 @@ your fault.
 Singularity image
 -----------------
 
-Let's install the latest RStudio server on a Debian unstable
-(Sid) base, which we know contains the latest `R` stable release.
+Our [singularity image](./Singularity.def) contains the latest RStudio server
+on a Debian unstable (Sid) base, which we know contains the latest `R` stable
+release.
 
 We also install some development libraries that are likely to be needed
 to compile some CRAN or bioconductor packages, as well as packages
@@ -25,81 +26,9 @@ needed by RMarkdown and `R CMD check`.
 
 Lastly, let's install the latest tidyverse, as everybody wants it.
 
-```sh
-cat <<__SINGULARITY__ > RStudio_2023.03.1-446.def
-Bootstrap: docker
-From: debian:sid
-
-%runscript
-  exec launch_rserver "${@}"
-
-%apprun R
-  exec R "${@}"
-
-%apprun Rscript
-  exec Rscript "${@}"
-
-%apprun default
-  exec "${@}"
-
-%post
-    # Update the image
-    apt update
-    apt upgrade -y
-    
-    # Add a package needed to suppress some error messages
-    apt install -y whiptail
-    
-    # Build the American and British English locales
-    apt install -y locales
-    sed -i /etc/locale.gen -e '/en_[UG].*.UTF-8/s/# //'
-    locale-gen
-    
-    # Install the latest R
-    apt install -y r-base
-    
-    # Install development packages
-    apt install -y r-base-dev git libssl-dev libclang-dev libxml2-dev \
-      libcurl4-openssl-dev libssl-dev libfftw3-dev libtiff-dev libgsl-dev\
-      libfontconfig1-dev libharfbuzz-dev libfribidi-dev
-    apt install -y libproj-dev # For proj4, for ggmsa
-    apt install -y libboost-all-dev # For GenomicBreaks and other packages
-    apt install -y cmake
-    apt install -y libv8-dev libudunits2-dev libgdal-dev # in case one wants to install concaveman for ggforce
-    
-    # Install software needed for vignette building and package checks
-    apt install -y pandoc qpdf texlive
-    
-    # Small utilities usefult for command line and troubleshooting
-        apt install -y bash-completion file sudo wget htop strace
-        
-    # Packages wanted by RStudio
-    apt install -y psmisc procps systemctl sudo lsb-release libgl1 libnss3 libasound2 libxdamage1
-    
-    # Install RStudio server
-    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.03.1-446-amd64.deb
-    apt --fix-broken -y install ./rstudio-server-2023.03.1-446-amd64.deb
-    rm rstudio-*-amd64.deb
-    
-    # Install R packages of general intetest
-    R -e 'install.packages("BiocManager")'
-    R -e 'install.packages("tidyverse")'
-    R -e 'install.packages("devtools")' 
-    R -e 'install.packages("remotes")'
-    R -e 'install.packages("rmarkdown")'
-
-    # Use home directory outside image to install more packages
-    printf 'R_LIBS_SITE="/usr/local/lib/R/site-library:/usr/lib/R/library"\n' | tee -a /etc/R/Renviron.site >/dev/null
-    printf 'R_LIBS_USER="~/R/library/RStudio-2023.03.1-446"\n'                | tee -a /etc/R/Renviron.site >/dev/null
-
-    # Clean downoladed package cache.  Yes I know about /var/libs.
-    apt clean
-__SINGULARITY__
-```
-
 Then build the image:
 
-    sudo singularity build RStudio_2023.03.1-446.sif RStudio_2023.03.1-446.def
+    sudo singularity build RStudio_2023.03.1-446.sif Singularity.def
 
 Write access on _deigo_
 -----------------------
