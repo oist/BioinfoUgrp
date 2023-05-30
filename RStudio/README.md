@@ -8,7 +8,7 @@ On _deigo_, load the `singularity` module, and use `srun` to start a _RStudio se
 
 ```
 ml singularity
-srun RStudio_server_2023.03.1-446.sif # Change according to image name
+srun -pcompute --mem 10G RStudio_server_2023.03.1-446.sif # Change according to your needs
 ```
 
 The running server will output its URL and a password unique to the session such as:
