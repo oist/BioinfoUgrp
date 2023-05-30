@@ -30,6 +30,18 @@ cat <<__SINGULARITY__ > RStudio_2023.03.1-446.def
 Bootstrap: docker
 From: debian:sid
 
+%runscript
+  exec launch_rserver "${@}"
+
+%apprun R
+  exec R "${@}"
+
+%apprun Rscript
+  exec Rscript "${@}"
+
+%apprun default
+  exec "${@}"
+
 %post
     # Update the image
     apt update
