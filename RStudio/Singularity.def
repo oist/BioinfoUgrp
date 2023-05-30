@@ -13,6 +13,19 @@ From: debian:sid
 %apprun default
   exec "${@}"
 
+%environment
+  export PATH=/usr/lib/rstudio-server/bin:${PATH}
+
+%setup
+
+  install -Dv \
+    rstudio_auth \
+    ${SINGULARITY_ROOTFS}/usr/lib/rstudio-server/bin/rstudio_auth
+
+  install -Dv \
+    launch_rserver.sh \
+    ${SINGULARITY_ROOTFS}/usr/lib/rstudio-server/bin/launch_rserver
+
 %post
     # Update the image
     apt update
