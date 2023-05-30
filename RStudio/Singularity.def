@@ -42,8 +42,10 @@ From: debian:sid
     apt install -y pandoc qpdf texlive
     
     # Small utilities usefult for command line and troubleshooting
-        apt install -y bash-completion file sudo wget htop strace
-        
+    apt install -y bash-completion file sudo wget htop strace
+    # Needed for the ss command to find which port to open
+    apt install -y iproute2
+    
     # Packages wanted by RStudio
     apt install -y psmisc procps systemctl sudo lsb-release libgl1 libnss3 libasound2 libxdamage1
     
