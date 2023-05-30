@@ -28,7 +28,7 @@ Lastly, let's install the latest tidyverse, as everybody wants it.
 
 Then build the image:
 
-    sudo singularity build RStudio_2023.03.1-446.sif Singularity.def
+    singularity build --fakeroot RStudio_2023.03.1-446.sif Singularity.def
 
 Write access on _deigo_
 -----------------------
