@@ -1,20 +1,39 @@
 RStudio server
 ==============
 
-_Coming soon_
+How to use
+----------
 
-RStudio desktop with X export is too slow, so let's use RStudio server in a browser.
+On _deigo_, load the `singularity` module, and use `srun` to start a _RStudio sever_ instance on a compute node.
 
+```
+ml singularity
+srun RStudio_server_2023.03.1-446.sif # Change according to image name
+```
 
-CAUTION
--------
+The running server will output its URL and a password unique to the session such as:
 
-If you run RStudio server as indicated here, and somebody finds your session,
-they can steal your SSH key, mine bitcoins on _Saion_, and pretend it is
-your fault.
+```
+RStudio URL:		http://deigo011232.oist.jp:63597/
+RStudio Username:	charles-plessy
+RStudio Password:	55eef325d064b7ba
+RStudio temporary files:	/home/c/charles-plessy/tmp.J7UkdHFppy
+```
 
-Singularity image
------------------
+At the moment you need to clean the temporary files by yourself after the session is over.
+
+The _R_ packages that you will install from RStudio will be stored in a specific location in your home directory, because they can not be mixed with the packages built directly on _deigo_ or in other images.  At the moment this directory is:
+
+```
+~/R/library/RStudio-2023.03.1-446
+```
+
+TODO: also output it together with the URL and password. 
+
+**You may need to create the directory first if it does not exist yet**
+
+How to build a Singularity image
+--------------------------------
 
 Our [singularity image](./Singularity.def) contains the latest RStudio server
 on a Debian unstable (Sid) base, which we know contains the latest `R` stable
@@ -30,8 +49,10 @@ Then build the image:
 
     singularity build --fakeroot RStudio_2023.03.1-446.sif Singularity.def
 
-Write access on _deigo_
------------------------
+Technical details
+-----------------
+
+Inspired by https://gitlab.oit.duke.edu/chsi-informatics/containers/singularity-rstudio-base and a couple of other repositories.
 
 The _RStudio_ server needs to write in three different places,
 each configured by a different command line argument.
@@ -41,28 +62,15 @@ each configured by a different command line argument.
  - `--database-config-file`: Overrides the default path to the SQLite database that RStudio server needs, which by default is in the Singularity image, therefore non-writable.
 
 At the moment I found no problem to make `--server-working-dir` and
-`--server-data-dir` point to the same directory in `$HOME`, but it needs
-to be furthe tested.
+`--server-data-dir` point to the same directory in `$HOME`, but it was not tested extensively.
 
-The SQLite database itself can be in the server working dir.  For instance
-on _deigo_ with the `charles-plessy` user, the database configuration file
-can be like:
+The SQLite database itself can be in the server working dir.  Its configuration
+file is generated on the fly for each run.  For instance its contents look like:
 
     provider=sqlite
-    directory=/home/c/charles-plessy/myRstudioServerDir/myRstudioDatabase.sqlite3
+    directory=/home/c/charles-plessy/tmp.J7UkdHFppy/db.sqlite3
 
-Other configuration arguments
------------------------------
+The server needs to run under your user name `--server-user=$USER`.
 
-The server needs to run under your user name.  For instance you can pass `--server-user=$(whoami)`.
-
-You need to pick a port number that is a) higher than 1024 and
-b) not used by somebody else on the same node.  Pass it to `rserver` with the
-`--www-port` option.
-
-Example command
----------------
-
-Run for the home directory.
-
-    ./RStudio_2022.12.0-353.sif /usr/lib/rstudio-server/bin/rserver --server-working-dir $(pwd)/deletemRstudi --server-data-dir $(pwd)/deletemRstudi --database-config-file $(pwd)/rsdb.conf --server-user=$(whoami) --www-port=9797
+An available port number is picked randomly between 50000 and 65535 and passed
+to `rserver` with the `--www-port` option.
