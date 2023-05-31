@@ -46,6 +46,7 @@ Other/meryl/1.3
 Other/minimap2/2.20
 Other/mosdepth/0.3.1
 Other/mugsy/1r2.2
+Other/ncbi-datasets-cli/15.1.0
 Other/pairtools/0.3.0
 Other/parallel/20210622
 Other/pbgzip/2016.08.04
@@ -211,6 +212,53 @@ __END__
 module load Other/bwa
 srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
     bwa mem <arguments>
+```
+
+## NCBI command-line tools
+
+- Home page: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/download-and-install/
+
+### Installation on Deigo
+
+```bash
+APP=ncbi-datasets-cli
+VER=15.1.0
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+wget https://ftp.ncbi.nlm.nih.gov/pub/datasets/command-line/v2/linux-amd64/datasets
+chmod 775 datasets
+wget https://ftp.ncbi.nlm.nih.gov/pub/datasets/command-line/v2/linux-amd64/dataformat
+chmod 775 dataformat
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://www.ncbi.nlm.nih.gov/datasets/docs/v2/download-and-install/")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."NCBI")
+whatis("Description: ".."Use datasets to download biological sequence data across all domains of life from NCBI. Use dataformat to convert metadata from JSON Lines format to other formats.")
+
+-- Package settings
+prepend_path("PATH", apphome)
+__END__
+```
+
+### Example commands for running pairtools on Deigo
+
+```bash
+module load Other/pairtools
+srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
+    pairtools parse -c example.chrom.sizes -o example_R1.pairs.gz --drop-sam example_R1.bam 
 ```
 
 
