@@ -46,9 +46,6 @@ Other/meryl/1.3
 Other/minimap2/2.20
 Other/mosdepth/0.3.1
 Other/mugsy/1r2.2
-Other/Nextflow/20.10.0
-Other/Nextflow/21.02.0-edge
-Other/nf-core/1.12.1-0
 Other/pairtools/0.3.0
 Other/parallel/20210622
 Other/pbgzip/2016.08.04
