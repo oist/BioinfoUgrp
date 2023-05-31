@@ -10,6 +10,11 @@ module per package on Deigo.
 For users
 ---------
 
+```
+ml bioinfo-ugrp-modules DebianMed
+ml av
+```
+
 Enjoy !
 
 
@@ -23,30 +28,10 @@ on how to create a Docker image with GitHub actions.
 
 ### Creation of a new Singularity image
 
-This has to be run on a machine where one has administrator priviledges.
-(That is: not Deigo)
+Pull the Docker image built on GitHub.
 
 ```
-DEBVERSION=11.5
-# Select Debian version and installed packages
-cat > DebianMed_$DEBVERSION.def << __EOF__
-Bootstrap: docker
-From: debian:$DEBVERSION
-
-%post
-    apt -y update
-    apt -y install locales # Multilingual support
-    DEBIAN_FRONTEND=noninteractive apt -y install med-cloud med-bio bioperl python3-biopython # Bioinfo packages
-    apt -y install gitk colordiff rsync ncftp lftp filezilla p7zip-full rename magic-wormhole datamash pigz libsixel-bin source-highlight # Small utilities
-    apt -y install perl-doc man-db # Documentation
-__EOF__
-
-# Build the image
-sudo singularity build DebianMed_$DEBVERSION.sif DebianMed_$DEBVERSION.def
-
-# Transfer it on Deigo
-ssh deigo mkdir -p /apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION
-rsync DebianMed_$DEBVERSION.def DebianMed_$DEBVERSION.sif deigo:/apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION
+singularity pull DebianMed_11.7.sif docker://ghcr.io/oist/bioinfougrp_debianmed_images:latest
 ```
 
 ### Misc commands
