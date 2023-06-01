@@ -11,7 +11,7 @@ On _deigo_, load the `singularity` module, and use `srun` to start a _RStudio se
 ```
 ml singularity
 # Change --mem and add -c according to your needs
-srun -pcompute --mem 10G /apps/unit/BioinfoUgrp/Other/RStudio_server/RStudio_server_2023.03.1-446.sif
+srun -pcompute --mem 10G /apps/unit/BioinfoUgrp/Other/RStudio_server/2023.03.1-446/RStudio_server_2023.03.1-446.sif
 ```
 
 The running server will output its URL and a password unique to the session such as:
