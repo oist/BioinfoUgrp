@@ -8,7 +8,8 @@ On _deigo_, load the `singularity` module, and use `srun` to start a _RStudio se
 
 ```
 ml singularity
-srun -pcompute --mem 10G RStudio_server_2023.03.1-446.sif # Change according to your needs
+# Change --mem and add -c according to your needs
+srun -pcompute --mem 10G /apps/unit/BioinfoUgrp/Other/RStudio_server/RStudio_server_2023.03.1-446.sif
 ```
 
 The running server will output its URL and a password unique to the session such as:
@@ -31,6 +32,12 @@ The _R_ packages that you will install from RStudio will be stored in a specific
 TODO: also output it together with the URL and password. 
 
 **You may need to create the directory first if it does not exist yet**
+
+Tip: when teleworking you can tunnel the access to compute node's serving RStudio with a SSH tunnel.  With the example above, the command below would make the server available on http://localhost:1664 from the local computer.
+
+```
+ssh charles-plessy@deigo011232.oist.jp -J login.oist.jp,deigo.oist.jp -L 1664:localhost:63597
+```
 
 How to build a Singularity image
 --------------------------------
