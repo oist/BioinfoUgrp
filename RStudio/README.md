@@ -4,6 +4,8 @@ RStudio server
 How to use
 ----------
 
+### Start the server
+
 On _deigo_, load the `singularity` module, and use `srun` to start a _RStudio sever_ instance on a compute node.
 
 ```
@@ -32,6 +34,8 @@ The _R_ packages that you will install from RStudio will be stored in a specific
 TODO: also output it together with the URL and password. 
 
 **You may need to create the directory first if it does not exist yet**
+
+### Remote access for telework
 
 Tip: when teleworking you can tunnel the access to compute node's serving RStudio with a SSH tunnel.  With the example above, the command below would make the server available on http://localhost:1664 from the local computer.
 
