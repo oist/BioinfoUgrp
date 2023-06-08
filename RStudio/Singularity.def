@@ -62,6 +62,9 @@ From: debian:sid
     # Packages wanted by RStudio
     apt install -y psmisc procps systemctl sudo lsb-release libgl1 libnss3 libasound2 libxdamage1
     
+    # A cool ligature font
+    apt install -y fonts-firacode
+    
     # Install RStudio server
     wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.03.1-446-amd64.deb
     apt --fix-broken -y install ./rstudio-server-2023.03.1-446-amd64.deb
