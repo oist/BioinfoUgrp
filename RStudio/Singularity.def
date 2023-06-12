@@ -66,13 +66,13 @@ From: debian:bookworm
     apt install -y fonts-firacode
     
     # Install RStudio desktop
-    wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.03.1-446-amd64.deb
-    apt --fix-broken -y install ./rstudio-2023.03.1-446-amd64.deb
+    wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.06.0-421-amd64.deb
+    apt --fix-broken -y install ./rstudio-*-amd64.deb
     rm rstudio-*-amd64.deb
     
     # Install RStudio server
-    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.03.1-446-amd64.deb
-    apt --fix-broken -y install ./rstudio-server-2023.03.1-446-amd64.deb
+    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.06.0-421-amd64.deb
+    apt --fix-broken -y install ./rstudio-*-amd64.deb
     rm rstudio-*-amd64.deb
     
     # Upgrade R to version 4.3
