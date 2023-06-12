@@ -16,14 +16,20 @@ UPPERPORT=65535
 for RSTUDIO_PORT in $(seq $LOWERPORT $UPPERPORT);
 do
     RSTUDIO_PORT="`shuf -i $LOWERPORT-$UPPERPORT -n 1`"
-    echo "Testing port: $RSTUDIO_PORT"
+    # echo "Testing port: $RSTUDIO_PORT"
     ss -lpn | grep -q ":$RSTUDIO_PORT " || break
 done
 
-printf "\n\nRStudio URL:\t\thttp://`hostname -A | cut -f1 -d' '`:${RSTUDIO_PORT}/\n"
-printf "\nRStudio Username:\t$USER\n"
+RSTUDIO_HOST=$(hostname -A | cut -f1 -d' ')
+
+printf "\nRStudio URL:\t\thttp://${RSTUDIO_HOST:-localhost}:${RSTUDIO_PORT}/\n"
+printf "RStudio Username:\t$USER\n"
 printf "RStudio Password:\t$RSTUDIO_PASSWORD\n"
+printf "\nYou may need to clean your temprary files by yourself:\n"
 printf "RStudio temporary files:\t$RSTUDIO_TEMP\n"
+printf "\nThis image will build its packages in the followind directory if it exists:\n"
+grep R_LIBS_USER /etc/R/Renviron.site
+printf "\n"
 
 /usr/lib/rstudio-server/bin/rserver \
 	--server-working-dir $RSTUDIO_TEMP \

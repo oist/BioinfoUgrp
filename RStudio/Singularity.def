@@ -95,7 +95,7 @@ From: debian:bookworm
 
     # Use home directory outside image to install more packages
     printf 'R_LIBS_SITE="/usr/local/lib/R/site-library:/usr/lib/R/library"\n' | tee -a /etc/R/Renviron.site >/dev/null
-    printf 'R_LIBS_USER="~/R/library/RStudio-2023.03.1-446"\n'                | tee -a /etc/R/Renviron.site >/dev/null
+    printf 'R_LIBS_USER="~/R/library/R_4.3.0_for_RStudio_Singularity"\n'      | tee -a /etc/R/Renviron.site >/dev/null
 
     # Clean downoladed package cache.  Yes I know about /var/libs.
     apt clean
