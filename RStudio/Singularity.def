@@ -59,8 +59,14 @@ From: debian:bookworm
     # Needed for the ss command to find which port to open
     apt install -y iproute2
     
+    # For troubleshooting by running xeyes
+    apt install -y x11-apps
+    
     # Packages wanted by RStudio
     apt install -y psmisc procps systemctl sudo lsb-release libgl1 libnss3 libasound2 libxdamage1
+    
+    # Packages wanted by RStudio Desktop
+    apt install -y libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0
     
     # A cool ligature font
     apt install -y fonts-firacode

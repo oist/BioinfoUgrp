@@ -43,6 +43,16 @@ Tip: when teleworking you can tunnel the access to compute node's serving RStudi
 ssh charles-plessy@deigo011232.oist.jp -J login.oist.jp,deigo.oist.jp -L 1664:localhost:63597
 ```
 
+### RStudio Desktop
+
+The image also contains RStudio Desktop in case you need it.
+
+```
+# On your desktop PC, not deigo:
+xhost +
+singularity exec ./RStudio_server_2023.03.1-446.sif rstudio
+```
+
 How to build a Singularity image
 --------------------------------
 
