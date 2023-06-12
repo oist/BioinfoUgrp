@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: debian:sid
+From: debian:bookworm
 
 %runscript
   exec launch_rserver "${@}"
@@ -70,6 +70,11 @@ From: debian:sid
     apt --fix-broken -y install ./rstudio-server-2023.03.1-446-amd64.deb
     rm rstudio-*-amd64.deb
     
+    # Upgrade R to version 4.3
+    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20230423T032533Z/ sid main\n' >> /etc/apt/sources.list
+    apt update
+    apt install -y r-base
+
     # Install R packages of general intetest
     R -e 'install.packages("BiocManager")'
     R -e 'install.packages("tidyverse")'
