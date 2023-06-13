@@ -57,8 +57,8 @@ How to build a Singularity image
 --------------------------------
 
 Our [singularity image](./Singularity.def) contains the latest RStudio server
-on a Debian unstable (Sid) base, which we know contains the latest `R` stable
-release.
+on a Debian 12.0 (Bookworm) base, to which we added the latest `R` stable
+release (4.3.0).
 
 We also install some development libraries that are likely to be needed
 to compile some CRAN or bioconductor packages, as well as packages
