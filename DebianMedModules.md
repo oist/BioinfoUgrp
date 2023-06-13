@@ -31,7 +31,7 @@ on how to create a Docker image with [GitHub actions](https://docs.github.com/en
 Pull the Docker image built on GitHub.
 
 ```
-DEBVERSION=12.0
+export DEBVERSION=12.0
 singularity pull DebianMed_${DEBVERSION}.sif docker://ghcr.io/oist/bioinfougrp_debianmed_images:${DEBVERSION}
 ```
 
