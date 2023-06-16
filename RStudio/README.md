@@ -17,10 +17,16 @@ srun -pcompute --mem 10G /apps/unit/BioinfoUgrp/Other/RStudio_server/2023.06.0-4
 The running server will output its URL and a password unique to the session such as:
 
 ```
-RStudio URL:		http://deigo011232.oist.jp:63597/
+RStudio URL:		http://deigo010913.oist.jp:62657/
 RStudio Username:	charles-plessy
-RStudio Password:	55eef325d064b7ba
-RStudio temporary files:	/home/c/charles-plessy/tmp.J7UkdHFppy
+RStudio Password:	6e94fc8e50212f16
+
+You may need to clean your temprary files by yourself:
+RStudio temporary files:	/home/c/charles-plessy/tmp.Ciw9hwQVWK
+
+This image will build its packages in the followind directory if it exists:
+#R_LIBS_USER=${R_LIBS_USER-'~/R/@R_PLATFORM@-library/@MAJ_MIN_VERSION@'}
+R_LIBS_USER="~/R/library/R_4.3.0_for_RStudio_Singularity"
 ```
 
 At the moment you need to clean the temporary files by yourself after the session is over.
@@ -28,10 +34,8 @@ At the moment you need to clean the temporary files by yourself after the sessio
 The _R_ packages that you will install from RStudio will be stored in a specific location in your home directory, because they can not be mixed with the packages built directly on _deigo_ or in other images.  At the moment this directory is:
 
 ```
-~/R/library/RStudio-2023.06.0-421
+~/R/library/R_4.3.0_for_RStudio_Singularity
 ```
-
-TODO: also output it together with the URL and password. 
 
 **You may need to create the directory first if it does not exist yet**
 
