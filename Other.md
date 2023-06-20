@@ -55,6 +55,7 @@ Other/peregrine/1.6.3
 Other/preseq/3.1.2
 Other/prokka/1.14.5
 Other/purge_dups/1.2.5
+Other/raxml-ng-mpi/1.2.0
 Other/SALSA/2.3
 Other/samblaster/0.1.26
 Other/seqkit/2.0.0
@@ -2478,7 +2479,7 @@ prepend-path    PATH            $apphome
 __END__
 ```
 ## cactus
-- Home page: [https://github.com/lh3/bioawk](https://github.com/ComparativeGenomicsToolkit/cactus)
+- Home page: (https://github.com/ComparativeGenomicsToolkit/cactus)
 - Source code: quay.io/comparative-genomics-toolkit/cactus:v2.4.0
 
 ### Installation on Deigo
@@ -2714,3 +2715,41 @@ setenv("JUPYTER_CONFIG_DIR", "/apps/free81/python/3.7.3/share/jupyter")
 prepend_path("PATH", apphome.."/envs/parcels/bin")
 prepend_path("PYTHONPATH", apphome.."/envs/parcels/lib/python3.10/site-packages")
 __END__
+```
+
+## RAxML NG (RAxML Next Generation MPI)
+- Home page: https://github.com/amkozlov/raxml-ng/
+- Source code: https://github.com/amkozlov/raxml-ng/releases/download/1.2.0/raxml-ng_v1.2.0_linux_x86_64_MPI.zip
+
+### Installation on Deigo
+```
+APP=raxml-ng-mpi
+VER=1.2.0
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+wget -O - https://github.com/amkozlov/raxml-ng/releases/download/1.2.0/raxml-ng_v1.2.0_linux_x86_64_MPI.zip > $APP-$VER.zip && unzip $APP-$VER.zip && rm $APP-$VER.zip
+sh install.sh
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/amkozlov/raxml-ng")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."raxml-ng")
+whatis("Description: ".."RAxML-NG is a phylogenetic tree inference tool which uses maximum-likelihood (ML) optimality criterion")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
