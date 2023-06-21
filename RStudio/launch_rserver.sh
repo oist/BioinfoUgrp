@@ -33,7 +33,7 @@ then
 fi
 printf "\nYou may need to clean your temporary files by yourself:\n"
 printf "RStudio temporary files:\t$RSTUDIO_TEMP\n"
-printf "\nThis image will build its packages in the followind directory if it exists:\n"
+printf "\nThis image will build its packages in the following directory if it exists:\n"
 grep ^R_LIBS_USER /etc/R/Renviron.site
 printf "\n"
 
