@@ -17,30 +17,34 @@ srun -pcompute --mem 10G /apps/unit/BioinfoUgrp/Other/RStudio_server/2023.06.0-4
 The running server will output its URL and a password unique to the session such as:
 
 ```
-RStudio URL:		http://deigo011232.oist.jp:63597/
+RStudio URL:		http://deigo010902.oist.jp:54279/
 RStudio Username:	charles-plessy
-RStudio Password:	55eef325d064b7ba
-RStudio temporary files:	/home/c/charles-plessy/tmp.J7UkdHFppy
+RStudio Password:	f0731f0e01d3b2f2
 ```
 
-At the moment you need to clean the temporary files by yourself after the session is over.
-
-The _R_ packages that you will install from RStudio will be stored in a specific location in your home directory, because they can not be mixed with the packages built directly on _deigo_ or in other images.  At the moment this directory is:
-
-```
-~/R/library/RStudio-2023.06.0-421
-```
-
-TODO: also output it together with the URL and password. 
-
-**You may need to create the directory first if it does not exist yet**
-
-### Remote access for telework
-
-Tip: when teleworking you can tunnel the access to compute node's serving RStudio with a SSH tunnel.  With the example above, the command below would make the server available on http://localhost:1664 from the local computer.
+If applicable, it will also give an example command on how to run a SSH tunnel,
+for people who remote work outside our network.
 
 ```
-ssh charles-plessy@deigo011232.oist.jp -J login.oist.jp,deigo.oist.jp -L 1664:localhost:63597
+If you remote work, you can forward the server to port 1664 on your computer with:
+ssh charles-plessy@deigo010902.oist.jp -J login.oist.jp,deigo.oist.jp -L 1664:localhost:54279
+```
+
+The server creates temporary files:
+
+```
+You may need to clean your temporary files by yourself:
+RStudio temporary files:	/home/c/charles-plessy/tmp.zv3bC383g1
+```
+
+The _R_ packages that you will install from RStudio will be stored in a
+specific location in your home directory, because they can not be mixed with
+the packages built directly on _deigo_ or in other images.  At the moment this
+directory is:
+
+```
+This image will build its packages in the following directory if it exists:
+R_LIBS_USER="~/R/library/R_4.3.0_for_RStudio_Singularity"
 ```
 
 ### RStudio Desktop
