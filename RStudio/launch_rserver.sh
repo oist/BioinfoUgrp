@@ -21,11 +21,17 @@ do
 done
 
 RSTUDIO_HOST=$(hostname -A | cut -f1 -d' ')
+RSTUDIO_HOST=${RSTUDIO_HOST:-localhost}
 
-printf "\nRStudio URL:\t\thttp://${RSTUDIO_HOST:-localhost}:${RSTUDIO_PORT}/\n"
+printf "\nRStudio URL:\t\thttp://${RSTUDIO_HOST}:${RSTUDIO_PORT}/\n"
 printf "RStudio Username:\t$USER\n"
 printf "RStudio Password:\t$RSTUDIO_PASSWORD\n"
-printf "\nYou may need to clean your temprary files by yourself:\n"
+if [ ! $RSTUDIO_HOST = "localhost" ]
+then
+	printf "\nIf you remote work, you can forward the server to port 1664 on your computer with:\n"
+	printf "ssh ${USER}@${RSTUDIO_HOST} -J login.oist.jp,deigo.oist.jp -L 1664:localhost:${RSTUDIO_PORT}\n"
+fi
+printf "\nYou may need to clean your temporary files by yourself:\n"
 printf "RStudio temporary files:\t$RSTUDIO_TEMP\n"
 printf "\nThis image will build its packages in the followind directory if it exists:\n"
 grep R_LIBS_USER /etc/R/Renviron.site
