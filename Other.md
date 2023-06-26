@@ -48,6 +48,7 @@ Other/mosdepth/0.3.1
 Other/mugsy/1r2.2
 Other/ncbi-datasets-cli/15.1.0
 Other/pairtools/0.3.0
+Other/paml/4.9j
 Other/parallel/20210622
 Other/pbgzip/2016.08.04
 Other/pbipa/1.3.2
@@ -2748,6 +2749,46 @@ whatis("URL: ".."https://github.com/amkozlov/raxml-ng")
 whatis("Category: ".."bioinformatics")
 whatis("Keywords: ".."raxml-ng")
 whatis("Description: ".."RAxML-NG is a phylogenetic tree inference tool which uses maximum-likelihood (ML) optimality criterion")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+## PAML
+- Home page: http://abacus.gene.ucl.ac.uk/software/#paml-for-unixlinux
+- Source code: https://github.com/abacus-gene/paml
+
+### Installation on Deigo
+```
+APP=paml
+VER=4.9j
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+git clone https://github.com/abacus-gene/paml
+mv $APP $VER && cd $VER/src
+make -f Makefile
+rm *.o
+mkdir ../bin
+mv baseml basemlg chi2 codeml evolver infinitesites mcmctree pamp yn00 ../bin
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/abacus-gene/paml")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."PAML")
+whatis("Description: ".."PAML is a program package for model fitting and phylogenetic tree reconstruction using DNA and protein sequence data. The programs are written in ANSI C")
 
 -- Package settings
 prepend_path("PATH", apphome.."/bin")
