@@ -2769,6 +2769,9 @@ mkdir -p $APPDIR
 cd $APPDIR
 git clone https://github.com/abacus-gene/paml
 mv $APP $VER && cd $VER/src
+## allow higher number of taxa in some programs
+sed -i "s/#define NS            500/#define NS            5000/g" mcmctree.c
+## compile
 make -f Makefile
 rm *.o
 mkdir ../bin
