@@ -37,6 +37,7 @@ Other/hifiasm/0.15.4
 Other/interproscan/5.48-83.0
 Other/interproscan/5.60-92.0
 Other/iqtree/2.2.0
+Other/iqtree/2.2.2.5
 Other/juicer/1.6
 Other/k8/0.2.5
 Other/KMC/genomescope
@@ -2146,6 +2147,59 @@ wget -O - https://github.com/iqtree/iqtree2/archive/refs/tags/v2.2.0.tar.gz | ta
 mv $DIS-$VER $VER
 cd $VER && mkdir build && cd build
 cmake ..
+make -j
+cd $MODROOT/$APP/$VER
+mkdir -p bin
+cd bin
+ln -s $MODROOT/$APP/$VER/build/iqtree2 .
+ln -s iqtree2 iqtree
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://www.iqtree.org")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."iqtree")
+whatis("Description: ".."A fast and effective stochastic algorithm to infer phylogenetic trees by maximum likelihood")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+```bash
+DIS=iqtree2
+APP=iqtree
+VER=2.2.2.5
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+## getting submodules for dating
+# https://github.com/Cibiv/IQ-TREE/issues/151
+# https://github.com/Cibiv/IQ-TREE/issues/151
+# Submodule 'lsd2' (https://github.com/tothuhien/lsd2.git) registered for path 'lsd2'
+# git checkout latest #VER=2.2.2.6
+# git submodule init 
+# git submodule update
+### leads to compiling errors
+# /apps/unit/BioinfoUgrp/Other/iqtree/2.2.2.6/alignment/superalignment.cpp:28:10: erreur fatale: boost/container_hash/hash.hpp : Aucun fichier ou dossier de ce type
+# /apps/unit/BioinfoUgrp/Other/iqtree/2.2.2.6/alignment/alignment.cpp:24:10: erreur fatale: boost/container_hash/hash.hpp : Aucun fichier ou dossier de ce type
+## switch to older distrib
+wget -O - https://github.com/iqtree/iqtree2/archive/refs/tags/v2.2.2.5.tar.gz | tar xzvf -
+mv $DIS-$VER $VER && cd $VER
+git clone https://github.com/tothuhien/lsd2
+mkdir build && cd build
+## enabling dating
+cmake -DUSE_LSD2=ON ..
 make -j
 cd $MODROOT/$APP/$VER
 mkdir -p bin
