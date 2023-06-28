@@ -49,7 +49,7 @@ Other/mosdepth/0.3.1
 Other/mugsy/1r2.2
 Other/ncbi-datasets-cli/15.1.0
 Other/pairtools/0.3.0
-Other/paml/4.9j
+Other/paml/4.10.6
 Other/parallel/20210622
 Other/pbgzip/2016.08.04
 Other/pbipa/1.3.2
@@ -2816,15 +2816,17 @@ __END__
 ### Installation on Deigo
 ```
 APP=paml
-VER=4.9j
+VER=4.10.6
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
-git clone https://github.com/abacus-gene/paml
+git clone https://github.com/abacus-gene/paml # this reads as version 4.9j on GitHub, which prints out as 4.10.6 when executed
 mv $APP $VER && cd $VER/src
 ## allow higher number of taxa in some programs
 sed -i "s/#define NS            500/#define NS            5000/g" mcmctree.c
+sed -i "s/#define NS            1000/#define NS            5000/g" yn00.c
+sed -i "s/#define NS          10/#define NS          5000/g" basemlg.c
 ## compile
 make -f Makefile
 rm *.o
