@@ -54,6 +54,7 @@ Other/parallel/20210622
 Other/pbgzip/2016.08.04
 Other/pbipa/1.3.2
 Other/peregrine/1.6.3
+Other/phyluce/1.7.2
 Other/preseq/3.1.2
 Other/prokka/1.14.5
 Other/purge_dups/1.2.5
@@ -2851,5 +2852,50 @@ whatis("Description: ".."PAML is a program package for model fitting and phyloge
 
 -- Package settings
 prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+## PHYLUCE
+- Home page: https://phyluce.readthedocs.io/en/latest/
+- Source code: https://phyluce.readthedocs.io/en/latest/installation.html
+
+### Installation on Deigo
+```
+APP=phyluce
+VER=1.7.2
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER && rm Miniconda3-latest-Linux-x86_64.sh
+cd $VER
+wget https://raw.githubusercontent.com/faircloth-lab/phyluce/v1.7.2/distrib/phyluce-1.7.2-py36-Linux-conda.yml
+./bin/conda env create -n phyluce-1.7.2 --file phyluce-1.7.2-py36-Linux-conda.yml
+# ./bin/conda activate phyluce-1.7.2
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://phyluce.readthedocs.io/en/latest/index.html
+
+## Short description of package:
+module-whatis  "Phyluce installed using Miniconda3."
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome/bin
+prepend-path    PATH            $apphome/envs/phyluce-1.7.2
+prepend-path    PATH            $apphome/envs/phyluce-1.7.2/bin
+prepend-path    LD_LIBRARY_PATH $apphome/lib
+prepend-path    PYTHONPATH	$apphome/bin
 __END__
 ```
