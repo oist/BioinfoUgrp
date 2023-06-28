@@ -18,6 +18,7 @@ Other/3d-dna/180922
 Other/arima_pipeline/2019.02.08
 Other/assembly_stats/1.0.1
 Other/asset/1.0.3
+Other/astral/5.7.8
 Other/BEAST/1.10.4
 Other/bioawk/1.0
 Other/BUSCO/5.1.3
@@ -2897,5 +2898,44 @@ prepend-path    PATH            $apphome/envs/phyluce-1.7.2
 prepend-path    PATH            $apphome/envs/phyluce-1.7.2/bin
 prepend-path    LD_LIBRARY_PATH $apphome/lib
 prepend-path    PYTHONPATH	$apphome/bin
+__END__
+```
+
+## ASTRAL
+- Home page: https://github.com/smirarab/ASTRAL
+- Source code: https://github.com/smirarab/ASTRAL
+
+### Installation on Deigo
+```
+APP=astral
+VER=5.7.8
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://github.com/smirarab/ASTRAL/raw/master/Astral.$VER.zip && unzip Astral.$VER.zip && rm Astral.$VER.zip
+mv Astral $VER
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/smirarab/ASTRAL
+
+## Short description of package:
+module-whatis  "ASTRAL is a tool for estimating an unrooted species tree given a set of unrooted gene trees. To be called in script with: java -jar dollarASTRAL. Replace dollar by the actual symbol"
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome    
+prepend-path    LD_LIBRARY_PATH $apphome/lib
+prepend-path    ASTRAL      $apphome/astral.5.7.8.jar
 __END__
 ```
