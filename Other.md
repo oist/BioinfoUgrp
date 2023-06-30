@@ -18,6 +18,7 @@ Other/3d-dna/180922
 Other/arima_pipeline/2019.02.08
 Other/assembly_stats/1.0.1
 Other/asset/1.0.3
+Other/aster/1.15
 Other/astral/5.7.8
 Other/BEAST/1.10.4
 Other/bioawk/1.0
@@ -2937,5 +2938,42 @@ module-whatis  "ASTRAL is a tool for estimating an unrooted species tree given a
 prepend-path    PATH            $apphome    
 prepend-path    LD_LIBRARY_PATH $apphome/lib
 prepend-path    ASTRAL      $apphome/astral.5.7.8.jar
+__END__
+```
+
+## ASTER
+- Home page: https://github.com/chaoszhang/ASTER
+
+### Installation on Deigo
+```
+APP=aster
+VER=1.15
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+git clone https://github.com/chaoszhang/ASTER && mv ASTER $VER && cd $VER
+# git branch -a
+git checkout remotes/origin/Linux
+make
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/chaoszhang/ASTER")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."ASTER")
+whatis("Description: ".."Accurate Species Tree EstimatoR")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
 __END__
 ```
