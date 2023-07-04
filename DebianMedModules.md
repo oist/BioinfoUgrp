@@ -23,15 +23,16 @@ For developers
 
 ### Docker image
 
-See [oist/BioinfoUgrp](https://github.com/oist/BioinfoUgrp_DebianMed_Images)
-on how to create a Docker image with GitHub actions.
+See [oist/BioinfoUgrp_DebianMed_Images](https://github.com/oist/BioinfoUgrp_DebianMed_Images)
+on how to create a Docker image with [GitHub actions](https://docs.github.com/en/actions).
 
 ### Creation of a new Singularity image
 
 Pull the Docker image built on GitHub.
 
 ```
-singularity pull DebianMed_11.7.sif docker://ghcr.io/oist/bioinfougrp_debianmed_images:latest
+export DEBVERSION=12.0
+singularity pull DebianMed_${DEBVERSION}.sif docker://ghcr.io/oist/bioinfougrp_debianmed_images:${DEBVERSION}
 ```
 
 ### Misc commands

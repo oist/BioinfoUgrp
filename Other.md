@@ -18,6 +18,8 @@ Other/3d-dna/180922
 Other/arima_pipeline/2019.02.08
 Other/assembly_stats/1.0.1
 Other/asset/1.0.3
+Other/aster/1.15
+Other/astral/5.7.8
 Other/BEAST/1.10.4
 Other/bioawk/1.0
 Other/BUSCO/5.1.3
@@ -37,6 +39,7 @@ Other/hifiasm/0.15.4
 Other/interproscan/5.48-83.0
 Other/interproscan/5.60-92.0
 Other/iqtree/2.2.0
+Other/iqtree/2.2.2.5
 Other/juicer/1.6
 Other/k8/0.2.5
 Other/KMC/genomescope
@@ -48,13 +51,16 @@ Other/mosdepth/0.3.1
 Other/mugsy/1r2.2
 Other/ncbi-datasets-cli/15.1.0
 Other/pairtools/0.3.0
+Other/paml/4.10.6
 Other/parallel/20210622
 Other/pbgzip/2016.08.04
 Other/pbipa/1.3.2
 Other/peregrine/1.6.3
+Other/phyluce/1.7.2
 Other/preseq/3.1.2
 Other/prokka/1.14.5
 Other/purge_dups/1.2.5
+Other/raxml-ng-mpi/1.2.0
 Other/SALSA/2.3
 Other/samblaster/0.1.26
 Other/seqkit/2.0.0
@@ -2172,6 +2178,59 @@ prepend_path("PATH", apphome.."/bin")
 __END__
 ```
 
+```bash
+DIS=iqtree2
+APP=iqtree
+VER=2.2.2.5
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+## getting submodules for dating
+# https://github.com/Cibiv/IQ-TREE/issues/151
+# https://github.com/Cibiv/IQ-TREE/issues/151
+# Submodule 'lsd2' (https://github.com/tothuhien/lsd2.git) registered for path 'lsd2'
+# git checkout latest #VER=2.2.2.6
+# git submodule init 
+# git submodule update
+### leads to compiling errors
+# /apps/unit/BioinfoUgrp/Other/iqtree/2.2.2.6/alignment/superalignment.cpp:28:10: erreur fatale: boost/container_hash/hash.hpp : Aucun fichier ou dossier de ce type
+# /apps/unit/BioinfoUgrp/Other/iqtree/2.2.2.6/alignment/alignment.cpp:24:10: erreur fatale: boost/container_hash/hash.hpp : Aucun fichier ou dossier de ce type
+## switch to older distrib
+wget -O - https://github.com/iqtree/iqtree2/archive/refs/tags/v2.2.2.5.tar.gz | tar xzvf -
+mv $DIS-$VER $VER && cd $VER
+git clone https://github.com/tothuhien/lsd2
+mkdir build && cd build
+## enabling dating
+cmake -DUSE_LSD2=ON ..
+make -j
+cd $MODROOT/$APP/$VER
+mkdir -p bin
+cd bin
+ln -s $MODROOT/$APP/$VER/build/iqtree2 .
+ln -s iqtree2 iqtree
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://www.iqtree.org")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."iqtree")
+whatis("Description: ".."A fast and effective stochastic algorithm to infer phylogenetic trees by maximum likelihood")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
 ## FastTree
 - Home page: http://www.microbesonline.org/fasttree/
 - Source code: http://www.microbesonline.org/fasttree/#Install
@@ -2478,7 +2537,7 @@ prepend-path    PATH            $apphome
 __END__
 ```
 ## cactus
-- Home page: [https://github.com/lh3/bioawk](https://github.com/ComparativeGenomicsToolkit/cactus)
+- Home page: (https://github.com/ComparativeGenomicsToolkit/cactus)
 - Source code: quay.io/comparative-genomics-toolkit/cactus:v2.4.0
 
 ### Installation on Deigo
@@ -2714,3 +2773,207 @@ setenv("JUPYTER_CONFIG_DIR", "/apps/free81/python/3.7.3/share/jupyter")
 prepend_path("PATH", apphome.."/envs/parcels/bin")
 prepend_path("PYTHONPATH", apphome.."/envs/parcels/lib/python3.10/site-packages")
 __END__
+```
+
+## RAxML NG (RAxML Next Generation MPI)
+- Home page: https://github.com/amkozlov/raxml-ng/
+- Source code: https://github.com/amkozlov/raxml-ng/releases/download/1.2.0/raxml-ng_v1.2.0_linux_x86_64_MPI.zip
+
+### Installation on Deigo
+```
+APP=raxml-ng-mpi
+VER=1.2.0
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+wget -O - https://github.com/amkozlov/raxml-ng/releases/download/1.2.0/raxml-ng_v1.2.0_linux_x86_64_MPI.zip > $APP-$VER.zip && unzip $APP-$VER.zip && rm $APP-$VER.zip
+sh install.sh
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/amkozlov/raxml-ng")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."raxml-ng")
+whatis("Description: ".."RAxML-NG is a phylogenetic tree inference tool which uses maximum-likelihood (ML) optimality criterion")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+## PAML
+- Home page: http://abacus.gene.ucl.ac.uk/software/#paml-for-unixlinux
+- Source code: https://github.com/abacus-gene/paml
+
+### Installation on Deigo
+```
+APP=paml
+VER=4.10.6
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+git clone https://github.com/abacus-gene/paml # this reads as version 4.9j on GitHub, which prints out as 4.10.6 when executed
+mv $APP $VER && cd $VER/src
+## allow higher number of taxa in some programs
+sed -i "s/#define NS            500/#define NS            5000/g" mcmctree.c
+sed -i "s/#define NS            1000/#define NS            5000/g" yn00.c
+sed -i "s/#define NS          10/#define NS          5000/g" basemlg.c
+## compile
+make -f Makefile
+rm *.o
+mkdir ../bin
+mv baseml basemlg chi2 codeml evolver infinitesites mcmctree pamp yn00 ../bin
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/abacus-gene/paml")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."PAML")
+whatis("Description: ".."PAML is a program package for model fitting and phylogenetic tree reconstruction using DNA and protein sequence data. The programs are written in ANSI C")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+## PHYLUCE
+- Home page: https://phyluce.readthedocs.io/en/latest/
+- Source code: https://phyluce.readthedocs.io/en/latest/installation.html
+
+### Installation on Deigo
+```
+APP=phyluce
+VER=1.7.2
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER && rm Miniconda3-latest-Linux-x86_64.sh
+cd $VER
+wget https://raw.githubusercontent.com/faircloth-lab/phyluce/v1.7.2/distrib/phyluce-1.7.2-py36-Linux-conda.yml
+./bin/conda env create -n phyluce-1.7.2 --file phyluce-1.7.2-py36-Linux-conda.yml
+# ./bin/conda activate phyluce-1.7.2
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://phyluce.readthedocs.io/en/latest/index.html
+
+## Short description of package:
+module-whatis  "Phyluce installed using Miniconda3."
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome/bin
+prepend-path    PATH            $apphome/envs/phyluce-1.7.2
+prepend-path    PATH            $apphome/envs/phyluce-1.7.2/bin
+prepend-path    LD_LIBRARY_PATH $apphome/lib
+prepend-path    PYTHONPATH	$apphome/bin
+__END__
+```
+
+## ASTRAL
+- Home page: https://github.com/smirarab/ASTRAL
+- Source code: https://github.com/smirarab/ASTRAL
+
+### Installation on Deigo
+```
+APP=astral
+VER=5.7.8
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://github.com/smirarab/ASTRAL/raw/master/Astral.$VER.zip && unzip Astral.$VER.zip && rm Astral.$VER.zip
+mv Astral $VER
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/smirarab/ASTRAL
+
+## Short description of package:
+module-whatis  "ASTRAL is a tool for estimating an unrooted species tree given a set of unrooted gene trees. To be called in script with: java -jar dollarASTRAL. Replace dollar by the actual symbol"
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome    
+prepend-path    LD_LIBRARY_PATH $apphome/lib
+prepend-path    ASTRAL      $apphome/astral.5.7.8.jar
+__END__
+```
+
+## ASTER
+- Home page: https://github.com/chaoszhang/ASTER
+
+### Installation on Deigo
+```
+APP=aster
+VER=1.15
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+git clone https://github.com/chaoszhang/ASTER && mv ASTER $VER && cd $VER
+# git branch -a
+git checkout remotes/origin/Linux
+make
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/chaoszhang/ASTER")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."ASTER")
+whatis("Description: ".."Accurate Species Tree EstimatoR")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```

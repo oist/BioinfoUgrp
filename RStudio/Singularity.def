@@ -68,6 +68,9 @@ From: debian:bookworm
     
     # Packages wanted by RStudio Desktop
     apt install -y libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0
+
+    # Install vim and other things needed for a good experience in the terminal
+    apt install vim
     
     # A cool ligature font
     apt install -y fonts-firacode
