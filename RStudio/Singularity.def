@@ -63,6 +63,9 @@ From: debian:bookworm
     # For troubleshooting by running xeyes
     apt install -y x11-apps
     
+    # Install scikit-learn, needed by the Bioconductor package seqArchR
+    apt install -y python3-sklearn python3-sklearn-lib python3-sklearn-doc
+    
     # Packages wanted by RStudio
     apt install -y psmisc procps systemctl sudo lsb-release libgl1 libnss3 libasound2 libxdamage1
     
@@ -74,7 +77,17 @@ From: debian:bookworm
     
     # A cool ligature font
     apt install -y fonts-firacode
-    
+    mkdir -p /etc/rstudio/fonts/firacode
+    cp -a /usr/share/fonts-firacode/woff2/FiraCode-Regular.woff2 /etc/rstudio/fonts/firacode
+    mkdir /etc/rstudio/fonts/firacode/light
+    cp -a /usr/share/fonts-firacode/woff2/FiraCode-Light.woff2 /etc/rstudio/fonts/firacode/light
+    mkdir /etc/rstudio/fonts/firacode/bold
+    cp -a /usr/share/fonts-firacode/woff2/FiraCode-Bold.woff2 /etc/rstudio/fonts/firacode/bold
+    mkdir /etc/rstudio/fonts/firacode/semibold
+    cp -a /usr/share/fonts-firacode/woff2/FiraCode-SemiBold.woff2 /etc/rstudio/fonts/firacode/semibold
+    mkdir /etc/rstudio/fonts/firacode/medium
+    cp -a /usr/share/fonts-firacode/woff2/FiraCode-Medium.woff2 /etc/rstudio/fonts/firacode/medium
+
     # Install RStudio desktop
     wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.06.0-421-amd64.deb
     apt --fix-broken -y install ./rstudio-*-amd64.deb
