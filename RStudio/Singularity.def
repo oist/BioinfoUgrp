@@ -90,8 +90,8 @@ From: debian:bookworm
     apt --fix-broken -y install ./rstudio-*-amd64.deb
     rm rstudio-*-amd64.deb
     
-    # Upgrade R to version 4.3
-    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20230423T032533Z/ sid main\n' >> /etc/apt/sources.list
+    # Upgrade R to version 4.3.1
+    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20230705T152828Z/ sid main\n' >> /etc/apt/sources.list
     apt update
     apt install -y r-base
 
