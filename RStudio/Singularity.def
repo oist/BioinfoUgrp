@@ -64,7 +64,7 @@ From: debian:bookworm
     apt install -y x11-apps
     
     # Install scikit-learn, needed by the Bioconductor package seqArchR
-    apt install -y python3-sklearn python3-sklearn-lib python3-sklearn-doc
+    apt install -y python3-sklearn python3-sklearn-lib python-sklearn-doc
     
     # Packages wanted by RStudio
     apt install -y psmisc procps systemctl sudo lsb-release libgl1 libnss3 libasound2 libxdamage1
