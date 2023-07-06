@@ -2915,7 +2915,8 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
 wget https://github.com/smirarab/ASTRAL/raw/master/Astral.$VER.zip && unzip Astral.$VER.zip && rm Astral.$VER.zip
-mv Astral $VER
+mv Astral $VER && cd $VER
+chmod g+r * && chmod g+x *
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER
