@@ -11,7 +11,7 @@ On _deigo_, load the `singularity` module, and use `srun` to start a _RStudio se
 ```
 ml singularity
 # Change --mem and add -c according to your needs
-srun -pcompute --mem 10G /apps/unit/BioinfoUgrp/Other/RStudio_server/2023.06.0-421/RStudio_server_2023.06.0-421.sif
+srun -pcompute --mem 10G /apps/unit/BioinfoUgrp/Other/RStudio_server/2023.06.0-421/RStudio_2023.06.0-421_R_4.3.1.sif
 ```
 
 The running server will output its URL and a password unique to the session such as:
@@ -54,7 +54,7 @@ The image also contains RStudio Desktop in case you need it.
 ```
 # On your desktop PC, not deigo:
 xhost +
-singularity exec ./RStudio_server_2023.06.0-421.sif rstudio
+singularity exec ./RStudio_2023.06.0-421_R_4.3.1.sif rstudio
 ```
 
 How to build a Singularity image
@@ -72,7 +72,7 @@ Lastly, let's install the latest tidyverse, as everybody wants it.
 
 Then build the image:
 
-    singularity build --fakeroot RStudio_2023.06.0-421.sif Singularity.def
+    singularity build --fakeroot RStudio_2023.06.0-421_R_4.3.1.sif Singularity.def
 
 Technical details
 -----------------
