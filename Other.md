@@ -228,7 +228,7 @@ srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
 
 ```bash
 APP=ncbi-datasets-cli
-VER=15.1.0
+VER=15.9.0
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER
@@ -2915,7 +2915,8 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
 wget https://github.com/smirarab/ASTRAL/raw/master/Astral.$VER.zip && unzip Astral.$VER.zip && rm Astral.$VER.zip
-mv Astral $VER
+mv Astral $VER && cd $VER
+chmod g+r * && chmod g+x *
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER
