@@ -8,17 +8,21 @@ provider=sqlite
 directory=$RSTUDIO_TEMP/db.sqlite3
 __DBCONF__
 
-export RSTUDIO_PASSWORD="`date -R | md5sum | cut -c-16`"
 
-# Taken from https://gitlab.oit.duke.edu/chsi-informatics/containers/singularity-rstudio-base/-/blob/master/port_and_password_1_3.sh
-LOWERPORT=50000
-UPPERPORT=65535
-for RSTUDIO_PORT in $(seq $LOWERPORT $UPPERPORT);
-do
-    RSTUDIO_PORT="`shuf -i $LOWERPORT-$UPPERPORT -n 1`"
-    # echo "Testing port: $RSTUDIO_PORT"
-    ss -lpn | grep -q ":$RSTUDIO_PORT " || break
-done
+export RSTUDIO_PASSWORD=${RSTUDIO_PASSWORD-`date -R | md5sum | cut -c-16`}
+
+if [ -z "$RSTUDIO_PORT" ]
+then
+	# Taken from https://gitlab.oit.duke.edu/chsi-informatics/containers/singularity-rstudio-base/-/blob/master/port_and_password_1_3.sh
+	LOWERPORT=50000
+	UPPERPORT=65535
+	for RSTUDIO_PORT in $(seq $LOWERPORT $UPPERPORT);
+	do
+	    RSTUDIO_PORT="`shuf -i $LOWERPORT-$UPPERPORT -n 1`"
+	    # echo "Testing port: $RSTUDIO_PORT"
+	    ss -lpn | grep -q ":$RSTUDIO_PORT " || break
+	done
+fi
 
 RSTUDIO_HOST=$(hostname -A | cut -f1 -d' ')
 RSTUDIO_HOST=${RSTUDIO_HOST:-localhost}
