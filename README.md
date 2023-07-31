@@ -27,6 +27,17 @@ ml bcftools
 bcftools --version
 ```
 
+### Unix goodies
+
+We provide some modules for Unix tools useful to everybody including bioinformaticians.
+
+```
+ml bioinfo-ugrp-modules UnixGoodies
+ml av
+```
+
+Check [oist/BioinfoUgrp_UnixGoodies_Images](https://github.com/oist/BioinfoUgrp_UnixGoodies_Images) for details.
+
 ### Nextflow pipelines
 
 We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml bioinfo-ugrp-modules Nextflow2`) and registered [OIST's profile](https://github.com/nf-core/configs/blob/master/docs/oist.md) to the [nf-core](https://nf-co.re/) community so that you can run their pipelines with the `-profile oist` option on _Deigo_.  A _nf-core_ [module](https://github.com/nf-core/modules) is also available (`ml bioinfo-ugrp-modules nf-core`).
