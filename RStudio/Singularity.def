@@ -31,13 +31,11 @@ From: debian:bookworm
     apt update
     apt upgrade -y
     
-    # Add a package needed to suppress some error messages
+    # Add a package needed to suppress some debconf error messages
     apt install -y whiptail
     
-    # Build the American and British English locales
-    apt install -y locales
-    sed -i /etc/locale.gen -e '/en_[UG].*.UTF-8/s/# //'
-    locale-gen
+    # Install all locales
+    apt install -y locales-all
     
     # Install the latest R
     apt install -y r-base
