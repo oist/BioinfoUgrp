@@ -6,12 +6,13 @@ How to use
 
 ### Start the server
 
-On _deigo_, load the `singularity` module, and use `srun` to start a _RStudio sever_ instance on a compute node.
+On _deigo_, load the `singularity` module, and use `srun` to start a _RStudio sever_ instance on a _compute_ node.
+Do not run it on a _login_ node.
 
 ```
-ml singularity
+ml bioinfo-ugrp-modules Other/RStudio_server
 # Change --mem and add -c according to your needs
-srun -pcompute --mem 10G /apps/unit/BioinfoUgrp/Other/RStudio_server/2023.06.0-421/RStudio_2023.06.0-421_R_4.3.1.sif
+srun -pcompute --mem 10G RStudio_server
 ```
 
 The running server will output its URL and a password unique to the session such as:
@@ -27,13 +28,13 @@ for people who remote work outside our network.
 
 ```
 If you remote work, you can forward the server to port 1664 on your computer with:
-ssh charles-plessy@deigo010902.oist.jp -J login.oist.jp,deigo.oist.jp -L 1664:localhost:54279
+ssh charles-plessy@deigo010902.oist.jp -J charles-plessy@login.oist.jp,charles-plessy@deigo.oist.jp -L 1664:localhost:54279
 ```
 
 The server creates temporary files:
 
 ```
-You may need to clean your temporary files by yourself:
+You will need to clean your temporary files by yourself:
 RStudio temporary files:	/home/c/charles-plessy/tmp.zv3bC383g1
 ```
 
@@ -99,3 +100,25 @@ The server needs to run under your user name `--server-user=$USER`.
 
 An available port number is picked randomly between 50000 and 65535 and passed
 to `rserver` with the `--www-port` option.
+
+### Lmod modulefile
+
+```
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/oist/BioinfoUgrp/tree/master/RStudio")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."R, RStudio, server")
+whatis("Description: ".."Singularity image to run RStudio server on a compute node and access from your web browser.")
+
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome.."/")
+```
