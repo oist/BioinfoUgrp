@@ -33,7 +33,7 @@ printf "RStudio Password:\t$RSTUDIO_PASSWORD\n"
 if [ ! $RSTUDIO_HOST = "localhost" ]
 then
 	printf "\nIf you remote work, you can forward the server to port 1664 on your computer with:\n"
-	printf "ssh ${USER}@${RSTUDIO_HOST} -J login.oist.jp,deigo.oist.jp -L 1664:localhost:${RSTUDIO_PORT}\n"
+	printf "ssh ${USER}@${RSTUDIO_HOST} -J ${USER}@login.oist.jp,${USER}@deigo.oist.jp -L 1664:localhost:${RSTUDIO_PORT}\n"
 fi
 printf "\nYou may need to clean your temporary files by yourself:\n"
 printf "RStudio temporary files:\t$RSTUDIO_TEMP\n"
