@@ -108,9 +108,7 @@ variable, and which is loaded by the `Dorado` module.
 
 At the moment the contents of the `Dorado-models/latest` module are
 downloaded by hand in `/apps/unit/BioinfoUgrp/Dorado-models/latest/`
-with the `srun -p gpu dorado download` command.  Note it needs to
-run on a GPU node because the `dorado` binary crashes otherwise, but
-it is not needed to book a GPU.
+with the `dorado download` command.
 
 The module config file contains:
 
