@@ -2978,3 +2978,42 @@ whatis("Description: ".."Accurate Species Tree EstimatoR")
 prepend_path("PATH", apphome.."/bin")
 __END__
 ```
+
+## VeryFastTree
+- Home page: https://github.com/citiususc/veryfasttree
+
+### Installation on Deigo
+
+```bash
+APP=veryfasttree
+VER=4.0.2
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/ && cd $APPDIR/
+git clone https://github.com/citiususc/veryfasttree
+mv veryfasttree $VER && cd $VER/
+cmake -DINSTALL_DIR:PATH=$APPDIR/$VER
+make
+chmod a+x VeryFastTree
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/citiususc/veryfasttree")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."veryfasttree")
+whatis("Description: ".."VeryFastTree is a new tool designed for efficient phylogenetic tree inference, specifically tailored to handle massive taxonomic datasets.")
+
+-- Package settings
+prepend_path("PATH", apphome)
+__END__
+```
+
