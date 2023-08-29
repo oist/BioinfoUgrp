@@ -68,6 +68,7 @@ Other/smudgeplot/0.2.3
 Other/SPAdes/3.15.1
 Other/TCSF_IMRA/2.7.3
 Other/trf/4.09.1
+Other/veryfasttree/4.0.2
 Other/winnowmap/2.03
 ```
 
