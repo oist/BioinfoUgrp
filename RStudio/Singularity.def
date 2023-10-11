@@ -79,17 +79,17 @@ From: debian:bookworm
     cp -a /usr/share/fonts-firacode/woff2/FiraCode-Regular.woff2 /etc/rstudio/fonts/firacode
 
     # Install RStudio desktop
-    wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.06.0-421-amd64.deb
+    wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.09.0-463-amd64.deb
     apt --fix-broken -y install ./rstudio-*-amd64.deb
     rm rstudio-*-amd64.deb
     
     # Install RStudio server
-    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.06.0-421-amd64.deb
+    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.09.0-463-amd64.deb
     apt --fix-broken -y install ./rstudio-*-amd64.deb
     rm rstudio-*-amd64.deb
     
     # Upgrade R to version 4.3.1
-    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20230705T152828Z/ sid main\n' >> /etc/apt/sources.list
+    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20230802T032101Z/ sid main\n' >> /etc/apt/sources.list
     apt update
     apt install -y r-base
 
