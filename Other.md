@@ -38,6 +38,7 @@ Other/hal/2.2
 Other/hifiasm/0.15.4
 Other/interproscan/5.48-83.0
 Other/interproscan/5.60-92.0
+Other/interproscan/5.65-97.0
 Other/iqtree/2.2.0
 Other/iqtree/2.2.2.5
 Other/juicer/1.6
@@ -2663,7 +2664,7 @@ __END__
 ### Installation on Deigo
 ```bash
 APP=interproscan
-VER=5.60-92.0
+VER=5.65-97.0
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
