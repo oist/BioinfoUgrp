@@ -86,7 +86,7 @@ ml bioinfo-ugrp-modules Nextflow2
 APP=nf-core
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=2.11.1
+VER=2.12.1
 mkdir -p $APPDIR
 cd $APPDIR
 curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -122,8 +122,8 @@ See https://nf-co.re/ for help.]])
 
 -- Package settings
 depends_on("singularity")
-depends_on("Nextflow2")
 prepend_path("PATH", apphome.."/bin")
+depends_on("Nextflow2")
 __END__
 ```
 
