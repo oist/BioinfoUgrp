@@ -51,6 +51,7 @@ Other/minimap2/2.20
 Other/mosdepth/0.3.1
 Other/mugsy/1r2.2
 Other/ncbi-datasets-cli/15.31.3
+Other/ncbi-datasets-cli/16.4.5
 Other/pairtools/0.3.0
 Other/paml/4.10.6
 Other/parallel/20210622
@@ -230,7 +231,7 @@ srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
 
 ```bash
 APP=ncbi-datasets-cli
-VER=15.31.3
+VER=16.4.5
 MODROOT=/apps/unit/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER
