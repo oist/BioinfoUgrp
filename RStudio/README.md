@@ -55,7 +55,7 @@ The image also contains RStudio Desktop in case you need it.
 ```
 # On your desktop PC, not deigo:
 xhost +
-singularity exec ./RStudio_2023.12.1-402_R_4.3.2.sif rstudio
+singularity exec ./RStudio_2023.12.1-402_R_4.3.3.sif rstudio
 ```
 
 How to build a Singularity image
@@ -73,7 +73,7 @@ Lastly, let's install the latest tidyverse, as everybody wants it.
 
 Then build the image:
 
-    singularity build --fakeroot RStudio_2023.12.1-402_R_4.3.2.sif Singularity.def
+    singularity build --fakeroot RStudio_2023.12.1-402_R_4.3.3.sif Singularity.def
 
 Technical details
 -----------------

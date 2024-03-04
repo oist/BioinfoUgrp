@@ -45,6 +45,7 @@ From: debian:bookworm
       libcurl4-openssl-dev libssl-dev libfftw3-dev libtiff-dev libgsl-dev\
       libfontconfig1-dev libharfbuzz-dev libfribidi-dev
     apt install -y libproj-dev # For proj4, for ggmsa
+    apt install -y libglpk-dev # For igraph and others
     apt install -y libboost-all-dev # For GenomicBreaks and other packages
     apt install -y libmagick++-dev # For cropping images in vignette built following BiocStyle
     apt install -y cmake
@@ -88,8 +89,8 @@ From: debian:bookworm
     apt --fix-broken -y install ./rstudio-*-amd64.deb
     rm rstudio-*-amd64.deb
     
-    # Upgrade R to version 4.3.2
-    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20231031T145518Z/ sid main\n' >> /etc/apt/sources.list
+    # Upgrade R to version 4.3.3
+    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20240229T211837Z/ sid main\n' >> /etc/apt/sources.list
     apt update
     apt install -y r-base
 
