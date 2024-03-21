@@ -59,7 +59,7 @@ PKGLIST=$(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud |
 Command to generate all the modules, with a few extra goodies.  Note that the goodie list must be the same as in the singularity definition file above.
 
 ```
-for package in $PKGLIST gitk colordiff rsync ncftp lftp filezilla p7zip-full rename magic-wormhole datamash pigz libsixel-bin source-highlight
+for package in $PKGLIST source-highlight
 do
   ../../BioinfoUgrp/mkDebMedModule.sh $package
 done
