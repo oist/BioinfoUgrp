@@ -45,8 +45,13 @@ directory is:
 
 ```
 This image will build its packages in the following directory if it exists:
-R_LIBS_USER="~/R/library/R_4.3.0_for_RStudio_Singularity"
+R_LIBS_USER="~/R/library/R_4.4_for_RStudio_Singularity"
 ```
+
+**Note that once a year, there is a major release of R that requires rebuild of
+the installed packages.  To stick the same version and ignore updates, load the
+module with the version name like in
+`Other/RStudio_server/2024.04.0-735_R_4.4.0` for instance.**
 
 ### RStudio Desktop
 
@@ -55,7 +60,7 @@ The image also contains RStudio Desktop in case you need it.
 ```
 # On your desktop PC, not deigo:
 xhost +
-singularity exec ./RStudio_2023.12.1-402_R_4.3.3.sif rstudio
+singularity exec ./RStudio_2024.04.0-735_R_4.4.0.sif rstudio
 ```
 
 How to build a Singularity image
@@ -73,7 +78,7 @@ Lastly, let's install the latest tidyverse, as everybody wants it.
 
 Then build the image:
 
-    singularity build --fakeroot RStudio_2023.12.1-402_R_4.3.3.sif Singularity.def
+    singularity build --fakeroot RStudio_2024.04.0-735_R_4.4.0.sif Singularity.def
 
 Technical details
 -----------------

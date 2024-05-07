@@ -80,17 +80,17 @@ From: debian:bookworm
     cp -a /usr/share/fonts-firacode/woff2/FiraCode-Regular.woff2 /etc/rstudio/fonts/firacode
 
     # Install RStudio desktop
-    wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2023.12.1-402-amd64.deb
+    wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2024.04.0-735-amd64.deb
     apt --fix-broken -y install ./rstudio-*-amd64.deb
     rm rstudio-*-amd64.deb
     
     # Install RStudio server
-    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.12.1-402-amd64.deb
+    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2024.04.0-735-amd64.deb
     apt --fix-broken -y install ./rstudio-*-amd64.deb
     rm rstudio-*-amd64.deb
     
-    # Upgrade R to version 4.3.3
-    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20240229T211837Z/ sid main\n' >> /etc/apt/sources.list
+    # Upgrade R to version 4.4
+    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20240426T205747Z/ sid main\n' >> /etc/apt/sources.list
     apt update
     apt install -y r-base
 
@@ -103,7 +103,7 @@ From: debian:bookworm
 
     # Use home directory outside image to install more packages
     printf 'R_LIBS_SITE="/usr/local/lib/R/site-library:/usr/lib/R/library"\n' | tee -a /etc/R/Renviron.site >/dev/null
-    printf 'R_LIBS_USER="~/R/library/R_4.3.0_for_RStudio_Singularity"\n'      | tee -a /etc/R/Renviron.site >/dev/null
+    printf 'R_LIBS_USER="~/R/library/R_4.4_for_RStudio_Singularity"\n'        | tee -a /etc/R/Renviron.site >/dev/null
 
     # Clean downoladed package cache.  Yes I know about /var/libs.
     apt clean
