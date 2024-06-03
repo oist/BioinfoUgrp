@@ -62,6 +62,55 @@ prepend_path("PATH", apphome.."/bin")
 __END__
 ```
 
+nf-test
+=======
+
+Testing framework for Nextflow pipelines (<https://www.nf-test.com/>).
+
+Installation on deigo
+---------------------
+
+```
+APP=nf-test
+MODROOT=/apps/unit/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+VER=0.8.4
+mkdir -p $APPDIR/$VER/bin
+cd $APPDIR/$VER
+wget https://github.com/askimed/nf-test/releases/download/v${VER}/nf-test-${VER}.tar.gz
+pushd bin
+tar xvfz ../nf-test-${VER}.tar.gz
+chmod 775 nf-test
+chmod 664 nf-test.jar
+popd
+rm nf-test-${VER}.tar.gz
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/apps/unit/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/askimed/nf-test/releases")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."pipeline, SLURM")
+whatis("Description: ".."Testing framework for Nextflow pipelines.")
+
+help([[nf-test version downloaded from GitHub
+
+See https://www.nf-test.com/ for help.]])
+
+-- Package settings
+depends_on("Nextflow2")
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
 nf-core
 =======
 
@@ -124,6 +173,7 @@ See https://nf-co.re/ for help.]])
 depends_on("singularity")
 prepend_path("PATH", apphome.."/bin")
 depends_on("Nextflow2")
+depends_on("Other/nf-test")
 __END__
 ```
 
