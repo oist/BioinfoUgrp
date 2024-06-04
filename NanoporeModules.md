@@ -57,7 +57,7 @@ Dorado
 ### Example module update on Saion
 
 ```
-VER=0.6.1
+VER=0.7.0
 cd /apps/unit/BioinfoUgrp/Dorado/
 FILE_TO_DOWNLOAD=dorado-${VER}-linux-x64.tar.gz
 wget https://cdn.oxfordnanoportal.com/software/analysis/$FILE_TO_DOWNLOAD 
