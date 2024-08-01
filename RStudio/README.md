@@ -110,7 +110,7 @@ to `rserver` with the `--www-port` option.
 
 ```
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())

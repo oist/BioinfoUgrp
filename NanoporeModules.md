@@ -25,7 +25,7 @@ Guppy
 
 ```
 VER=6.5.7
-cd /apps/unit/BioinfoUgrp/Guppy/
+cd /bucket/BioinfoUgrp/Guppy/
 wget https://mirror.oxfordnanoportal.com/software/analysis/ont-guppy-${VER}-1.el7.x86_64.rpm
 rpm2cpio ont-guppy-${VER}-1.el7.x86_64.rpm | cpio -idmv
 mkdir $VER
@@ -58,7 +58,7 @@ Dorado
 
 ```
 VER=0.7.0
-cd /apps/unit/BioinfoUgrp/Dorado/
+cd /bucket/BioinfoUgrp/Dorado/
 FILE_TO_DOWNLOAD=dorado-${VER}-linux-x64.tar.gz
 wget https://cdn.oxfordnanoportal.com/software/analysis/$FILE_TO_DOWNLOAD 
 tar xvfz $FILE_TO_DOWNLOAD
@@ -75,7 +75,7 @@ The config file contains:
 #
 set appname    [lrange [split [module-info name] {/}] 0 0]
 set appversion [lrange [split [module-info name] {/}] 1 1]
-set apphome    /apps/unit/BioinfoUgrp/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$appname/$appversion
 
 ## URL of application homepage:
 set appurl     https://github.com/nanoporetech/dorado
@@ -107,7 +107,7 @@ module that exports their path to the `$DORADO_MODELS` environment
 variable, and which is loaded by the `Dorado` module.
 
 At the moment the contents of the `Dorado-models/latest` module are
-downloaded by hand in `/apps/unit/BioinfoUgrp/Dorado-models/latest/`
+downloaded by hand in `/bucket/BioinfoUgrp/Dorado-models/latest/`
 with the `dorado download` command.
 
 The module config file contains:
@@ -117,7 +117,7 @@ The module config file contains:
 #
 set appname    [lrange [split [module-info name] {/}] 0 0]
 set appversion [lrange [split [module-info name] {/}] 1 1]
-set apphome    /apps/unit/BioinfoUgrp/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$appname/$appversion
 
 ## URL of application homepage:
 set appurl     https://github.com/nanoporetech/dorado
@@ -166,13 +166,13 @@ removing the old ones.
 
 ```
 VER=4.4.0
-cd /apps/unit/BioinfoUgrp/Rerio/
+cd /bucket/BioinfoUgrp/Rerio/
 git clone https://github.com/nanoporetech/rerio rerio-GitHub-$VER
 cd rerio-GitHub-$VER
 git checkout $VER
 ./download_model.py
 cp -a basecall_models ../$VER
-cp /apps/unit/BioinfoUgrp/Guppy/4.4.0/ont/guppy/data/lambda_3.6kb.fasta ../$VER
+cp /bucket/BioinfoUgrp/Guppy/4.4.0/ont/guppy/data/lambda_3.6kb.fasta ../$VER
 
 cd /apps/.bioinfo-ugrp-modulefiles/Rerio
 cat > $VER<< '__END__'
@@ -180,7 +180,7 @@ cat > $VER<< '__END__'
 #
 set appname    [lrange [split [module-info name] {/}] 0 0]
 set appversion [lrange [split [module-info name] {/}] 1 1]
-set apphome    /apps/unit/BioinfoUgrp/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$appname/$appversion
 
 ## URL of application homepage:
 set appurl     https://github.com/nanoporetech/rerio
@@ -234,7 +234,7 @@ VER=1.3.2
 module load python/3.7.3
 module load ont-fast5-api
 APP=medaka
-MODROOT=/apps/unit/BioinfoUgrp/
+MODROOT=/bucket/BioinfoUgrp/
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
@@ -244,7 +244,7 @@ mkdir -p $APP
 cat <<'__END__' > $APP/$VER
 #%Module1.0##################################################################
 #
-set modulehome /apps/unit/BioinfoUgrp
+set modulehome /bucket/BioinfoUgrp
 set appname    [lrange [split [module-info name] {/}] 0 0]
 set appversion [lrange [split [module-info name] {/}] 1 1]
 set apphome    $modulehome/$appname/$appversion
@@ -283,7 +283,7 @@ ont-fast5-api
 ```
 module load python/3.7.3
 APP=ont_fast5_api
-MODROOT=/apps/unit/BioinfoUgrp/
+MODROOT=/bucket/BioinfoUgrp/
 APPDIR=$MODROOT/$APP
 VER=3.3.0
 mkdir -p $APPDIR/$VER
@@ -293,7 +293,7 @@ cd /apps/.bioinfo-ugrp-modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/LuscombeU/"
+local modroot    = "/bucket/LuscombeU/"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -322,7 +322,7 @@ __END__
 ```
 module load python/3.7.3
 APP=ont_fast5_api
-MODROOT=/apps/unit/BioinfoUgrp/
+MODROOT=/bucket/BioinfoUgrp/
 APPDIR=$MODROOT/$APP
 VER=3.3.0
 mkdir -p $APPDIR/$VER
@@ -333,7 +333,7 @@ mkdir -p $APP
 cat <<'__END__' > $APP/$VER
 #%Module1.0##################################################################
 #
-set modulehome /apps/unit/BioinfoUgrp
+set modulehome /bucket/BioinfoUgrp
 set appname    [lrange [split [module-info name] {/}] 0 0]
 set appversion [lrange [split [module-info name] {/}] 1 1]
 set apphome    $modulehome/$appname/$appversion
@@ -374,7 +374,7 @@ Appears to be the successor of `pod5-format-tools`
 ```
 module load python/3.7.3
 APP=pod5
-MODROOT=/apps/unit/BioinfoUgrp/
+MODROOT=/bucket/BioinfoUgrp/
 APPDIR=$MODROOT/$APP
 VER=0.1.5
 mkdir -p $APPDIR/$VER
@@ -386,7 +386,7 @@ mkdir -p $APP
 cat <<'__END__' > $APP/$VER
 #%Module1.0##################################################################
 #
-set modulehome /apps/unit/BioinfoUgrp
+set modulehome /bucket/BioinfoUgrp
 set appname    [lrange [split [module-info name] {/}] 0 0]
 set appversion [lrange [split [module-info name] {/}] 1 1]
 set apphome    $modulehome/$appname/$appversion
@@ -430,7 +430,7 @@ See also:
 
 ```
 APP=vbz_compression
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 VER=1.0.2
 mkdir -p $APPDIR/$VER
@@ -442,7 +442,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())

@@ -25,7 +25,7 @@ Source: https://github.com/nextflow-io/nextflow
 
 ```
 APP=Nextflow2
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 VER=24.04.2
 mkdir -p $APPDIR/$VER/bin
@@ -37,7 +37,7 @@ mkdir -p $MODROOT/$APP/modulefiles/
 cd $MODROOT/$APP/modulefiles/
 cat <<'__END__' > $VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp/Other"
+local modroot    = "/bucket/BioinfoUgrp/Other"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -72,7 +72,7 @@ Installation on deigo
 
 ```
 APP=nf-test
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 VER=0.8.4
 mkdir -p $APPDIR/$VER/bin
@@ -88,7 +88,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -133,7 +133,7 @@ To install a new latest version, update the `VER` variable below and run the com
 ml purge
 ml bioinfo-ugrp-modules Nextflow2
 APP=nf-core
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 VER=2.14.1
 mkdir -p $APPDIR
@@ -150,7 +150,7 @@ mkdir -p $MODROOT/$APP/modulefiles/
 cd $MODROOT/$APP/modulefiles/
 cat <<'__END__' > $VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp/Other"
+local modroot    = "/bucket/BioinfoUgrp/Other"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -186,7 +186,7 @@ with an arbitrary version number to not interfere with stable versions.
 NFMODULE=Nextflow/21.10.6  # Change the LUA file too !!
 ml bioinfo-ugrp-modules $NFMODULE
 APP=nf-core
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 VER=0.dev_`date -u +%F`
 mkdir -p $APPDIR
@@ -203,7 +203,7 @@ mkdir -p $MODROOT/$APP/modulefiles/
 cd $MODROOT/$APP/modulefiles/
 cat <<'__END__' > $VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp/Other"
+local modroot    = "/bucket/BioinfoUgrp/Other"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())

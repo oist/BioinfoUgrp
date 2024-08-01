@@ -86,7 +86,7 @@ Other/winnowmap/2.03
 ```bash
 APP=assembly-stats
 VER=1.0.1
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -100,7 +100,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -136,7 +136,7 @@ srun -p compute -c 1 --mem 10G -t 00:10:00 --pty \
 ```bash
 APP=pbgzip
 VER=20160804
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -148,7 +148,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -185,7 +185,7 @@ srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
 ```bash
 APP=bwa
 VER=0.7.17
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -197,7 +197,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -232,7 +232,7 @@ srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
 ```bash
 APP=ncbi-datasets-cli
 VER=16.4.5
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
@@ -244,7 +244,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -282,7 +282,7 @@ srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
 module load python/3.7.3
 APP=pairtools
 VER=0.3.0
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -295,7 +295,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -333,7 +333,7 @@ srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
 ```bash
 APP=preseq
 VER=3.1.2
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -345,7 +345,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -381,7 +381,7 @@ srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
 ```bash
 APP=samblaster
 VER=0.1.26
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -392,7 +392,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -428,7 +428,7 @@ srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
 ```bash
 APP=seqkit
 VER=2.0.0
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
@@ -437,7 +437,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -473,7 +473,7 @@ srun -p compute -c 1 --mem 40G -t 24:00:00 --pty \
 ```bash
 APP=parallel
 VER=20210622
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER
 cd $APPDIR
@@ -483,7 +483,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -519,7 +519,7 @@ srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
 ```bash
 APP=mosdepth
 VER=0.3.1
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
@@ -528,7 +528,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -565,7 +565,7 @@ srun -p compute -c 1 --mem 100G -t 24:00:00 --pty \
 module load singularity
 APP=BUSCO
 VER=5.1.3
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
@@ -576,7 +576,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -630,7 +630,7 @@ srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
 ```bash
 APP=gfatools
 VER=0.5
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -641,7 +641,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -677,7 +677,7 @@ srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
 ```bash
 APP=hal
 VER=2.2
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/${VER}
 cd $APPDIR/${VER}
@@ -694,7 +694,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -724,7 +724,7 @@ This module is installed just to satisfy the requirements by paftools.js in the 
 ```bash
 APP=k8
 VER=0.2.5
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -735,7 +735,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -771,7 +771,7 @@ srun -p compute -c 1 --mem 40G -t 10:00:00 --pty \
 ```bash
 APP=minimap2
 VER=2.20
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -782,7 +782,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -828,7 +828,7 @@ srun -p compute -c 1 --mem 100G -t 24:00:00 --pty \
 ```bash
 APP=winnowmap
 VER=2.03
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -839,7 +839,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -875,7 +875,7 @@ srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
 ```bash
 APP=hifiasm
 VER=0.15.4
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -886,7 +886,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -922,7 +922,7 @@ srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
 ```bash
 APP=canu
 VER=2.1.1
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -932,7 +932,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -968,7 +968,7 @@ srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
 ```bash
 APP=meryl
 VER=1.3
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -978,7 +978,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1015,7 +1015,7 @@ srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
 module load R/4.0.4
 APP=merqury
 VER=1.3
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1028,7 +1028,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1068,7 +1068,7 @@ srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
 module load singularity
 APP=peregrine
 VER=1.6.3
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1078,7 +1078,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1125,7 +1125,7 @@ srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
 ```bash
 APP=pbipa
 VER=1.3.2
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1140,7 +1140,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1177,7 +1177,7 @@ srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
 module load singularity
 APP=deepvariant
 VER=1.1.0
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1187,7 +1187,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1234,7 +1234,7 @@ srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
 ```bash
 APP=arima_pipeline
 VER=2019.02.08
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1245,7 +1245,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1290,7 +1290,7 @@ See the pipeline script ([01_mapping_arima.sh](https://github.com/ArimaGenomics/
 ```bash
 APP=SALSA
 VER=2.3
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1299,7 +1299,7 @@ mv $APP-$VER $VER && cd $VER && make
 wget https://s3.amazonaws.com/hicfiles.tc4ga.com/public/juicer/juicer_tools_1.22.01.jar
 cat <<'__END__' > convert.sh
 #!/bin/bash
-JUICER_JAR=/apps/unit/BioinfoUgrp/Other/SALSA/2.3/juicer_tools_1.22.01.jar
+JUICER_JAR=/bucket/BioinfoUgrp/Other/SALSA/2.3/juicer_tools_1.22.01.jar
 SALSA_OUT_DIR=$1
 
 samtools faidx ${SALSA_OUT_DIR}/scaffolds_FINAL.fasta
@@ -1312,7 +1312,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1361,7 +1361,7 @@ NOTE: Only the "CPU" mode is installed, as the codes for HPCs are hard to use.
 ```bash
 APP=juicer
 VER=1.6
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1376,7 +1376,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1429,7 +1429,7 @@ Note that the default path of the option `-D` is replaced from `/opt/juicer` to 
 ```bash
 APP=3d-dna
 VER=180922
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1445,7 +1445,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1510,7 +1510,7 @@ srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
 module load python/3.7.3
 APP=hic2cool
 VER=0.8.3
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1524,7 +1524,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1564,7 +1564,7 @@ srun -p compute -c 128 --mem 500G -t 12:00:00 --pty \
 ```bash
 APP=purge_dups
 VER=1.2.5
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1574,7 +1574,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1625,7 +1625,7 @@ See the [README](https://github.com/dfguan/purge_dups) written by the developer 
 ```bash
 APP=asset
 VER=1.0.3
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1635,7 +1635,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1693,7 +1693,7 @@ See the [README](https://github.com/dfguan/asset) written by the developer or [a
 ```bash
 APP=trf
 VER=4.09.1
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1702,7 +1702,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1739,7 +1739,7 @@ srun -p compute -c 1 --mem 40G -t 10:00:00 --pty \
 module load python/3.7.3
 APP=make_telomere_bed
 VER=2021.05.20
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1751,7 +1751,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1789,7 +1789,7 @@ srun -p compute -c 1 --mem 100G -t 12:00:00 --pty \
 ```bash
 APP=DAZZ_DB
 VER=2021.03.30
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1799,7 +1799,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1862,7 +1862,7 @@ See the [README](https://github.com/thegenemyers/DAZZ_DB) written by the develop
 ```bash
 APP=FASTK
 VER=2021.05.27
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1872,7 +1872,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1926,7 +1926,7 @@ See the [README](https://github.com/thegenemyers/FASTK) written by the developer
 module load R/4.0.4
 APP=genescope
 VER=2021.03.26
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1946,7 +1946,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -1984,7 +1984,7 @@ srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
 ```bash
 APP=KMC
 VER=genomescope
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -1994,7 +1994,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2040,7 +2040,7 @@ Visit the [GitHub page](https://github.com/tbenavi1/KMC) for details about how t
 module load R/4.0.4
 APP=genomescope
 VER=2.0
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2054,7 +2054,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2093,7 +2093,7 @@ srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
 module load R/4.0.4
 APP=smudgeplot
 VER=0.2.3
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2107,7 +2107,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2145,7 +2145,7 @@ srun -p compute -c 1 --mem 100G -t 24:00:00 --pty \
 DIS=iqtree2
 APP=iqtree
 VER=2.2.0
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2163,7 +2163,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2185,7 +2185,7 @@ __END__
 DIS=iqtree2
 APP=iqtree
 VER=2.2.2.5
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2197,8 +2197,8 @@ cd $APPDIR
 # git submodule init 
 # git submodule update
 ### leads to compiling errors
-# /apps/unit/BioinfoUgrp/Other/iqtree/2.2.2.6/alignment/superalignment.cpp:28:10: erreur fatale: boost/container_hash/hash.hpp : Aucun fichier ou dossier de ce type
-# /apps/unit/BioinfoUgrp/Other/iqtree/2.2.2.6/alignment/alignment.cpp:24:10: erreur fatale: boost/container_hash/hash.hpp : Aucun fichier ou dossier de ce type
+# /bucket/BioinfoUgrp/Other/iqtree/2.2.2.6/alignment/superalignment.cpp:28:10: erreur fatale: boost/container_hash/hash.hpp : Aucun fichier ou dossier de ce type
+# /bucket/BioinfoUgrp/Other/iqtree/2.2.2.6/alignment/alignment.cpp:24:10: erreur fatale: boost/container_hash/hash.hpp : Aucun fichier ou dossier de ce type
 ## switch to older distrib
 wget -O - https://github.com/iqtree/iqtree2/archive/refs/tags/v2.2.2.5.tar.gz | tar xzvf -
 mv $DIS-$VER $VER && cd $VER
@@ -2216,7 +2216,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2243,7 +2243,7 @@ __END__
 ```bash
 APP=fasttree
 VER=2.1.11
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER/bin
@@ -2253,7 +2253,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2279,7 +2279,7 @@ __END__
 ```bash
 APP=samtools
 VER=1.15.1
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2291,7 +2291,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2317,7 +2317,7 @@ __END__
 ```bash
 APP=bcftools
 VER=1.15.1
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2329,7 +2329,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2356,7 +2356,7 @@ __END__
 module load singularity
 APP=prokka
 VER=1.14.5
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2366,7 +2366,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2393,7 +2393,7 @@ __END__
 ```bash
 APP=BEAST
 VER=1.10.4
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2406,7 +2406,7 @@ cat <<'__END__' > $APP/$VER
 set approot    [lrange [split [module-info name] {/}] 0 0]
 set appname    [lrange [split [module-info name] {/}] 1 1]
 set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
 
 ## URL of application homepage:
 set appurl     https://beast.community
@@ -2435,7 +2435,7 @@ __END__
 ```bash
 APP=DIAMOND
 VER=2.0.15.153
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 mkdir $VER
@@ -2448,7 +2448,7 @@ cat <<'__END__' > $APP/$VER
 set approot    [lrange [split [module-info name] {/}] 0 0]
 set appname    [lrange [split [module-info name] {/}] 1 1]
 set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
 
 ## URL of application homepage:
 set appurl     https://github.com/bbuchfink/diamond
@@ -2472,7 +2472,7 @@ __END__
 ```bash
 APP=SPAdes
 VER=3.15.1
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2485,7 +2485,7 @@ cat <<'__END__' > $APP/$VER
 set approot    [lrange [split [module-info name] {/}] 0 0]
 set appname    [lrange [split [module-info name] {/}] 1 1]
 set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
 
 ## URL of application homepage:
 set appurl     https://github.com/ablab/spades
@@ -2511,7 +2511,7 @@ __END__
 ```bash
 APP=bioawk
 VER=1.0
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2524,7 +2524,7 @@ cat <<'__END__' > $APP/$VER
 set approot    [lrange [split [module-info name] {/}] 0 0]
 set appname    [lrange [split [module-info name] {/}] 1 1]
 set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
 
 ## URL of application homepage:
 set appurl     https://github.com/lh3/bioawk
@@ -2548,7 +2548,7 @@ __END__
 module load singularity
 APP=cactus
 VER=2.4.0
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2558,7 +2558,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2585,7 +2585,7 @@ __END__
 ```
 APP=mugsy
 VER=1r2.2
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2599,7 +2599,7 @@ cat <<'__END__' > $APP/$VER
 set approot    [lrange [split [module-info name] {/}] 0 0]
 set appname    [lrange [split [module-info name] {/}] 1 1]
 set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
 
 ## URL of application homepage:
 set appurl     https://mugsy.sourceforge.net
@@ -2624,7 +2624,7 @@ __END__
 ```
 APP=TCSF_IMRA
 VER=2.7.3
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2638,7 +2638,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2666,7 +2666,7 @@ __END__
 ```bash
 APP=interproscan
 VER=5.65-97.0
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2690,7 +2690,7 @@ cat <<'__END__' > $APP/$VER
 set approot    [lrange [split [module-info name] {/}] 0 0]
 set appname    [lrange [split [module-info name] {/}] 1 1]
 set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
 
 ## set/prepend environment valiable
 if { [ info exist env(IPRDIR) ] } then {
@@ -2734,7 +2734,7 @@ Module created for the mini course on Particle Tracking Simulation using Ocean P
 
 ```
 APP=parcels
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 VER=2.4.0
 mkdir -p $APPDIR
@@ -2751,7 +2751,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2783,7 +2783,7 @@ __END__
 ```
 APP=raxml-ng-mpi
 VER=1.2.0
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 mkdir -p $APPDIR/$VER
@@ -2794,7 +2794,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2820,7 +2820,7 @@ __END__
 ```
 APP=paml
 VER=4.10.6
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2839,7 +2839,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2865,7 +2865,7 @@ __END__
 ```
 APP=phyluce
 VER=1.7.2
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2882,7 +2882,7 @@ cat <<'__END__' > $APP/$VER
 set approot    [lrange [split [module-info name] {/}] 0 0]
 set appname    [lrange [split [module-info name] {/}] 1 1]
 set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
 
 ## URL of application homepage:
 set appurl     https://phyluce.readthedocs.io/en/latest/index.html
@@ -2910,7 +2910,7 @@ __END__
 ```
 APP=astral
 VER=5.7.8
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2924,7 +2924,7 @@ cat <<'__END__' > $APP/$VER
 set approot    [lrange [split [module-info name] {/}] 0 0]
 set appname    [lrange [split [module-info name] {/}] 1 1]
 set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /apps/unit/BioinfoUgrp/$approot/$appname/$appversion
+set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
 
 ## URL of application homepage:
 set appurl     https://github.com/smirarab/ASTRAL
@@ -2949,7 +2949,7 @@ __END__
 ```
 APP=aster
 VER=1.15
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
@@ -2961,7 +2961,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())
@@ -2987,7 +2987,7 @@ __END__
 ```bash
 APP=veryfasttree
 VER=4.0.2
-MODROOT=/apps/unit/BioinfoUgrp/Other
+MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/ && cd $APPDIR/
 git clone https://github.com/citiususc/veryfasttree
@@ -2999,7 +2999,7 @@ cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
 -- Default settings
-local modroot    = "/apps/unit/BioinfoUgrp"
+local modroot    = "/bucket/BioinfoUgrp"
 local appname    = myModuleName()
 local appversion = myModuleVersion()
 local apphome    = pathJoin(modroot, myModuleFullName())

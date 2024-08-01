@@ -9,7 +9,7 @@ fi
 
 printf "==== $APP ====\n"
 
-MODROOT=/apps/unit/BioinfoUgrp/DebianMed/$DEBVERSION
+MODROOT=/bucket/BioinfoUgrp/DebianMed/$DEBVERSION
 DEBMEDIMAGE=$MODROOT/DebianMed_$DEBVERSION.sif
 APPDIR=$MODROOT/modules/$APP
 VER=$(singularity exec $DEBMEDIMAGE dpkg-query -W -f='${Version}' $APP | perl -pe 's/^.*?://')
