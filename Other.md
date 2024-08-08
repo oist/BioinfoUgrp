@@ -874,7 +874,7 @@ srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
 
 ```bash
 APP=hifiasm
-VER=0.15.4
+VER=0.19.9
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
