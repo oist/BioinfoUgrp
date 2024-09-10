@@ -65,7 +65,7 @@ tar xvfz $FILE_TO_DOWNLOAD
 rm $FILE_TO_DOWNLOAD
 mv dorado-${VER}* $VER
 cd /apps/.bioinfo-ugrp-modulefiles/Dorado
-cp 0.0.1 $VER
+cp 0.7.0 $VER
 ```
 
 The config file contains:
