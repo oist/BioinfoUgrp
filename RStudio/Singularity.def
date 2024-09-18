@@ -4,27 +4,12 @@ From: debian:bookworm
 %runscript
   exec launch_rserver "${@}"
 
-%apprun R
-  exec R "${@}"
-
-%apprun Rscript
-  exec Rscript "${@}"
-
-%apprun default
-  exec "${@}"
-
 %environment
   export PATH=/usr/lib/rstudio-server/bin:${PATH}
 
-%setup
-
-  install -Dv \
-    rstudio_auth.sh \
-    ${SINGULARITY_ROOTFS}/usr/lib/rstudio-server/bin/rstudio_auth
-
-  install -Dv \
-    launch_rserver.sh \
-    ${SINGULARITY_ROOTFS}/usr/lib/rstudio-server/bin/launch_rserver
+%files
+    rstudio_auth.sh   /usr/lib/rstudio-server/bin/rstudio_auth
+    launch_rserver.sh /usr/lib/rstudio-server/bin/launch_rserver
 
 %post
     # Update the image

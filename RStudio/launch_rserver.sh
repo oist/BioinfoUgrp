@@ -1,5 +1,10 @@
 #!/bin/sh -e
 
+if [ "$1" = "desktop" ]; then
+  # Replace the shell process with the rstudio process
+  exec rstudio
+fi
+
 RSTUDIO_TEMP=$(mktemp -d -p ~)
 trap "{ rm -rf $RSTUDIO_TEMP; }" EXIT
 
