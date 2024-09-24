@@ -58,6 +58,7 @@ Other/parallel/20210622
 Other/pbgzip/2016.08.04
 Other/pbipa/1.3.2
 Other/peregrine/1.6.3
+Other/phyloflash/3.4.2
 Other/phyluce/1.7.2
 Other/preseq/3.1.2
 Other/prokka/1.14.5
@@ -3016,4 +3017,46 @@ whatis("Description: ".."VeryFastTree is a new tool designed for efficient phylo
 prepend_path("PATH", apphome)
 __END__
 ```
+## VeryFastTree
+- Home page: http://hrgv.github.io/phyloFlash/
 
+### Installation on Deigo
+```bash
+APP=phyloflash
+VER=3.4.2
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
+cd $VER
+# Create new environment named "pf" with phyloflash
+./bin/conda create -n pf $APP
+# Activate environment
+conda activate /bucket/BioinfoUgrp/Other/phyloflash/3.4.2/envs/pf
+# Check that dependencies all installed properly
+# phyloFlash.pl -check_env
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://hrgv.github.io/phyloFlash/")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."rRNA, phylogeny, illumina, transcriptome")
+whatis("Description: ".."phyloFlash is a pipeline to rapidly reconstruct the SSU rRNAs and explore phylogenetic composition of an Illumina (meta)genomic or transcriptomic dataset.")
+
+-- Package settings
+prepend_path("PATH", apphome)
+prepend_path("PATH", apphome.."/envs/pf")
+prepend_path("PATH", apphome.."/envs/pf/bin")
+__END__
+```
