@@ -63,6 +63,7 @@ Other/phyluce/1.7.2
 Other/preseq/3.1.2
 Other/prokka/1.14.5
 Other/purge_dups/1.2.5
+Other/qiime2-amplicon/2024.5
 Other/raxml-ng-mpi/1.2.0
 Other/SALSA/2.3
 Other/samblaster/0.1.26
@@ -3017,7 +3018,7 @@ whatis("Description: ".."VeryFastTree is a new tool designed for efficient phylo
 prepend_path("PATH", apphome)
 __END__
 ```
-## VeryFastTree
+## phyloflash
 - Home page: http://hrgv.github.io/phyloFlash/
 
 ### Installation on Deigo
@@ -3058,5 +3059,49 @@ whatis("Description: ".."phyloFlash is a pipeline to rapidly reconstruct the SSU
 prepend_path("PATH", apphome)
 prepend_path("PATH", apphome.."/envs/pf")
 prepend_path("PATH", apphome.."/envs/pf/bin")
+__END__
+```
+
+
+## QIIME2-amplicon
+- Home page: https://github.com/qiime2/qiime2
+- Installation: https://docs.qiime2.org/2024.5/install/native/#miniconda
+
+### Installation on Deigo
+```bash
+APP=qiime2-amplicon
+VER=2024.5
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
+cd $VER
+# Create new environment
+./bin/conda env create -n $APP-$VER --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.5-py39-linux-conda.yml
+# Activate environment
+conda activate /bucket/BioinfoUgrp/Other/qiime2-amplicon/2024.5/envs/qiime2-amplicon-2024.5
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/qiime2/qiime2")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."DNA, amplicon, metagenome")
+whatis("Description: ".."QIIME 2 is a powerful, extensible, and decentralized microbiome bioinformatics platform that is free, open source, and community developed.")
+
+-- Package settings
+prepend_path("PATH", apphome)
+prepend_path("PATH", apphome.."/envs/qiime2-amplicon-2024.5")
+prepend_path("PATH", apphome.."/envs/qiime2-amplicon-2024.5/bin")
 __END__
 ```
