@@ -35,7 +35,7 @@ Other/genescope/2021.03.26
 Other/genomescope/2.0
 Other/gfatools/0.5
 Other/hal/2.2
-Other/hifiasm/0.15.4
+Other/hifiasm/0.20.0
 Other/interproscan/5.48-83.0
 Other/interproscan/5.60-92.0
 Other/interproscan/5.65-97.0
@@ -876,7 +876,7 @@ srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
 
 ```bash
 APP=hifiasm
-VER=0.19.9
+VER=0.20.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -884,26 +884,7 @@ cd $APPDIR
 wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER
 cd $VER && make
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
 
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/chhylp123/hifiasm")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."PacBio, hifi, assembly")
-whatis("Description: ".."Hifiasm: a haplotype-resolved assembler for accurate Hifi reads.")
-
--- Package settings
-prepend_path("PATH", apphome)
-__END__
 ```
 
 ### Example commands for running hifiasm on Deigo
