@@ -13,7 +13,7 @@ module load Other/<your-favorite-module>
 
 List of available modules:
 
-```text
+```texthttps://www.ebi.ac.uk/interpro/
 Other/3d-dna/180922
 Other/arima_pipeline/2019.02.08
 Other/assembly_stats/1.0.1
@@ -39,6 +39,7 @@ Other/hifiasm/0.20.0
 Other/interproscan/5.48-83.0
 Other/interproscan/5.60-92.0
 Other/interproscan/5.65-97.0
+Other/interproscan/5.70-102.0
 Other/iqtree/2.2.0
 Other/iqtree/2.2.2.5
 Other/juicer/1.6
@@ -2648,7 +2649,7 @@ __END__
 ### Installation on Deigo
 ```bash
 APP=interproscan
-VER=5.65-97.0
+VER=5.70-102.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
