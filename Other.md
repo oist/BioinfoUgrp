@@ -2662,6 +2662,19 @@ chmod -R g+w interproscan-${VER}
 mv interproscan-${VER} ${VER}
 cd ${VER}
 # Index HMMs, see https://interproscan-docs.readthedocs.io/en/latest/HowToDownload.html#index-hmm-models
+hmmpress data/antifam/7.0/AntiFam.hmm
+hmmpress data/gene3d/4.3.0/gene3d_main.hmm
+rm       data/hamap/2023_05/hamap.hmm.lib.*
+hmmpress data/hamap/2023_05/hamap.hmm.lib
+hmmpress data/ncbifam/15.0/ncbifam.hmm
+hmmpress data/panther/19.0/famhmm/binHmm
+hmmpress data/pfam/37.0/pfam_a.hmm
+rm       data/pirsf/3.10/sf_hmm_all.h3i
+hmmpress data/pirsf/3.10/sf_hmm_all
+hmmpress data/pirsr/2023_05/sr_hmm_all
+rm       data/sfld/4/sfld.hmm.h3i
+hmmpress data/sfld/4/sfld.hmm
+hmmpress data/superfamily/1.75/hmmlib_1.75
 srun -pshort python3 setup.py interproscan.properties
 cd $MODROOT/modulefiles/
 mkdir -p $APP
