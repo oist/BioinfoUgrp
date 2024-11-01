@@ -39,7 +39,7 @@ Other/hifiasm/0.20.0
 Other/interproscan/5.48-83.0
 Other/interproscan/5.60-92.0
 Other/interproscan/5.65-97.0
-Other/interproscan/5.70-102.0
+Other/interproscan/5.71-102.0
 Other/iqtree/2.2.0
 Other/iqtree/2.2.2.5
 Other/juicer/1.6
@@ -2649,7 +2649,7 @@ __END__
 ### Installation on Deigo
 ```bash
 APP=interproscan
-VER=5.70-102.0
+VER=5.71-102.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -2664,15 +2664,12 @@ cd ${VER}
 # Index HMMs, see https://interproscan-docs.readthedocs.io/en/latest/HowToDownload.html#index-hmm-models
 hmmpress data/antifam/7.0/AntiFam.hmm
 hmmpress data/gene3d/4.3.0/gene3d_main.hmm
-rm       data/hamap/2023_05/hamap.hmm.lib.*
 hmmpress data/hamap/2023_05/hamap.hmm.lib
 hmmpress data/ncbifam/15.0/ncbifam.hmm
 hmmpress data/panther/19.0/famhmm/binHmm
 hmmpress data/pfam/37.0/pfam_a.hmm
-rm       data/pirsf/3.10/sf_hmm_all.h3i
 hmmpress data/pirsf/3.10/sf_hmm_all
 hmmpress data/pirsr/2023_05/sr_hmm_all
-rm       data/sfld/4/sfld.hmm.h3i
 hmmpress data/sfld/4/sfld.hmm
 hmmpress data/superfamily/1.75/hmmlib_1.75
 srun -pshort python3 setup.py interproscan.properties
