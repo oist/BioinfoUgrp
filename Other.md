@@ -3097,3 +3097,50 @@ prepend_path("PATH", apphome.."/envs/qiime2-amplicon-2024.5")
 prepend_path("PATH", apphome.."/envs/qiime2-amplicon-2024.5/bin")
 __END__
 ```
+
+## BAMM
+- Home page: https://github.com/macroevolution/bamm
+- Installation: https://github.com/macroevolution/bamm
+
+### Installation on Deigo
+```bash
+APP=bamm
+VER=2.5
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR
+git clone https://github.com/macroevolution/bamm
+mv $APP $VER
+cd $VER
+# compile
+mkdir build
+cd build
+cmake ..
+make -j
+cd $MODROOT/$APP/$VER
+mkdir -p bin
+cd bin
+ln -s $MODROOT/$APP/$VER/build/bamm .
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/macroevolution/bamm")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."bamm")
+whatis("Description: ".."A program for multimodel inference on speciation and trait evolution.")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
