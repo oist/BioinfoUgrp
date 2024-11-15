@@ -22,6 +22,9 @@ From: debian:bookworm
     # Install all locales
     apt install -y locales-all
     
+    # Install python packages for RStudio
+    apt install -y python3-venv python3-pip
+
     # Install the latest R
     apt install -y r-base
     
@@ -75,7 +78,7 @@ From: debian:bookworm
     rm rstudio-*-amd64.deb
     
     # Upgrade R to version 4.4
-    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20241031T212645Z/ sid main\n' >> /etc/apt/sources.list
+    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20241101T025324Z/ sid main\n' >> /etc/apt/sources.list
     apt update
     apt install -y r-base
 
