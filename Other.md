@@ -13,7 +13,7 @@ module load Other/<your-favorite-module>
 
 List of available modules:
 
-```text
+```texthttps://www.ebi.ac.uk/interpro/
 Other/3d-dna/180922
 Other/arima_pipeline/2019.02.08
 Other/assembly_stats/1.0.1
@@ -35,10 +35,11 @@ Other/genescope/2021.03.26
 Other/genomescope/2.0
 Other/gfatools/0.5
 Other/hal/2.2
-Other/hifiasm/0.15.4
+Other/hifiasm/0.20.0
 Other/interproscan/5.48-83.0
 Other/interproscan/5.60-92.0
 Other/interproscan/5.65-97.0
+Other/interproscan/5.71-102.0
 Other/iqtree/2.2.0
 Other/iqtree/2.2.2.5
 Other/juicer/1.6
@@ -51,17 +52,19 @@ Other/minimap2/2.20
 Other/mosdepth/0.3.1
 Other/mugsy/1r2.2
 Other/ncbi-datasets-cli/15.31.3
-Other/ncbi-datasets-cli/16.4.5
+Other/ncbi-datasets-cli/16.33.0
 Other/pairtools/0.3.0
 Other/paml/4.10.6
 Other/parallel/20210622
 Other/pbgzip/2016.08.04
 Other/pbipa/1.3.2
 Other/peregrine/1.6.3
+Other/phyloflash/3.4.2
 Other/phyluce/1.7.2
 Other/preseq/3.1.2
 Other/prokka/1.14.5
 Other/purge_dups/1.2.5
+Other/qiime2-amplicon/2024.5
 Other/raxml-ng-mpi/1.2.0
 Other/SALSA/2.3
 Other/samblaster/0.1.26
@@ -231,7 +234,7 @@ srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
 
 ```bash
 APP=ncbi-datasets-cli
-VER=16.4.5
+VER=16.33.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER
@@ -874,7 +877,7 @@ srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
 
 ```bash
 APP=hifiasm
-VER=0.19.9
+VER=0.20.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -882,26 +885,7 @@ cd $APPDIR
 wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER
 cd $VER && make
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
 
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/chhylp123/hifiasm")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."PacBio, hifi, assembly")
-whatis("Description: ".."Hifiasm: a haplotype-resolved assembler for accurate Hifi reads.")
-
--- Package settings
-prepend_path("PATH", apphome)
-__END__
 ```
 
 ### Example commands for running hifiasm on Deigo
@@ -2665,7 +2649,7 @@ __END__
 ### Installation on Deigo
 ```bash
 APP=interproscan
-VER=5.65-97.0
+VER=5.71-102.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -2678,6 +2662,16 @@ chmod -R g+w interproscan-${VER}
 mv interproscan-${VER} ${VER}
 cd ${VER}
 # Index HMMs, see https://interproscan-docs.readthedocs.io/en/latest/HowToDownload.html#index-hmm-models
+hmmpress data/antifam/7.0/AntiFam.hmm
+hmmpress data/gene3d/4.3.0/gene3d_main.hmm
+hmmpress data/hamap/2023_05/hamap.hmm.lib
+hmmpress data/ncbifam/15.0/ncbifam.hmm
+hmmpress data/panther/19.0/famhmm/binHmm
+hmmpress data/pfam/37.0/pfam_a.hmm
+hmmpress data/pirsf/3.10/sf_hmm_all
+hmmpress data/pirsr/2023_05/sr_hmm_all
+hmmpress data/sfld/4/sfld.hmm
+hmmpress data/superfamily/1.75/hmmlib_1.75
 srun -pshort python3 setup.py interproscan.properties
 cd $MODROOT/modulefiles/
 mkdir -p $APP
@@ -3014,6 +3008,139 @@ whatis("Description: ".."VeryFastTree is a new tool designed for efficient phylo
 
 -- Package settings
 prepend_path("PATH", apphome)
+__END__
+```
+## phyloflash
+- Home page: http://hrgv.github.io/phyloFlash/
+
+### Installation on Deigo
+```bash
+APP=phyloflash
+VER=3.4.2
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
+cd $VER
+# Create new environment named "pf" with phyloflash
+./bin/conda create -n pf $APP
+# Activate environment
+conda activate /bucket/BioinfoUgrp/Other/phyloflash/3.4.2/envs/pf
+# Check that dependencies all installed properly
+# phyloFlash.pl -check_env
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://hrgv.github.io/phyloFlash/")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."rRNA, phylogeny, illumina, transcriptome")
+whatis("Description: ".."phyloFlash is a pipeline to rapidly reconstruct the SSU rRNAs and explore phylogenetic composition of an Illumina (meta)genomic or transcriptomic dataset.")
+
+-- Package settings
+prepend_path("PATH", apphome)
+prepend_path("PATH", apphome.."/envs/pf")
+prepend_path("PATH", apphome.."/envs/pf/bin")
+__END__
+```
+
+
+## QIIME2-amplicon
+- Home page: https://github.com/qiime2/qiime2
+- Installation: https://docs.qiime2.org/2024.5/install/native/#miniconda
+
+### Installation on Deigo
+```bash
+APP=qiime2-amplicon
+VER=2024.5
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
+cd $VER
+# Create new environment
+./bin/conda env create -n $APP-$VER --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.5-py39-linux-conda.yml
+# Activate environment
+conda activate /bucket/BioinfoUgrp/Other/qiime2-amplicon/2024.5/envs/qiime2-amplicon-2024.5
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/qiime2/qiime2")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."DNA, amplicon, metagenome")
+whatis("Description: ".."QIIME 2 is a powerful, extensible, and decentralized microbiome bioinformatics platform that is free, open source, and community developed.")
+
+-- Package settings
+prepend_path("PATH", apphome)
+prepend_path("PATH", apphome.."/envs/qiime2-amplicon-2024.5")
+prepend_path("PATH", apphome.."/envs/qiime2-amplicon-2024.5/bin")
+__END__
+```
+
+## BAMM
+- Home page: https://github.com/macroevolution/bamm
+- Installation: https://github.com/macroevolution/bamm
+
+### Installation on Deigo
+```bash
+APP=bamm
+VER=2.5
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR
+git clone https://github.com/macroevolution/bamm
+mv $APP $VER
+cd $VER
+# compile
+mkdir build
+cd build
+cmake ..
+make -j
+cd $MODROOT/$APP/$VER
+mkdir -p bin
+cd bin
+ln -s $MODROOT/$APP/$VER/build/bamm .
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/macroevolution/bamm")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."bamm")
+whatis("Description: ".."A program for multimodel inference on speciation and trait evolution.")
+
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
 __END__
 ```
 

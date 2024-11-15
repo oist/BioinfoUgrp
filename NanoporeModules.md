@@ -57,15 +57,15 @@ Dorado
 ### Example module update on Saion
 
 ```
-VER=0.7.0
-cd /bucket/BioinfoUgrp/Dorado/
+VER=0.7.3
+cd /bucket/BioinfoUgrp/Nanopore/Dorado/
 FILE_TO_DOWNLOAD=dorado-${VER}-linux-x64.tar.gz
 wget https://cdn.oxfordnanoportal.com/software/analysis/$FILE_TO_DOWNLOAD 
 tar xvfz $FILE_TO_DOWNLOAD
 rm $FILE_TO_DOWNLOAD
 mv dorado-${VER}* $VER
 cd /apps/.bioinfo-ugrp-modulefiles/Dorado
-cp 0.0.1 $VER
+cp 0.7.0 $VER
 ```
 
 The config file contains:
