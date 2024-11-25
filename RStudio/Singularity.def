@@ -31,7 +31,8 @@ From: debian:bookworm
     # Install development packages
     apt install -y r-base-dev git libssl-dev libclang-dev libxml2-dev \
       libcurl4-openssl-dev libssl-dev libfftw3-dev libtiff-dev libgsl-dev\
-      libfontconfig1-dev libharfbuzz-dev libfribidi-dev
+      libfontconfig1-dev libharfbuzz-dev libfreetype-dev libfribidi-dev \
+      librsvg2-dev
     apt install -y libproj-dev # For proj4, for ggmsa
     apt install -y libglpk-dev # For igraph and others
     apt install -y libboost-all-dev # For GenomicBreaks and other packages
