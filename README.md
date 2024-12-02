@@ -133,4 +133,4 @@ We have a very basic implementation of Alpha fold 2.1.1 within the user group mo
 
 ### Nanopore
 
-We have modules for [basecalling Nanopore](NanoporeModules.md) data, in particular for _Guppy_ and _Rerio_.
+We have modules for [basecalling Nanopore](NanoporeModules/README.md) data, in particular for _Guppy_ and _Rerio_.
