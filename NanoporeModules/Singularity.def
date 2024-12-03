@@ -1,0 +1,29 @@
+Bootstrap: docker
+From: debian:bookworm
+
+%runscript
+    exec $(basename "$SINGULARITY_CONTAINER") "$@"
+
+%post
+    # Update the image
+    apt update
+    apt upgrade -y
+    
+    # Add a package needed to suppress some debconf error messages
+    apt install -y whiptail
+    
+    # Install all locales
+    apt install -y locales-all
+    
+    # Install pip
+    apt install -y python3-pip
+
+    # Install development libraries
+    apt install -y libbz2-dev liblzma-dev
+
+    # Install Nanopore modules with pip
+    pip install --break-system-packages duplex-tools medaka ont-fast5-api ont-remora pod5 pyabpoa
+
+    # Remove apt
+    apt clean
+    apt -y purge apt --allow-remove-essential --auto-remove

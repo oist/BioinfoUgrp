@@ -1,40 +1,8 @@
 Modules related to Nanopore sequencing
 ======================================
 
-Usage
------
-
-```
-module load bioinfo-ugrp-modules
-module load Guppy
-# If needed:
-module load Rerio
-```
-
-Note that for GPU acceleration on _Saion_, `srun` needs `-pgpu --gres gpu:1` and `guppy_basecaller` needs `--device auto`.
-
-Please ask further questions on the _BioinfoUgrp_ group on [Teams](https://teams.microsoft.com/l/team/19%3a3183bd7fe2844138a49996a2bd376873%40thread.tacv2/conversations?groupId=cc78e114-c544-43e2-b4b1-29c7428aa305&tenantId=d8c0fb8d-bb56-44bb-9f4a-c58e7465652e) (OIST login needed).
-
-Guppy
------
-
- - Homepage: https://community.nanoporetech.com/protocols/Guppy-protocol
- - Source code: Proprietary.
-
-### Example module update on Saion
-
-```
-VER=6.5.7
-cd /bucket/BioinfoUgrp/Guppy/
-wget https://mirror.oxfordnanoportal.com/software/analysis/ont-guppy-${VER}-1.el7.x86_64.rpm
-rpm2cpio ont-guppy-${VER}-1.el7.x86_64.rpm | cpio -idmv
-mkdir $VER
-mv opt $VER
-cd /apps/.bioinfo-ugrp-modulefiles/Guppy
-cp 2.3.5 $VER
-```
-
-### Example commands for running Guppy on Saion
+Usage example
+-------------
 
 ```
 module load bioinfo-ugrp-modules
@@ -48,13 +16,44 @@ srun --time 2-0 --mem 20G -pgpu --gres gpu:1 --pty guppy_basecaller \
    -s <where to write the output>
 ```
 
-Dorado
-------
+Note that for GPU acceleration on _Saion_, `srun` needs `-pgpu --gres gpu:1` and `guppy_basecaller` needs `--device auto`.
+
+Please ask further questions on the _BioinfoUgrp_ group on [Teams](https://teams.microsoft.com/l/team/19%3a3183bd7fe2844138a49996a2bd376873%40thread.tacv2/conversations?groupId=cc78e114-c544-43e2-b4b1-29c7428aa305&tenantId=d8c0fb8d-bb56-44bb-9f4a-c58e7465652e) (OIST login needed).
+
+Module building
+---------------
+
+### Singularity image
+
+Our [singularity image](./Singularity.def) contains the latest modules
+available through `pip`.
+
+Example command to build the image:
+
+    singularity build --fakeroot NanoporeModules_2024-12-03.sif Singularity.def
+
+### Guppy
+
+ - Homepage: https://community.nanoporetech.com/protocols/Guppy-protocol
+ - Source code: Proprietary.
+
+#### Example module update:
+
+```
+VER=6.5.7
+cd /bucket/BioinfoUgrp/Guppy/
+wget https://mirror.oxfordnanoportal.com/software/analysis/ont-guppy-${VER}-1.el7.x86_64.rpm
+rpm2cpio ont-guppy-${VER}-1.el7.x86_64.rpm | cpio -idmv
+mkdir $VER
+mv opt $VER
+cd /apps/.bioinfo-ugrp-modulefiles/Guppy
+cp 2.3.5 $VER
+```
+
+### Dorado
 
  - Homepage: <https://github.com/nanoporetech/dorado>
  - License: Oxford Nanopore Technologies PLC. Public License Version 1.0
-
-### Example module update on Saion
 
 ```
 VER=0.7.3
@@ -150,13 +149,10 @@ srun -pgpu dorado basecaller -h
 srun -pgpu --gres gpu:V100:1 --pty --mem 20G dorado basecaller $DORADO_MODELS/the_model_you_want path_to_POD5_or_FAST5_files
 ```
 
-Rerio
------
+### Rerio
 
  - Homepage: https://github.com/nanoporetech/rerio
  - Source code: Proprietary (the GitHub repository is only a facility to dowload the models from ONT).
-
-### Notes on module creation on Saion
 
 Important: there are some additions and deletions of models without change
 of version number.  In that case I download and add the models by hand, without
@@ -203,7 +199,7 @@ system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\$\{
 __END__
 ```
 
-### Example commands for running Guppy on Saion
+### Example commands for running Rerio models with Guppy on Saion
 
 ```
 module load bioinfo-ugrp-modules
@@ -223,8 +219,7 @@ srun --time 2-0 --mem 20G -pgpu --gres gpu:1 --pty \
     --device auto
 ```
 
-Medaka
-------
+### Medaka
 
  - Homepage: https://github.com/nanoporetech/medaka
  - Source code: MPL-2.0 License 
@@ -278,7 +273,24 @@ ont-fast5-api
  - Homepage: https://pypi.org/project/ont-fast5-api/
  - Sourcecode: https://github.com/nanoporetech/ont_fast5_api
 
-### Installation on Deigo
+#### Instalation with Singularity
+
+First, create a proper Singularity image (see at the top).  Then:
+
+```
+APP=ont_fast5_api
+MODROOT=/bucket/BioinfoUgrp/
+APPDIR=$MODROOT/$APP
+VER=3.3.0
+VER=3.3.0
+mkdir -p $APPDIR/$VER/bin
+cd $APPDIR/$VER/bin
+ln -s 
+
+
+```
+
+#### Installation with pip (old)
 
 ```
 module load python/3.7.3
@@ -317,93 +329,45 @@ prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
 __END__
 ```
 
-### Installation on Saion
-
-```
-module load python/3.7.3
-APP=ont_fast5_api
-MODROOT=/bucket/BioinfoUgrp/
-APPDIR=$MODROOT/$APP
-VER=3.3.0
-mkdir -p $APPDIR/$VER
-cd $APPDIR/$VER
-PYTHONUSERBASE=$(pwd) pip3 install --user ont_fast5_api
-cd /apps/.bioinfo-ugrp-modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER
-#%Module1.0##################################################################
-#
-set modulehome /bucket/BioinfoUgrp
-set appname    [lrange [split [module-info name] {/}] 0 0]
-set appversion [lrange [split [module-info name] {/}] 1 1]
-set apphome    $modulehome/$appname/$appversion
-
-## URL of application homepage:
-set appurl     https://pypi.org/project/ont-fast5-api/
-
-## Short description of package:
-module-whatis   "Oxford Nanopore Technologies fast5 API software"
-
-## Load any needed modules:
-module load python/3.7.3
-
-## Modify as needed, removing any variables not needed.  Non-path variables
-## can be set with "setenv VARIABLE value".
-prepend-path    PATH            $apphome/bin
-prepend-path    PYTHONPATH      $apphome/lib/python3.7/site-packages/
-
-## These lines are for logging module usage.  Don't remove them:
-set modulefile [lrange [split [module-info name] {/}] 0 0]
-set version    [lrange [split [module-info name] {/}] 1 1]
-set action     [module-info mode]
-system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\$\{SLURM_JOB_ID=NOJOB\},APP=$modulefile,VERSION=$version,ACTION=$action
-## Don't remove this line!  For some reason, it has to be here...
-__END__
-```
-
-POD5 Python Package
--------------------
+### POD5 Python Package
 
 Appears to be the successor of `pod5-format-tools`
 
  - Homepage: https://pypi.org/project/pod5/
  - Sourcecode: https://github.com/nanoporetech/pod5-file-format
 
-### Installation on Saion
+```
+APP=pod5
+MODROOT=/bucket/BioinfoUgrp/Nanopore
+APPDIR=$MODROOT/$APP
+VER=0.3.10
+mkdir -p $APPDIR/$VER/bin
+cd $APPDIR/$VER/bin
+ln -s ../../../Singularity/NanoporeModules_2024-12-02.sif pod5
+```
+
+Example modulefile:
 
 ```
-module load python/3.7.3
-APP=pod5
-MODROOT=/bucket/BioinfoUgrp/
-APPDIR=$MODROOT/$APP
-VER=0.1.5
-mkdir -p $APPDIR/$VER
-cd $APPDIR/$VER
-PYTHONUSERBASE=$(pwd) pip3 install --user --upgrade pip
-PYTHONUSERBASE=$(pwd) bin/pip3 install --user --upgrade $APP
-cd /apps/.bioinfo-ugrp-modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER
 #%Module1.0##################################################################
 #
-set modulehome /bucket/BioinfoUgrp
+set modulehome /bucket/BioinfoUgrp/Nanopore
 set appname    [lrange [split [module-info name] {/}] 0 0]
 set appversion [lrange [split [module-info name] {/}] 1 1]
 set apphome    $modulehome/$appname/$appversion
 
 ## URL of application homepage:
-set appurl     https://pypi.org/project/pod5-format-tools/
+set appurl     https://pypi.org/project/pod5/
 
 ## Short description of package:
 module-whatis   "Oxford Nanopore Technologies POD5 tools"
 
 ## Load any needed modules:
-module load python/3.7.3
+module load singularity
 
 ## Modify as needed, removing any variables not needed.  Non-path variables
 ## can be set with "setenv VARIABLE value".
 prepend-path    PATH            $apphome/bin
-prepend-path    PYTHONPATH      $apphome/lib/python3.7/site-packages/
 
 ## These lines are for logging module usage.  Don't remove them:
 set modulefile [lrange [split [module-info name] {/}] 0 0]
@@ -411,7 +375,6 @@ set version    [lrange [split [module-info name] {/}] 1 1]
 set action     [module-info mode]
 system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\$\{SLURM_JOB_ID=NOJOB\},APP=$modulefile,VERSION=$version,ACTION=$action
 ## Don't remove this line!  For some reason, it has to be here...
-__END__
 ```
 
 vbz compression plugin
