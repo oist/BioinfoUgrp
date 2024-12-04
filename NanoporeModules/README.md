@@ -32,23 +32,6 @@ Example command to build the image:
 
     singularity build --fakeroot NanoporeModules_2024-12-03.sif Singularity.def
 
-### Guppy
-
- - Homepage: https://community.nanoporetech.com/protocols/Guppy-protocol
- - Source code: Proprietary.
-
-#### Example module update:
-
-```
-VER=6.5.7
-cd /bucket/BioinfoUgrp/Guppy/
-wget https://mirror.oxfordnanoportal.com/software/analysis/ont-guppy-${VER}-1.el7.x86_64.rpm
-rpm2cpio ont-guppy-${VER}-1.el7.x86_64.rpm | cpio -idmv
-mkdir $VER
-mv opt $VER
-cd /apps/.bioinfo-ugrp-modulefiles/Guppy
-cp 2.3.5 $VER
-```
 
 ### Dorado
 
@@ -425,4 +408,25 @@ See [https://github.com/nanoporetech/ont_fast5_api](https://github.com/nanoporet
 -- Package settings
 setenv("HDF5_PLUGIN_PATH", apphome.."/hdf_plugin")
 __END__
+```
+
+### Guppy
+
+Guppy was the default Nanopore basecaller before Dorado and after Albatros.  No further updates are expected.
+We still keep a lot of modules of older versions, for the sake of reproducible research.
+
+ - Homepage: https://community.nanoporetech.com/protocols/Guppy-protocol
+ - Source code: Proprietary.
+
+#### Example module update:
+
+```
+VER=6.5.7
+cd /bucket/BioinfoUgrp/Guppy/
+wget https://mirror.oxfordnanoportal.com/software/analysis/ont-guppy-${VER}-1.el7.x86_64.rpm
+rpm2cpio ont-guppy-${VER}-1.el7.x86_64.rpm | cpio -idmv
+mkdir $VER
+mv opt $VER
+cd /apps/.bioinfo-ugrp-modulefiles/Guppy
+cp 2.3.5 $VER
 ```
