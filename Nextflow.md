@@ -125,8 +125,9 @@ APP=nf-core
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 VER=3.0.2
-cd $APPDIR/bin
-singularity pull docker://nfcore/tools:3.0.2
+mkdir -p $APPDIR/$VER/bin
+cd $APPDIR/$VER/bin
+singularity pull docker://nfcore/tools:$VER
 mv tools_${VER}.sif nf-core
 cat <<"__END__" > pre-commit
 #!/bin/sh
