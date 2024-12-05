@@ -57,7 +57,6 @@ Other/pairtools/0.3.0
 Other/paml/4.10.6
 Other/parallel/20210622
 Other/pbgzip/2016.08.04
-Other/pbipa/1.3.2
 Other/peregrine/1.6.3
 Other/phyloflash/3.4.2
 Other/phyluce/1.7.2
@@ -1105,51 +1104,7 @@ srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
 - Home page: https://github.com/PacificBiosciences/pbipa
 - Source code: https://anaconda.org/bioconda/pbipa
 
-### Installation on Deigo
-
-```bash
-APP=pbipa
-VER=1.3.2
-MODROOT=/bucket/BioinfoUgrp/Other
-APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR
-cd $APPDIR
-curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER && rm Miniconda3-latest-Linux-x86_64.sh
-cd $VER
-./bin/conda config --add channels defaults
-./bin/conda config --add channels conda-forge
-./bin/conda config --add channels bioconda
-./bin/conda install -y $APP=$VER
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/PacificBiosciences/pbipa")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."PacBio, HiFi, assembly")
-whatis("Description: ".."Improved Phased Assembler.")
-
--- Package settings
-prepend_path("PATH", apphome.."/bin")
-__END__
-```
-
-### Example commands for running IPA on Deigo
-
-```bash
-module load Other/pbipa
-srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
-    ipa <arguments>
-```
+IPA was installed with conda before and we had to remove the module for that reason.  Please let us know if you want IPA back.
 
 ## DeepVariant
 
@@ -2720,53 +2675,6 @@ if {[ module-info mode load ]} then {
 #prepend-path    PATH            $apphome
 
 #EOF
-__END__
-```
-
-## OceanParcels
-
-Module created for the mini course on Particle Tracking Simulation using Ocean Parcels (<https://groups.oist.jp/grad/mini-course-particle-tracking-simulation-using-ocean-parcels>)
-
-```
-APP=parcels
-MODROOT=/bucket/BioinfoUgrp/Other
-APPDIR=$MODROOT/$APP
-VER=2.4.0
-mkdir -p $APPDIR
-cd $APPDIR
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
-cd $VER
-./bin/conda create -n $APP
-./bin/conda install --yes -n $APP -c conda-forge $APP
-./bin/conda install --yes -n $APP jupyter
-./bin/conda install --yes -n $APP cmocean
-./bin/conda install --yes -n $APP cartopy
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://oceanparcels.org/")
-whatis("Category: ".."Marine sciences")
-whatis("Keywords: ".."Simulator")
-whatis("Description: ".." Probably A Really Computationally Efficient Lagrangian Simulator.")
-
-help([[OceanParcels installed with conda.
-
-See https://oceanparcels.org/ for help.]])
-
--- Package settings
-setenv("JUPYTER_CONFIG_DIR", "/apps/free81/python/3.7.3/share/jupyter")
-prepend_path("PATH", apphome.."/envs/parcels/bin")
-prepend_path("PYTHONPATH", apphome.."/envs/parcels/lib/python3.10/site-packages")
 __END__
 ```
 
