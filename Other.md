@@ -2974,6 +2974,7 @@ __END__
 ## QIIME2-amplicon
 - Home page: https://github.com/qiime2/qiime2
 - Installation: https://docs.qiime2.org/2024.5/install/native/#miniconda
+- Note: switched to miniforge installation on 2024/12/12
 
 ### Installation on Deigo
 ```bash
@@ -2983,13 +2984,11 @@ MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
-cd $VER
-# Create new environment
-./bin/conda env create -n $APP-$VER --file https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.5-py39-linux-conda.yml
-# Activate environment
-conda activate /bucket/BioinfoUgrp/Other/qiime2-amplicon/2024.5/envs/qiime2-amplicon-2024.5
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER && rm Miniforge3-$(uname)-$(uname -m).sh && cd $VER
+source ./bin/activate
+./bin/mamba env create -p $MODROOT/$APP/$VER/envs/$APP-$VER --file=https://data.qiime2.org/distro/amplicon/qiime2-amplicon-2024.5-py39-linux-conda.yml
+# conda activate /bucket/BioinfoUgrp/Other/qiime2-amplicon/2024.5/envs/qiime2-amplicon-2024.5
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
