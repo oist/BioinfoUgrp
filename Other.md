@@ -59,7 +59,7 @@ Other/parallel/20210622
 Other/pbgzip/2016.08.04
 Other/peregrine/1.6.3
 Other/phyloflash/3.4.2
-Other/phyluce/1.7.2
+Other/phyluce/1.7.3
 Other/preseq/3.1.2
 Other/prokka/1.14.5
 Other/purge_dups/1.2.5
@@ -2763,21 +2763,21 @@ __END__
 ## PHYLUCE
 - Home page: https://phyluce.readthedocs.io/en/latest/
 - Source code: https://phyluce.readthedocs.io/en/latest/installation.html
+- - Note: switched to miniforge installation on 2024/12/11
 
 ### Installation on Deigo
 ```
 APP=phyluce
-VER=1.7.2
+VER=1.7.3
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
-curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER && rm Miniconda3-latest-Linux-x86_64.sh
-cd $VER
-wget https://raw.githubusercontent.com/faircloth-lab/phyluce/v1.7.2/distrib/phyluce-1.7.2-py36-Linux-conda.yml
-./bin/conda env create -n phyluce-1.7.2 --file phyluce-1.7.2-py36-Linux-conda.yml
-# ./bin/conda activate phyluce-1.7.2
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER && rm Miniforge3-$(uname)-$(uname -m).sh && cd $VER
+source ./bin/activate
+./bin/mamba env create -p $MODROOT/$APP/$VER/envs/phyluce-1.7.3 --file=https://raw.githubusercontent.com/faircloth-lab/phyluce/v1.7.3/distrib/phyluce-1.7.3-py36-Linux-conda.yml
+### modulefile
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER
@@ -2791,18 +2791,19 @@ set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
 set appurl     https://phyluce.readthedocs.io/en/latest/index.html
 
 ## Short description of package:
-module-whatis  "Phyluce installed using Miniconda3."
+module-whatis  "Phyluce installed using Miniforge3."
 
 ## Load any needed modules:
 
 ## Modify as needed, removing any variables not needed.
 ## Non-path variables can be set with "setenv VARIABLE value"
 prepend-path    PATH            $apphome/bin
-prepend-path    PATH            $apphome/envs/phyluce-1.7.2
-prepend-path    PATH            $apphome/envs/phyluce-1.7.2/bin
+prepend-path    PATH            $apphome/envs/phyluce-1.7.3
+prepend-path    PATH            $apphome/envs/phyluce-1.7.3/bin
 prepend-path    LD_LIBRARY_PATH $apphome/lib
 prepend-path    PYTHONPATH	$apphome/bin
 __END__
+
 ```
 
 ## ASTRAL
@@ -2921,7 +2922,7 @@ __END__
 ```
 ## phyloflash
 - Home page: http://hrgv.github.io/phyloFlash/
-
+- Note: switched to miniforge installation on 2024/12/12
 ### Installation on Deigo
 ```bash
 APP=phyloflash
@@ -2930,15 +2931,21 @@ MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-sh Miniconda3-latest-Linux-x86_64.sh -b -p $APPDIR/$VER
-cd $VER
+curl -L -O "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
+bash Miniforge3-$(uname)-$(uname -m).sh -b -p $APPDIR/$VER && rm Miniforge3-$(uname)-$(uname -m).sh && cd $VER
+source ./bin/activate
+# add the channel to the configuration for the active environment
+# https://stackoverflow.com/questions/40616381/can-i-add-a-channel-to-a-specific-conda-environment
+./bin/conda config --env --add channels defaults
+./bin/conda config --env --add channels bioconda
+./bin/conda config --env --add channels conda-forge
 # Create new environment named "pf" with phyloflash
+#./bin/mamba env create -p $MODROOT/$APP/$VER/envs/pf $APP #### needs yml file
 ./bin/conda create -n pf $APP
-# Activate environment
-conda activate /bucket/BioinfoUgrp/Other/phyloflash/3.4.2/envs/pf
-# Check that dependencies all installed properly
-# phyloFlash.pl -check_env
+# ./bin/conda activate $MODROOT/$APP/$VER/envs/pf #### CondaError: Run 'conda init' before 'conda activate'
+# export PATH=$MODROOT/$APP/$VER/envs/pf/bin:$PATH
+# ./envs/pf/bin/phyloFlash.pl -check_env
+### modulefile
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
