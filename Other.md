@@ -2800,7 +2800,7 @@ module-whatis  "Phyluce installed using Miniforge3."
 prepend-path    PATH            $apphome/bin
 prepend-path    PATH            $apphome/envs/phyluce-1.7.3
 prepend-path    PATH            $apphome/envs/phyluce-1.7.3/bin
-prepend-path    LD_LIBRARY_PATH $apphome/lib
+prepend-path    PATH $apphome/lib
 prepend-path    PYTHONPATH	$apphome/bin
 __END__
 
@@ -2841,7 +2841,7 @@ module-whatis  "ASTRAL is a tool for estimating an unrooted species tree given a
 ## Modify as needed, removing any variables not needed.
 ## Non-path variables can be set with "setenv VARIABLE value"
 prepend-path    PATH            $apphome    
-prepend-path    LD_LIBRARY_PATH $apphome/lib
+prepend-path    PATH $apphome/lib
 prepend-path    ASTRAL      $apphome/astral.5.7.8.jar
 __END__
 ```
