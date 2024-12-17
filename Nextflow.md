@@ -27,7 +27,7 @@ Source: https://github.com/nextflow-io/nextflow
 APP=Nextflow2
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=24.10.2
+VER=24.10.3
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-dist
