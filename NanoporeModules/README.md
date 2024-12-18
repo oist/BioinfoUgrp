@@ -41,7 +41,7 @@ Example command to build the image:
  - Update instructions:
 
 ```
-VER=0.8.3
+VER=0.9.0
 cd /bucket/BioinfoUgrp/Nanopore/Dorado/
 FILE_TO_DOWNLOAD=dorado-${VER}-linux-x64.tar.gz
 wget https://cdn.oxfordnanoportal.com/software/analysis/$FILE_TO_DOWNLOAD 
@@ -54,8 +54,8 @@ cp 0.7.0 $VER
 
 ### Dorado models
 
-The basecall models are distributed separately and can be downloaded
-with the `dorado` command.  They are also available as a `Dorado-models`
+The basecall models are distributed separately to be downloaded
+with the `dorado` command.  They are available through `Dorado-models`
 module that exports their path to the `$DORADO_MODELS` environment
 variable, and which is loaded by the `Dorado` module.
 
