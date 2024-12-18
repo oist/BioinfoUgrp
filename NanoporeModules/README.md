@@ -61,7 +61,8 @@ variable, and which is loaded by the `Dorado` module.
 
 At the moment the contents of the `Dorado-models/latest` module are
 downloaded by hand in `/bucket/BioinfoUgrp/Dorado-models/latest/`
-with the `dorado download` command.
+with the `dorado download` command.  Then the older models are copied
+in the new directory with a command such as `for d in $(ls latest); do if [ ! -d new/$d ] ;then cp -av latest/$d new/$d ; fi; done`.
 
 Template module file: [Dorado-models.tcl](./Dorado-models.tcl)
 
