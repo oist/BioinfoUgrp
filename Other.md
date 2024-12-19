@@ -35,7 +35,7 @@ Other/genescope/2021.03.26
 Other/genomescope/2.0
 Other/gfatools/0.5
 Other/hal/2.2
-Other/hifiasm/0.23.0
+Other/hifiasm/0.24.0
 Other/interproscan/5.48-83.0
 Other/interproscan/5.60-92.0
 Other/interproscan/5.65-97.0
@@ -876,7 +876,7 @@ srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
 
 ```bash
 APP=hifiasm
-VER=0.23.0
+VER=0.24.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
