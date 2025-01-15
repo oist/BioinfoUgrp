@@ -124,7 +124,7 @@ ml bioinfo-ugrp-modules Nextflow2
 APP=nf-core
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=3.1.0
+VER=3.1.1
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER/bin
 singularity pull docker://nfcore/tools:$VER
