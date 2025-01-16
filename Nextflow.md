@@ -131,7 +131,7 @@ singularity pull docker://nfcore/tools:$VER
 mv tools_${VER}.sif nf-core
 cat <<"__END__" > pre-commit
 #!/bin/sh
-singularity exec nf-core pre-commit "$@"
+singularity exec $(dirname $0)/nf-core pre-commit "$@"
 __END__
 chmod 775 pre-commit
 cd $MODROOT/$APP/modulefiles/
