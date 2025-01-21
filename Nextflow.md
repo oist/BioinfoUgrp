@@ -130,5 +130,6 @@ mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user pre-commit
+cd $MODROOT/$APP/modulefiles/
 cp 3.1.2.lua ${VER}.lua
 ```
