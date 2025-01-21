@@ -121,19 +121,14 @@ To install a new latest version, update the `VER` variable below and run the com
 ```
 ml purge
 ml bioinfo-ugrp-modules Nextflow2
+ml python/3.11.4
 APP=nf-core
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=3.1.1
-mkdir -p $APPDIR/$VER/bin
-cd $APPDIR/$VER/bin
-singularity pull docker://nfcore/tools:$VER
-mv tools_${VER}.sif nf-core
-cat <<"__END__" > pre-commit
-#!/bin/sh
-singularity exec $(dirname $0)/nf-core pre-commit "$@"
-__END__
-chmod 775 pre-commit
-cd $MODROOT/$APP/modulefiles/
-cp 3.0.2.lua ${VER}.lua
+VER=3.1.2
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 
+PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user pre-commit
+cp 3.1.2.lua ${VER}.lua
 ```
