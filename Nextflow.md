@@ -133,3 +133,35 @@ PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user pre-commit
 cd $MODROOT/$APP/modulefiles/
 cp 3.1.2.lua ${VER}.lua
 ```
+
+Contents of 3.1.2.lua:
+
+```
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp/Other"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+-- setenv("Nextflow_MOD_HOME", apphome)
+-- setenv("Nextflow_MOD_VERSION", appversion)
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://nf-co.re/docs/nf-core-tools")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."pipeline, SLURM")
+whatis("Description: ".." Python package with helper tools for the nf-core community.")
+
+help([[nf-core tools installed with pip
+
+See https://nf-co.re/ for help.]])
+
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome.."/bin")
+prepend_path("PYTHONPATH", apphome.."/lib/python3.11/site-packages/")
+depends_on("Nextflow2")
+depends_on("python/3.11.4")
+depends_on("Other/nf-test")
+```
