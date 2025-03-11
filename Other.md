@@ -60,6 +60,46 @@ srun -p compute -c 1 --mem 10G -t 00:10:00 --pty \
     assembly-stats contigs.fasta
 ```
 
+## ASTRAL
+- Home page: https://github.com/smirarab/ASTRAL
+- Source code: https://github.com/smirarab/ASTRAL
+
+### Installation on Deigo
+```
+APP=astral
+VER=5.7.8
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://github.com/smirarab/ASTRAL/raw/master/Astral.$VER.zip && unzip Astral.$VER.zip && rm Astral.$VER.zip
+mv Astral $VER && cd $VER
+chmod g+r * && chmod g+x *
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/smirarab/ASTRAL
+
+## Short description of package:
+module-whatis  "ASTRAL is a tool for estimating an unrooted species tree given a set of unrooted gene trees. To be called in script with: java -jar dollarASTRAL. Replace dollar by the actual symbol"
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome    
+prepend-path    PATH $apphome/lib
+prepend-path    ASTRAL      $apphome/astral.5.7.8.jar
+__END__
+```
+
 ## ASTER
 
 - Home page: https://github.com/chaoszhang/ASTER
@@ -68,8 +108,8 @@ srun -p compute -c 1 --mem 10G -t 00:10:00 --pty \
 ### Installation on Deigo
 
 ```bash
-APP=ASTER
-VER=2025-03-09
+APP=aster
+VER=1.20.4.6
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -100,14 +140,6 @@ whatis("Description: ".." Accurate Species Tree EstimatoR: a family of optimatio
 -- Package settings
 prepend_path("PATH", apphome)
 __END__
-```
-
-### Example commands for running bwa on Deigo
-
-```bash
-module load Other/bwa
-srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
-    bwa mem <arguments>
 ```
 
 ## pbgzip
@@ -2786,83 +2818,6 @@ prepend-path    PATH $apphome/lib
 prepend-path    PYTHONPATH	$apphome/bin
 __END__
 
-```
-
-## ASTRAL
-- Home page: https://github.com/smirarab/ASTRAL
-- Source code: https://github.com/smirarab/ASTRAL
-
-### Installation on Deigo
-```
-APP=astral
-VER=5.7.8
-MODROOT=/bucket/BioinfoUgrp/Other
-APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR
-cd $APPDIR
-wget https://github.com/smirarab/ASTRAL/raw/master/Astral.$VER.zip && unzip Astral.$VER.zip && rm Astral.$VER.zip
-mv Astral $VER && cd $VER
-chmod g+r * && chmod g+x *
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER
-#%Module1.0##################################################################
-set approot    [lrange [split [module-info name] {/}] 0 0]
-set appname    [lrange [split [module-info name] {/}] 1 1]
-set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
-
-## URL of application homepage:
-set appurl     https://github.com/smirarab/ASTRAL
-
-## Short description of package:
-module-whatis  "ASTRAL is a tool for estimating an unrooted species tree given a set of unrooted gene trees. To be called in script with: java -jar dollarASTRAL. Replace dollar by the actual symbol"
-
-## Load any needed modules:
-
-## Modify as needed, removing any variables not needed.
-## Non-path variables can be set with "setenv VARIABLE value"
-prepend-path    PATH            $apphome    
-prepend-path    PATH $apphome/lib
-prepend-path    ASTRAL      $apphome/astral.5.7.8.jar
-__END__
-```
-
-## ASTER
-- Home page: https://github.com/chaoszhang/ASTER
-
-### Installation on Deigo
-```
-APP=aster
-VER=1.15
-MODROOT=/bucket/BioinfoUgrp/Other
-APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR
-cd $APPDIR
-git clone https://github.com/chaoszhang/ASTER && mv ASTER $VER && cd $VER
-# git branch -a
-git checkout remotes/origin/Linux
-make
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/chaoszhang/ASTER")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."ASTER")
-whatis("Description: ".."Accurate Species Tree EstimatoR")
-
--- Package settings
-prepend_path("PATH", apphome.."/bin")
-__END__
 ```
 
 ## VeryFastTree
