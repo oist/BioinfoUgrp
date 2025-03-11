@@ -1,87 +1,20 @@
 # A collection of general bioinformatics modules
 
-## TO DO
-- Better to categorize modules into smaller subsets?
-
-## Usage
+To use the modules, load the `bioinfo-ugrp-modules` metamodule first.
 
 ```bash
-module load bioinfo-ugrp-modules
+ml bioinfo-ugrp-modules
 ml av Other
-module load Other/<your-favorite-module>
+ml Other/<your-favorite-module>
 ```
 
-List of available modules:
-
-```texthttps://www.ebi.ac.uk/interpro/
-Other/3d-dna/180922
-Other/arima_pipeline/2019.02.08
-Other/assembly_stats/1.0.1
-Other/asset/1.0.3
-Other/aster/1.15
-Other/astral/5.7.8
-Other/BEAST/1.10.4
-Other/bioawk/1.0
-Other/BUSCO/5.1.3
-Other/bwa/0.7.17
-Other/cactus/2.4.0
-Other/canu/2.1.1
-Other/DAZZ_DB/2021.03.30
-Other/deepvariant/1.1.0
-Other/DIAMOND/2.0.4.142
-Other/FASTK/2021.05.27
-Other/fasttree/2.1.11
-Other/genescope/2021.03.26
-Other/genomescope/2.0
-Other/gfatools/0.5
-Other/hal/2.2
-Other/hifiasm/0.24.0
-Other/interproscan/5.48-83.0
-Other/interproscan/5.60-92.0
-Other/interproscan/5.65-97.0
-Other/interproscan/5.71-102.0
-Other/iqtree/2.2.0
-Other/iqtree/2.2.2.5
-Other/juicer/1.6
-Other/k8/0.2.5
-Other/KMC/genomescope
-Other/make_telomere_bed/2021.05.20
-Other/merqury/1.3
-Other/meryl/1.3
-Other/minimap2/2.20
-Other/mosdepth/0.3.1
-Other/mugsy/1r2.2
-Other/ncbi-datasets-cli/16.43.0
-Other/pairtools/0.3.0
-Other/paml/4.10.6
-Other/parallel/20210622
-Other/pbgzip/2016.08.04
-Other/peregrine/1.6.3
-Other/phyloflash/3.4.2
-Other/phyluce/1.7.3
-Other/preseq/3.1.2
-Other/prokka/1.14.5
-Other/purge_dups/1.2.5
-Other/qiime2-amplicon/2024.5
-Other/raxml-ng-mpi/1.2.0
-Other/SALSA/2.3
-Other/samblaster/0.1.26
-Other/seqkit/2.0.0
-Other/smudgeplot/0.2.3
-Other/SPAdes/3.15.1
-Other/TCSF_IMRA/2.7.3
-Other/trf/4.09.1
-Other/veryfasttree/4.0.2
-Other/winnowmap/2.03
-```
-
-# Installation
+Here are installation snippets to help the members of the bioinfo user group to update the modules.
 
 ## assembly-stats
 
 - Home page: https://github.com/sanger-pathogens/assembly-stats
 - Source code: https://github.com/sanger-pathogens/assembly-stats
-- 
+
 ### Installation on Deigo
 
 ```bash
