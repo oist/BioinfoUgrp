@@ -127,6 +127,56 @@ srun -p compute -c 1 --mem 10G -t 00:10:00 --pty \
     assembly-stats contigs.fasta
 ```
 
+## ASTER
+
+- Home page: https://github.com/chaoszhang/ASTER
+- Source code: https://github.com/chaoszhang/ASTER
+
+### Installation on Deigo
+
+```bash
+APP=ASTER
+VER=2025-03-09
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://github.com/chaoszhang/ASTER/archive/refs/heads/Linux.zip
+unzip Linux.zip
+cd ASTER-Linux
+make
+cd ..
+mv ASTER-Linux/bin $VER
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/chaoszhang/ASTER")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."ASTER")
+whatis("Description: ".." Accurate Species Tree EstimatoR: a family of optimation algorithms for species tree inference (including ASTRAL & CASTER).")
+
+-- Package settings
+prepend_path("PATH", apphome)
+__END__
+```
+
+### Example commands for running bwa on Deigo
+
+```bash
+module load Other/bwa
+srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
+    bwa mem <arguments>
+```
+
 ## pbgzip
 
 - Home page: https://github.com/nh13/pbgzip
