@@ -2619,7 +2619,7 @@ __END__
 ### Installation on Deigo
 ```bash
 APP=interproscan
-VER=5.71-102.0
+VER=5.73-104.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -2631,64 +2631,61 @@ tar -pxvzf interproscan-${VER}-64-bit.tar.gz
 chmod -R g+w interproscan-${VER}
 mv interproscan-${VER} ${VER}
 cd ${VER}
-# Index HMMs, see https://interproscan-docs.readthedocs.io/en/latest/HowToDownload.html#index-hmm-models
-hmmpress data/antifam/7.0/AntiFam.hmm
-hmmpress data/gene3d/4.3.0/gene3d_main.hmm
-hmmpress data/hamap/2023_05/hamap.hmm.lib
-hmmpress data/ncbifam/15.0/ncbifam.hmm
-hmmpress data/panther/19.0/famhmm/binHmm
-hmmpress data/pfam/37.0/pfam_a.hmm
-hmmpress data/pirsf/3.10/sf_hmm_all
-hmmpress data/pirsr/2023_05/sr_hmm_all
-hmmpress data/sfld/4/sfld.hmm
-hmmpress data/superfamily/1.75/hmmlib_1.75
-srun -pshort python3 setup.py interproscan.properties
+python3 setup.py -f interproscan.properties
 cd $MODROOT/modulefiles/
 mkdir -p $APP
-cat <<'__END__' > $APP/$VER
-#%Module1.0
-#
-# InterProScan software and databases  
-#
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
 
-set approot    [lrange [split [module-info name] {/}] 0 0]
-set appname    [lrange [split [module-info name] {/}] 1 1]
-set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://interproscan-docs.readthedocs.io/en/latest/index.html")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."ASTER")
+whatis("Description: ".." InterproScan to run the scanning algorithms from the InterPro database in an integrated way.")
 
-## set/prepend environment valiable
-if { [ info exist env(IPRDIR) ] } then {
-  prepend-path  IPRDIR     $apphome
-} else {
-  setenv        IPRDIR     $apphome 
-}
+-- Package settings
+prepend_path("PATH", apphome)
+if os.getenv("IPRDIR") then
+    prepend_path("IPRDIR", apphome)
+else
+    setenv("IPRDIR", apphome)
+end
 
-## URL of application homepage:
-set appurl     "https://interproscan-docs.readthedocs.io/en/latest/index.html"
+-- Load dependencies
+-- begin ChatGPT
+-- Load dependencies (Ensure at least one version is loaded)
+local python_versions = {"python/3.11.4", "python/3.10.2"}
+local java_versions = {"java-jdk/21", "java-jdk/17", "java-jdk/14", "java-jdk/11"}
 
-## Short description of package:
-module-whatis  "InterproScan to run the scanning algorithms from the InterPro database in an integrated way."
+local function ensure_one_loaded(versions)
+    for _, v in ipairs(versions) do
+        if isloaded(v) then
+            return  -- If one is already loaded, no need to load another
+        end
+    end
+    depends_on(versions[1])  -- Load the first option if none are loaded
+end
 
-## Load dependencies
-module load python/3.7.3
-module load java-jdk/14
+ensure_one_loaded(python_versions)
+ensure_one_loaded(java_versions)
+-- end ChatGPT
 
-## Note
-if {[ module-info mode load ]} then {
-  puts stderr {
-  An environment variable "IPRDIR" has been set to InterProScan directory.
-  InterProScan software has been installed.
+-- Display note when the module is loaded
+if (mode() == "load") then
+    LmodMessage([[
+An environment variable "IPRDIR" has been set to the InterProScan directory.
+InterProScan software has been installed.
 
-  USAGE EXAMPLE:
-    ${IPRDIR}/interproscan.sh -i input.fasta --output-file-base IPRresult -cpu 4
-
-  }
-}
-
-## prepend pathes
-#prepend-path    PATH            $apphome
-
-#EOF
+USAGE EXAMPLE:
+  ${IPRDIR}/interproscan.sh -i input.fasta --output-file-base IPRresult -cpu 4
+]])
+end
 __END__
 ```
 
