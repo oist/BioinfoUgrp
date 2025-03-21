@@ -2508,6 +2508,7 @@ mkdir -p $APPDIR
 cd $APPDIR
 singularity build $APP.sif docker:quay.io/comparative-genomics-toolkit/${APP}:v${VER}
 echo '#!/bin/sh' > $APP && echo "singularity exec $APPDIR/$APP.sif $APP \$*" >> $APP && chmod +x $APP
+echo '#!/bin/sh' > cactus-pangenome && echo "singularity exec $APPDIR/$APP.sif cactus-pangenome \$*" >> cactus-pangenome && chmod +x cactus-pangenome
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
