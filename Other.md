@@ -2993,3 +2993,40 @@ prepend_path("PATH", apphome.."/bin")
 __END__
 ```
 
+## Flye
+- Home page: https://github.com/mikolmogorov/Flye/tree/flye
+- Installation: https://github.com/mikolmogorov/Flye/tree/flye
+
+### Installation on Deigo
+```bash
+APP=Flye
+VER=2.9.5
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/mikolmogorov/Flye/archive/refs/tags/$VER.tar.gz | tar xzvf -
+mv $APP-$VER $VER
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/mikolmogorov/Flye/tree/flye")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."flye")
+whatis("Description: ".."Flye is a de novo assembler for single-molecule sequencing reads, such as those produced by PacBio and Oxford Nanopore Technologies..")
+
+-- Package settings
+depends_on("python/3.7.3")
+prepend_path("PATH", apphome.."/bin")
+prepend_path("PYTHONPATH")
+__END__
+```
