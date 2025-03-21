@@ -2495,13 +2495,13 @@ __END__
 ```
 ## cactus
 - Home page: (https://github.com/ComparativeGenomicsToolkit/cactus)
-- Source code: quay.io/comparative-genomics-toolkit/cactus:v2.4.0
+- Source code: quay.io/comparative-genomics-toolkit/cactus:v2.9.7
 
 ### Installation on Deigo
 ```
-module load singularity
+ml singularity
 APP=cactus
-VER=2.4.0
+VER=2.9.7
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
