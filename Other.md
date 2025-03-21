@@ -3007,6 +3007,8 @@ mkdir -p $APPDIR
 cd $APPDIR
 wget -O - https://github.com/mikolmogorov/Flye/archive/refs/tags/$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER
+cd $VER
+make
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -3027,6 +3029,5 @@ whatis("Description: ".."Flye is a de novo assembler for single-molecule sequenc
 -- Package settings
 depends_on("python/3.7.3")
 prepend_path("PATH", apphome.."/bin")
-prepend_path("PYTHONPATH")
 __END__
 ```
