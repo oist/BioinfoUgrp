@@ -1,87 +1,20 @@
 # A collection of general bioinformatics modules
 
-## TO DO
-- Better to categorize modules into smaller subsets?
-
-## Usage
+To use the modules, load the `bioinfo-ugrp-modules` metamodule first.
 
 ```bash
-module load bioinfo-ugrp-modules
+ml bioinfo-ugrp-modules
 ml av Other
-module load Other/<your-favorite-module>
+ml Other/<your-favorite-module>
 ```
 
-List of available modules:
-
-```texthttps://www.ebi.ac.uk/interpro/
-Other/3d-dna/180922
-Other/arima_pipeline/2019.02.08
-Other/assembly_stats/1.0.1
-Other/asset/1.0.3
-Other/aster/1.15
-Other/astral/5.7.8
-Other/BEAST/1.10.4
-Other/bioawk/1.0
-Other/BUSCO/5.1.3
-Other/bwa/0.7.17
-Other/cactus/2.4.0
-Other/canu/2.1.1
-Other/DAZZ_DB/2021.03.30
-Other/deepvariant/1.1.0
-Other/DIAMOND/2.0.4.142
-Other/FASTK/2021.05.27
-Other/fasttree/2.1.11
-Other/genescope/2021.03.26
-Other/genomescope/2.0
-Other/gfatools/0.5
-Other/hal/2.2
-Other/hifiasm/0.24.0
-Other/interproscan/5.48-83.0
-Other/interproscan/5.60-92.0
-Other/interproscan/5.65-97.0
-Other/interproscan/5.71-102.0
-Other/iqtree/2.2.0
-Other/iqtree/2.2.2.5
-Other/juicer/1.6
-Other/k8/0.2.5
-Other/KMC/genomescope
-Other/make_telomere_bed/2021.05.20
-Other/merqury/1.3
-Other/meryl/1.3
-Other/minimap2/2.20
-Other/mosdepth/0.3.1
-Other/mugsy/1r2.2
-Other/ncbi-datasets-cli/16.43.0
-Other/pairtools/0.3.0
-Other/paml/4.10.6
-Other/parallel/20210622
-Other/pbgzip/2016.08.04
-Other/peregrine/1.6.3
-Other/phyloflash/3.4.2
-Other/phyluce/1.7.3
-Other/preseq/3.1.2
-Other/prokka/1.14.5
-Other/purge_dups/1.2.5
-Other/qiime2-amplicon/2024.5
-Other/raxml-ng-mpi/1.2.0
-Other/SALSA/2.3
-Other/samblaster/0.1.26
-Other/seqkit/2.0.0
-Other/smudgeplot/0.2.3
-Other/SPAdes/3.15.1
-Other/TCSF_IMRA/2.7.3
-Other/trf/4.09.1
-Other/veryfasttree/4.0.2
-Other/winnowmap/2.03
-```
-
-# Installation
+Here are installation snippets to help the members of the bioinfo user group to update the modules.
 
 ## assembly-stats
 
 - Home page: https://github.com/sanger-pathogens/assembly-stats
 - Source code: https://github.com/sanger-pathogens/assembly-stats
-- 
+
 ### Installation on Deigo
 
 ```bash
@@ -125,6 +58,88 @@ __END__
 ml Other/assembly-stats
 srun -p compute -c 1 --mem 10G -t 00:10:00 --pty \
     assembly-stats contigs.fasta
+```
+
+## ASTRAL
+- Home page: https://github.com/smirarab/ASTRAL
+- Source code: https://github.com/smirarab/ASTRAL
+
+### Installation on Deigo
+```
+APP=astral
+VER=5.7.8
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://github.com/smirarab/ASTRAL/raw/master/Astral.$VER.zip && unzip Astral.$VER.zip && rm Astral.$VER.zip
+mv Astral $VER && cd $VER
+chmod g+r * && chmod g+x *
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER
+#%Module1.0##################################################################
+set approot    [lrange [split [module-info name] {/}] 0 0]
+set appname    [lrange [split [module-info name] {/}] 1 1]
+set appversion [lrange [split [module-info name] {/}] 2 2]
+set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/smirarab/ASTRAL
+
+## Short description of package:
+module-whatis  "ASTRAL is a tool for estimating an unrooted species tree given a set of unrooted gene trees. To be called in script with: java -jar dollarASTRAL. Replace dollar by the actual symbol"
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.
+## Non-path variables can be set with "setenv VARIABLE value"
+prepend-path    PATH            $apphome    
+prepend-path    PATH $apphome/lib
+prepend-path    ASTRAL      $apphome/astral.5.7.8.jar
+__END__
+```
+
+## ASTER
+
+- Home page: https://github.com/chaoszhang/ASTER
+- Source code: https://github.com/chaoszhang/ASTER
+
+### Installation on Deigo
+
+```bash
+APP=aster
+VER=1.20.4.6
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget https://github.com/chaoszhang/ASTER/archive/refs/heads/Linux.zip
+unzip Linux.zip
+cd ASTER-Linux
+make
+cd ..
+mv ASTER-Linux/bin $VER
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/chaoszhang/ASTER")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."ASTER")
+whatis("Description: ".." Accurate Species Tree EstimatoR: a family of optimation algorithms for species tree inference (including ASTRAL & CASTER).")
+
+-- Package settings
+prepend_path("PATH", apphome)
+__END__
 ```
 
 ## pbgzip
@@ -2480,19 +2495,20 @@ __END__
 ```
 ## cactus
 - Home page: (https://github.com/ComparativeGenomicsToolkit/cactus)
-- Source code: quay.io/comparative-genomics-toolkit/cactus:v2.4.0
+- Source code: quay.io/comparative-genomics-toolkit/cactus:v2.9.7
 
 ### Installation on Deigo
 ```
-module load singularity
+ml singularity
 APP=cactus
-VER=2.4.0
+VER=2.9.7
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
 singularity build $APP.sif docker:quay.io/comparative-genomics-toolkit/${APP}:v${VER}
 echo '#!/bin/sh' > $APP && echo "singularity exec $APPDIR/$APP.sif $APP \$*" >> $APP && chmod +x $APP
+echo '#!/bin/sh' > cactus-pangenome && echo "singularity exec $APPDIR/$APP.sif cactus-pangenome \$*" >> cactus-pangenome && chmod +x cactus-pangenome
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -2604,7 +2620,7 @@ __END__
 ### Installation on Deigo
 ```bash
 APP=interproscan
-VER=5.71-102.0
+VER=5.73-104.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -2616,64 +2632,61 @@ tar -pxvzf interproscan-${VER}-64-bit.tar.gz
 chmod -R g+w interproscan-${VER}
 mv interproscan-${VER} ${VER}
 cd ${VER}
-# Index HMMs, see https://interproscan-docs.readthedocs.io/en/latest/HowToDownload.html#index-hmm-models
-hmmpress data/antifam/7.0/AntiFam.hmm
-hmmpress data/gene3d/4.3.0/gene3d_main.hmm
-hmmpress data/hamap/2023_05/hamap.hmm.lib
-hmmpress data/ncbifam/15.0/ncbifam.hmm
-hmmpress data/panther/19.0/famhmm/binHmm
-hmmpress data/pfam/37.0/pfam_a.hmm
-hmmpress data/pirsf/3.10/sf_hmm_all
-hmmpress data/pirsr/2023_05/sr_hmm_all
-hmmpress data/sfld/4/sfld.hmm
-hmmpress data/superfamily/1.75/hmmlib_1.75
-srun -pshort python3 setup.py interproscan.properties
+python3 setup.py -f interproscan.properties
 cd $MODROOT/modulefiles/
 mkdir -p $APP
-cat <<'__END__' > $APP/$VER
-#%Module1.0
-#
-# InterProScan software and databases  
-#
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
 
-set approot    [lrange [split [module-info name] {/}] 0 0]
-set appname    [lrange [split [module-info name] {/}] 1 1]
-set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://interproscan-docs.readthedocs.io/en/latest/index.html")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."ASTER")
+whatis("Description: ".." InterproScan to run the scanning algorithms from the InterPro database in an integrated way.")
 
-## set/prepend environment valiable
-if { [ info exist env(IPRDIR) ] } then {
-  prepend-path  IPRDIR     $apphome
-} else {
-  setenv        IPRDIR     $apphome 
-}
+-- Package settings
+prepend_path("PATH", apphome)
+if os.getenv("IPRDIR") then
+    prepend_path("IPRDIR", apphome)
+else
+    setenv("IPRDIR", apphome)
+end
 
-## URL of application homepage:
-set appurl     "https://interproscan-docs.readthedocs.io/en/latest/index.html"
+-- Load dependencies
+-- begin ChatGPT
+-- Load dependencies (Ensure at least one version is loaded)
+local python_versions = {"python/3.11.4", "python/3.10.2"}
+local java_versions = {"java-jdk/21", "java-jdk/17", "java-jdk/14", "java-jdk/11"}
 
-## Short description of package:
-module-whatis  "InterproScan to run the scanning algorithms from the InterPro database in an integrated way."
+local function ensure_one_loaded(versions)
+    for _, v in ipairs(versions) do
+        if isloaded(v) then
+            return  -- If one is already loaded, no need to load another
+        end
+    end
+    depends_on(versions[1])  -- Load the first option if none are loaded
+end
 
-## Load dependencies
-module load python/3.7.3
-module load java-jdk/14
+ensure_one_loaded(python_versions)
+ensure_one_loaded(java_versions)
+-- end ChatGPT
 
-## Note
-if {[ module-info mode load ]} then {
-  puts stderr {
-  An environment variable "IPRDIR" has been set to InterProScan directory.
-  InterProScan software has been installed.
+-- Display note when the module is loaded
+if (mode() == "load") then
+    LmodMessage([[
+An environment variable "IPRDIR" has been set to the InterProScan directory.
+InterProScan software has been installed.
 
-  USAGE EXAMPLE:
-    ${IPRDIR}/interproscan.sh -i input.fasta --output-file-base IPRresult -cpu 4
-
-  }
-}
-
-## prepend pathes
-#prepend-path    PATH            $apphome
-
-#EOF
+USAGE EXAMPLE:
+  ${IPRDIR}/interproscan.sh -i input.fasta --output-file-base IPRresult -cpu 4
+]])
+end
 __END__
 ```
 
@@ -2803,83 +2816,6 @@ prepend-path    PATH $apphome/lib
 prepend-path    PYTHONPATH	$apphome/bin
 __END__
 
-```
-
-## ASTRAL
-- Home page: https://github.com/smirarab/ASTRAL
-- Source code: https://github.com/smirarab/ASTRAL
-
-### Installation on Deigo
-```
-APP=astral
-VER=5.7.8
-MODROOT=/bucket/BioinfoUgrp/Other
-APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR
-cd $APPDIR
-wget https://github.com/smirarab/ASTRAL/raw/master/Astral.$VER.zip && unzip Astral.$VER.zip && rm Astral.$VER.zip
-mv Astral $VER && cd $VER
-chmod g+r * && chmod g+x *
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER
-#%Module1.0##################################################################
-set approot    [lrange [split [module-info name] {/}] 0 0]
-set appname    [lrange [split [module-info name] {/}] 1 1]
-set appversion [lrange [split [module-info name] {/}] 2 2]
-set apphome    /bucket/BioinfoUgrp/$approot/$appname/$appversion
-
-## URL of application homepage:
-set appurl     https://github.com/smirarab/ASTRAL
-
-## Short description of package:
-module-whatis  "ASTRAL is a tool for estimating an unrooted species tree given a set of unrooted gene trees. To be called in script with: java -jar dollarASTRAL. Replace dollar by the actual symbol"
-
-## Load any needed modules:
-
-## Modify as needed, removing any variables not needed.
-## Non-path variables can be set with "setenv VARIABLE value"
-prepend-path    PATH            $apphome    
-prepend-path    PATH $apphome/lib
-prepend-path    ASTRAL      $apphome/astral.5.7.8.jar
-__END__
-```
-
-## ASTER
-- Home page: https://github.com/chaoszhang/ASTER
-
-### Installation on Deigo
-```
-APP=aster
-VER=1.15
-MODROOT=/bucket/BioinfoUgrp/Other
-APPDIR=$MODROOT/$APP
-mkdir -p $APPDIR
-cd $APPDIR
-git clone https://github.com/chaoszhang/ASTER && mv ASTER $VER && cd $VER
-# git branch -a
-git checkout remotes/origin/Linux
-make
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/chaoszhang/ASTER")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."ASTER")
-whatis("Description: ".."Accurate Species Tree EstimatoR")
-
--- Package settings
-prepend_path("PATH", apphome.."/bin")
-__END__
 ```
 
 ## VeryFastTree
@@ -3058,3 +2994,41 @@ prepend_path("PATH", apphome.."/bin")
 __END__
 ```
 
+## Flye
+- Home page: https://github.com/mikolmogorov/Flye/tree/flye
+- Installation: https://github.com/mikolmogorov/Flye/tree/flye
+
+### Installation on Deigo
+```bash
+APP=Flye
+VER=2.9.5
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/mikolmogorov/Flye/archive/refs/tags/$VER.tar.gz | tar xzvf -
+mv $APP-$VER $VER
+cd $VER
+make
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/mikolmogorov/Flye/tree/flye")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."flye")
+whatis("Description: ".."Flye is a de novo assembler for single-molecule sequencing reads, such as those produced by PacBio and Oxford Nanopore Technologies..")
+
+-- Package settings
+depends_on("python/3.7.3")
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
