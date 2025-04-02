@@ -128,8 +128,9 @@ module load bioinfo-ugrp-modules
 module available
 ```
 
-### Alpha Fold
-We have a very basic implementation of Alpha fold 2.1.1 within the user group modules. You can find (in time) a verbose documentation [here](AlphaFold.md). However, for a basic usage, you can try to do something similar to the example script in: /apps/unit/BioinfoUgrp/alphafold/2.1.1/bin/alphafold_example_script.sh
+### AlphaFold
+
+We have a basic module for [AlphaFold 2.1.1](AlphaFold/AlphaFold2.md).  For a basic usage, you can do something similar to the example script in `/bucket/BioinfoUgrp/alphafold/2.1.1/bin/alphafold_example_script.sh`.
 
 ### Nanopore
 
