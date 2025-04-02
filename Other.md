@@ -890,14 +890,16 @@ srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
 
 ```bash
 APP=hifiasm
-VER=0.24.0
+VER=0.25.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
 wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER
-cd $VER && make
+cd $VER
+ml purge && ml gcc/11.2.1
+make CXXFLAGS="-g -O3 -mavx2 -mpopcnt -fomit-frame-pointer -Wall"  # Replace SSE with AVX.  When updating, check that the other flags did not change.
 cd /bucket/BioinfoUgrp/Other/modulefiles/hifiasm
 cp 0.20.0.lua ${VER}.lua
 ```
