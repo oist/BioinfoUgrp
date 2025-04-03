@@ -247,7 +247,7 @@ srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
 
 ```bash
 APP=ncbi-datasets-cli
-VER=16.43.0
+VER=17.2.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER
