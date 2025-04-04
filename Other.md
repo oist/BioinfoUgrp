@@ -142,11 +142,89 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
+## BandageNG
+
+- Home page: https://github.com/asl/BandageNG
+- Source code: https://github.com/asl/BandageNG
+
+### Installation on Deigo
+
+I created a Singularity image with the following definition file on my Linux laptop.
+
+```
+Bootstrap: docker
+From: debian:bookworm
+
+
+%runscript
+    exec /squashfs-root/AppRun "$@"
+
+%post
+    # Update the image
+    apt update
+    apt upgrade -y
+    
+    # Add a package needed to suppress some debconf error messages
+    apt install -y whiptail
+    
+    # Install all locales
+    apt install -y locales-all
+
+    # Install FUSE to extract and run the AppImage
+    apt install -y fuse3
+    # X11 and other dependencies
+    apt install -y x11-apps mesa-utils libgl1 libglu1-mesa
+    apt install -y dbus
+    dbus-uuidgen > /etc/machine-id
+
+    # Download BandageNG
+    apt install -y wget
+    wget https://github.com/asl/BandageNG/releases/download/continuous/BandageNG-Linux-827c5cb.AppImage
+    chmod 775 BandageNG-Linux-827c5cb.AppImage
+    ./BandageNG-Linux-827c5cb.AppImage --appimage-extract
+
+    # Clean downoladed package cache.  Yes I know about /var/libs.
+    apt clean
+```
+
+Then, I copied it in my home directory on _deigo_.
+
+```bash
+APP=BandageNG
+VER=2025-03-28
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+cp ~/BandageNG.sif BandageNG
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/chaoszhang/ASTER")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."BandageNG")
+whatis("Description: ".." a Bioinformatics Application for Navigating De novo Assembly Graphs Easily")
+
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome)
+__END__
+```
+
 ## pbgzip
 
 - Home page: https://github.com/nh13/pbgzip
 - Source code: https://github.com/nh13/pbgzip
-- 
+
 ### Installation on Deigo
 
 ```bash
