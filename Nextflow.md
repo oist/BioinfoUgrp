@@ -56,7 +56,7 @@ See https://www.nextflow.io/ for help.]])
 
 -- Package settings
 depends_on("singularity")
-depends_on("java-jdk/14")
+depends_on("java-jdk/17")
 setenv("NXF_OPTS", "-Xms500M -Xmx2G")
 prepend_path("PATH", apphome.."/bin")
 __END__
