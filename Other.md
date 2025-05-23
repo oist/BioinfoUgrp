@@ -665,7 +665,6 @@ mkdir -p $APPDIR
 cd $APPDIR
 singularity pull busco.sif docker://ezlabgva/busco:v${VER}_cv1
 echo '#!/bin/sh' > busco && echo "singularity exec $APPDIR/busco.sif busco \$*" >> busco && chmod +x busco
-echo '#!/bin/sh' > copy_augustus_config_dir && echo "singularity exec $APPDIR/busco.sif cp -r /augustus/config \$HOME/augustus_config" >> copy_augustus_config_dir && chmod +x copy_augustus_config_dir
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -687,10 +686,20 @@ whatis("Description: ".."Assessing genome assembly and annotation completeness w
 depends_on("singularity")
 prepend_path("PATH", apphome)
 
-execute {
-    cmd = "if [ ! -d $HOME/augustus_config ]; then copy_augustus_config_dir; fi; export AUGUSTUS_CONFIG_PATH=\"$HOME/augustus_config\"",
-    modeA = {"load"}
-}
+LmodMessage([[
+================================================================================
+The BUSCO module runs a read-only Singularity image.
+
+If you need to change AUGUSTUS configuration, you can do a local copy with the
+following command that will place it in $HOME/augustus_config.
+
+    singularity exec /bucket/BioinfoUgrp/Other/BUSCO/5.8.2/busco.sif cp -r /usr/local/config $HOME/augustus_config
+
+You can then pass the information by exporting the AUGUSTUS_CONFIG_PATH variable.
+
+    export AUGUSTUS_CONFIG_PATH="$HOME/augustus_config"
+================================================================================
+]])
 __END__
 ```
 
