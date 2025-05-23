@@ -658,7 +658,7 @@ srun -p compute -c 1 --mem 100G -t 24:00:00 --pty \
 ```bash
 module load singularity
 APP=BUSCO
-VER=5.1.3
+VER=5.8.2
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
