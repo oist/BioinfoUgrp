@@ -69,17 +69,17 @@ From: debian:bookworm
     cp -a /usr/share/fonts-firacode/woff2/FiraCode-Regular.woff2 /etc/rstudio/fonts/firacode
 
     # Install RStudio desktop
-    wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2024.09.1-394-amd64.deb
+    wget https://download1.rstudio.org/electron/jammy/amd64/rstudio-2024.12.1-563-amd64.deb
     apt --fix-broken -y install ./rstudio-*-amd64.deb
     rm rstudio-*-amd64.deb
     
     # Install RStudio server
-    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2024.09.1-394-amd64.deb
+    wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2024.12.1-563-amd64.deb
     apt --fix-broken -y install ./rstudio-*-amd64.deb
     rm rstudio-*-amd64.deb
     
     # Upgrade R to version 4.4
-    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20241101T025324Z/ sid main\n' >> /etc/apt/sources.list
+    printf 'deb     [check-valid-until=no] https://snapshot.debian.org/archive/debian/20250228T210243Z/ sid main\n' >> /etc/apt/sources.list
     apt update
     apt install -y r-base
     apt install -y libbz2-dev # Need bookworm+1 to provide a pkgconfig to librsvg2-dev, otherwise I have a pkgconfig error
