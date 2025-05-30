@@ -63,6 +63,13 @@ xhost +
 singularity exec ./RStudio_2025.05.0-496_R_4.5.0.sif rstudio
 ```
 
+### Rscript
+
+Scripts like the following are installed on Deigo as a convenience for running `Rscript`
+
+    #!/bin/sh
+    singularity exec /bucket/.deigo/BioinfoUgrp/Other/RStudio_server/2025.05.0-496_R_4.5.0/RStudio_2025.05.0-496_R_4.5.0.sif Rscript "$@" 
+
 How to build a Singularity image
 --------------------------------
 
