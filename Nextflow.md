@@ -27,7 +27,7 @@ Source: https://github.com/nextflow-io/nextflow
 APP=Nextflow2
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=24.10.5
+VER=25.04.2
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-dist
@@ -56,7 +56,7 @@ See https://www.nextflow.io/ for help.]])
 
 -- Package settings
 depends_on("singularity")
-depends_on("java-jdk/14")
+depends_on("java-jdk/17")
 setenv("NXF_OPTS", "-Xms500M -Xmx2G")
 prepend_path("PATH", apphome.."/bin")
 __END__
@@ -125,7 +125,7 @@ ml python/3.11.4
 APP=nf-core
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=3.2.0
+VER=3.2.1
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 

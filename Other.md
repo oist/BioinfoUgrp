@@ -142,11 +142,89 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
+## BandageNG
+
+- Home page: https://github.com/asl/BandageNG
+- Source code: https://github.com/asl/BandageNG
+
+### Installation on Deigo
+
+I created a Singularity image with the following definition file on my Linux laptop.
+
+```
+Bootstrap: docker
+From: debian:bookworm
+
+
+%runscript
+    exec /squashfs-root/AppRun "$@"
+
+%post
+    # Update the image
+    apt update
+    apt upgrade -y
+    
+    # Add a package needed to suppress some debconf error messages
+    apt install -y whiptail
+    
+    # Install all locales
+    apt install -y locales-all
+
+    # Install FUSE to extract and run the AppImage
+    apt install -y fuse3
+    # X11 and other dependencies
+    apt install -y x11-apps mesa-utils libgl1 libglu1-mesa
+    apt install -y dbus
+    dbus-uuidgen > /etc/machine-id
+
+    # Download BandageNG
+    apt install -y wget
+    wget https://github.com/asl/BandageNG/releases/download/continuous/BandageNG-Linux-827c5cb.AppImage
+    chmod 775 BandageNG-Linux-827c5cb.AppImage
+    ./BandageNG-Linux-827c5cb.AppImage --appimage-extract
+
+    # Clean downoladed package cache.  Yes I know about /var/libs.
+    apt clean
+```
+
+Then, I copied it in my home directory on _deigo_.
+
+```bash
+APP=BandageNG
+VER=2025-03-28
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+cp ~/BandageNG.sif BandageNG
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/chaoszhang/ASTER")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."BandageNG")
+whatis("Description: ".." a Bioinformatics Application for Navigating De novo Assembly Graphs Easily")
+
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome)
+__END__
+```
+
 ## pbgzip
 
 - Home page: https://github.com/nh13/pbgzip
 - Source code: https://github.com/nh13/pbgzip
-- 
+
 ### Installation on Deigo
 
 ```bash
@@ -247,7 +325,7 @@ srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
 
 ```bash
 APP=ncbi-datasets-cli
-VER=16.43.0
+VER=18.0.5 
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER
@@ -580,14 +658,13 @@ srun -p compute -c 1 --mem 100G -t 24:00:00 --pty \
 ```bash
 module load singularity
 APP=BUSCO
-VER=5.1.3
+VER=5.8.2
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
 singularity pull busco.sif docker://ezlabgva/busco:v${VER}_cv1
 echo '#!/bin/sh' > busco && echo "singularity exec $APPDIR/busco.sif busco \$*" >> busco && chmod +x busco
-echo '#!/bin/sh' > copy_augustus_config_dir && echo "singularity exec $APPDIR/busco.sif cp -r /augustus/config \$HOME/augustus_config" >> copy_augustus_config_dir && chmod +x copy_augustus_config_dir
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
@@ -609,10 +686,20 @@ whatis("Description: ".."Assessing genome assembly and annotation completeness w
 depends_on("singularity")
 prepend_path("PATH", apphome)
 
-execute {
-    cmd = "if [ ! -d $HOME/augustus_config ]; then copy_augustus_config_dir; fi; export AUGUSTUS_CONFIG_PATH=\"$HOME/augustus_config\"",
-    modeA = {"load"}
-}
+LmodMessage([[
+================================================================================
+The BUSCO module runs a read-only Singularity image.
+
+If you need to change AUGUSTUS configuration, you can do a local copy with the
+following command that will place it in $HOME/augustus_config.
+
+    singularity exec /bucket/BioinfoUgrp/Other/BUSCO/5.8.2/busco.sif cp -r /usr/local/config $HOME/augustus_config
+
+You can then pass the information by exporting the AUGUSTUS_CONFIG_PATH variable.
+
+    export AUGUSTUS_CONFIG_PATH="$HOME/augustus_config"
+================================================================================
+]])
 __END__
 ```
 
@@ -890,14 +977,16 @@ srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
 
 ```bash
 APP=hifiasm
-VER=0.24.0
+VER=0.25.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
 cd $APPDIR
 wget -O - https://github.com/chhylp123/hifiasm/archive/refs/tags/$VER.tar.gz | tar xzvf -
 mv $APP-$VER $VER
-cd $VER && make
+cd $VER
+ml purge && ml gcc/11.2.1
+make CXXFLAGS="-g -O3 -mavx2 -mpopcnt -fomit-frame-pointer -Wall"  # Replace SSE with AVX.  When updating, check that the other flags did not change.
 cd /bucket/BioinfoUgrp/Other/modulefiles/hifiasm
 cp 0.20.0.lua ${VER}.lua
 ```

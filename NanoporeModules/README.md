@@ -257,6 +257,58 @@ prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
 __END__
 ```
 
+### modkit
+
+Tool for working with modified bases from ONT.
+
+- Homepage: https://github.com/nanoporetech/modkit
+
+```
+APP=modkit
+MODROOT=/bucket/BioinfoUgrp/Nanopore
+APPDIR=$MODROOT/$APP
+VER=0.4.4
+mkdir -p $APPDIR/$VER/bin
+cd $APPDIR/$VER/bin
+wget https://github.com/nanoporetech/modkit/releases/download/v$VER/modkit_v$VER_u16_x86_64.tar.gz
+gunzip modkit_v$VER_u16_x86_64.tar.gz
+tar -xvf modkit_v$VER_u16_x86_64.tar
+mv dist_modkit_v$VER_7cf558c/modkit .
+rm -rf dist_modkit_v$VER_7cf558c
+
+```
+
+Example modulefile:
+
+```
+#%Module1.0##################################################################
+#
+set modulehome /bucket/BioinfoUgrp/Nanopore
+set appname    [lrange [split [module-info name] {/}] 0 0]
+set appversion [lrange [split [module-info name] {/}] 1 1]
+set apphome    $modulehome/$appname/$appversion
+
+## URL of application homepage:
+set appurl     https://github.com/nanoporetech/modkit
+
+## Short description of package:
+module-whatis   "Oxford Nanopore Technologies modkit"
+
+## Load any needed modules:
+
+## Modify as needed, removing any variables not needed.  Non-path variables
+## can be set with "setenv VARIABLE value".
+prepend-path    PATH            $apphome/bin
+
+## These lines are for logging module usage.  Don't remove them:
+set modulefile [lrange [split [module-info name] {/}] 0 0]
+set version    [lrange [split [module-info name] {/}] 1 1]
+set action     [module-info mode]
+system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\
+$\{SLURM_JOB_ID=NOJOB\},APP=$modulefile,VERSION=$version,ACTION=$action
+## Don't remove this line!  For some reason, it has to be here...
+```
+
 ### POD5 Python Package
 
 Appears to be the successor of `pod5-format-tools`
