@@ -521,12 +521,12 @@ srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
 
 ```bash
 APP=seqkit
-VER=2.0.0
+VER=2.10.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
 cd $APPDIR
-wget -O - https://github.com/shenwei356/seqkit/releases/download/v$VER/seqkit_linux_amd64.tar.gz | tar xzvf -
+wget -qO- https://github.com/shenwei356/seqkit/releases/download/v$VER/seqkit_linux_amd64.tar.gz | tar xzvf -
 cd $MODROOT/modulefiles/
 mkdir -p $APP
 cat <<'__END__' > $APP/$VER.lua
