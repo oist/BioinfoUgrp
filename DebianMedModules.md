@@ -26,25 +26,24 @@ For developers
 See [oist/BioinfoUgrp_DebianMed_Images](https://github.com/oist/BioinfoUgrp_DebianMed_Images)
 on how to create a Docker image with [GitHub actions](https://docs.github.com/en/actions).
 
-### Creation of a new Singularity image
+### Create a new Singularity image
 
 Pull the Docker image built on GitHub.
 
 ```
-export DEBVERSION=12.0
+export DEBVERSION=13.0-1
 singularity pull DebianMed_${DEBVERSION}.sif docker://ghcr.io/oist/bioinfougrp_debianmed_images:${DEBVERSION}
 ```
 
-### Misc commands
+### Generate all the modules
 
-To see all the packages that the `med-bio` metapackage `Recommends`:
+Make sure the module and modulefiles created are writable for the group:
 
 ```
-ml singularity
-./DebianMed_$DEBVERSION.sif apt show med-bio | grep Recommends
+umask 002
 ```
 
-To generate a list of all the bioinformatics packages recommended by the med-bio and med-cloud metapackages:
+Generate a list of all the bioinformatics packages recommended by the med-bio and med-cloud metapackages:
 
 ```
 PKGLIST=$(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud |
@@ -56,25 +55,16 @@ PKGLIST=$(./DebianMed_$DEBVERSION.sif apt show med-bio med-cloud |
   grep -v -e r-cran -e r-bioc -e r-other )
 ```
 
-Command to generate all the modules, with a few extra goodies.  Note that the goodie list must be the same as in the singularity definition file above.
+Create the modules
 
 ```
+ln -s DebianMed_${DEBVERSION}.sif debalamod.sif
+debalamod.sif cp /debalamod .
+chmod 775 debalamod
 for package in $PKGLIST source-highlight
 do
-  ../../BioinfoUgrp/mkDebMedModule.sh $package
+  ./debalamod $package
 done
-```
-
-Make sure the module and modulefiles created are writable for the group:
-
-```
-umask 002
-```
-
-Or if you did not use `umask`, add the write permissions after:
-
-```
-chmod g+w file_name
 ```
 
 After creating a new module, if it is not seen by `ml av`, delete the cache:
