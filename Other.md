@@ -557,6 +557,10 @@ srun -p compute -c 1 --mem 40G -t 24:00:00 --pty \
     seqkit <subcommand> <arguments>
 ```
 
+## TETools
+
+Downloaded singularity image from <https://github.com/Dfam-consortium/TETools> but no module created yet.
+
 ## GNU parallel
 
 - Home page: https://www.gnu.org/software/parallel
