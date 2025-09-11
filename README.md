@@ -98,9 +98,9 @@ Version 34.0:  Use `ml DB/Pfam/34.0` to invoke it in your scripts.
 
 ### Dfam
 
-Version 3.6 downloaded from <https://www.dfam.org/releases/Dfam_3.6/families/Dfam.h5.gz>.
+Version 3.9 downloaded from <https://www.dfam.org/releases/Dfam_3.9/families/>.
 
-The command `ml DB/Dfam/3.6` will expose an environment variable `$BioinfoUgrp_Dfam` containing the path to the directory containing the database files, that can be passed to RepeatMasker through its `-libdir` argument.
+The command `ml DB/Dfam/3.9` will expose an environment variable `$BioinfoUgrp_Dfam` containing the path to the directory containing the database files, that can be passed to RepeatMasker through its `-libdir` argument.
 
 ### Dfam for RepeatMasker
 
