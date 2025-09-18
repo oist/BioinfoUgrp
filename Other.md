@@ -559,7 +559,35 @@ srun -p compute -c 1 --mem 40G -t 24:00:00 --pty \
 
 ## TETools
 
-Downloaded singularity image from <https://github.com/Dfam-consortium/TETools> but no module created yet.
+Downloaded singularity image from <https://github.com/Dfam-consortium/TETools>.
+Scripts like the following are created to run tools from inside the container.
+
+```
+#!/bin/sh
+LC_ALL=C singularity exec /bucket/.deigo/BioinfoUgrp/Other/TETools/1.94/dfam-tetools-1.94.sif RepeatMasker "$@"
+```
+
+### Module file template
+
+```
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/Dfam-consortium/TETools")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."Dfam, RepeatMasker, RepeatModeller")
+whatis("Description: ".."Dfam Transposable Element Tools Container.")
+
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome.."/bin")
+```
 
 ## GNU parallel
 

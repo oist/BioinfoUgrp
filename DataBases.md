@@ -48,6 +48,31 @@ Version 3.9 downloaded from <https://www.dfam.org/releases/Dfam_3.9/families/> a
 The command `ml DB/Dfam/3.9` exposes two environment variables
  - `$BioinfoUgrp_Dfam` containing the path to the directory containing the HMM files, that can be passed to RepeatMasker through its `-libdir` argument.
  - `$BioinfoUgrp_FamDB` containing the path to the directory containing the HDF5 files, to be bind-mounted on `/opt/RepeatMasker/Libraries/famdb/` when using `TETools`.
+ - `SINGULARITY_BINDPATH`, with a value to replace `/opt/RepeatMasker/Libraries/famdb` in the Singularity containers with the local full copy of Dfam.
+
+This is done with the following Lua module file.
+
+```
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://dfam.org")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."annotation, transposon, repeat")
+whatis("Description: ".."The Dfam open collection of Transposable Element DNA sequence alignments")
+
+-- Package settings
+LmodMessage("You can find the Dfam database HMMs in the directory pointed to\nby the environment variable $BioinfoUgrp_Dfam, and the\nHDF5 files in $BioinfoUgrp_FamDB.")
+setenv("BioinfoUgrp_Dfam", apphome)
+setenv("BioinfoUgrp_FamDB", apphome .. "/FamDB")
+setenv("SINGULARITY_BINDPATH", apphome.."/FamDB:/opt/RepeatMasker/Libraries/famdb")
+```
 
 ## Dfam for RepeatMasker
 
