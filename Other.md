@@ -557,6 +557,42 @@ srun -p compute -c 1 --mem 40G -t 24:00:00 --pty \
     seqkit <subcommand> <arguments>
 ```
 
+## SMARTdenovo
+
+
+```bash
+APP=SMARTdenovo
+VER=2021-02-24
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP/$VER
+mkdir -p $MODROOT/$APP
+cd $MODROOT/$APP
+git clone https://github.com/ruanjue/smartdenovo $VER
+ml gcc
+cd $VER
+make
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/ruanjue/smartdenovo")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."PacBio, Nanopore, genome, assembler")
+whatis("Description: ".."de novo assembler for PacBio and Oxford Nanopore (ONT) data")
+
+-- Package settings
+prepend_path("PATH", apphome)
+__END__
+```
+
 ## TETools
 
 Downloaded singularity image from <https://github.com/Dfam-consortium/TETools>.
