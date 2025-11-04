@@ -50,7 +50,7 @@ Under the `Other/` namespace, we also provide some general bioinformatics tools 
 - InterProScan and its database (`ml Other/interproscan/5.48-83.0`)
 - … and more !
 
-See [this page](Other.md) for the full list of modules and for more information.
+See [this page](Other/README.md) for the full list of modules and for more information.
 
 ## Databases
 
