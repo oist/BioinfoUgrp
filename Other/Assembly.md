@@ -381,7 +381,7 @@ srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
 
 ```bash
 APP=canu
-VER=2.1.1
+VER=2.3
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
