@@ -8,4 +8,4 @@ ml av Other
 ml Other/<your-favorite-module>
 ```
 
-We have modules related [genome assembly](Assemblers.md), [sequence alignment](Aligners.md) and [many other](Other.md).
+We have modules related [genome assembly](Assembly.md), [sequence alignment](Alignment.md) and [many other](Other.md).
