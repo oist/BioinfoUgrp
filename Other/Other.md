@@ -336,12 +336,31 @@ srun -p compute -c 1 --mem 40G -t 24:00:00 --pty \
 
 ## TETools
 
-Downloaded singularity image from <https://github.com/Dfam-consortium/TETools>.
-Scripts like the following are created to run tools from inside the container.
+Downloaded singularity image from <https://github.com/Dfam-consortium/TETools>:
+
 
 ```
+APP=TETools
+VER=1.95
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER/bin
+cd $APPDIR/$VER
+singularity pull docker://dfam/tetools:$VER
+CMDS="BuildDatabase famdb.py generateSeedAlignments.pl RepeatMasker RepeatModeler"
+for cmd in $CMDS; do
+  cat > "bin/$cmd" <<EOF
 #!/bin/sh
-LC_ALL=C singularity exec /bucket/.deigo/BioinfoUgrp/Other/TETools/1.94/dfam-tetools-1.94.sif RepeatMasker "$@"
+VER=${VER}
+COMMAND=${cmd}
+LC_ALL=C singularity exec /bucket/.deigo/BioinfoUgrp/Other/TETools/\${VER}/tetools_\${VER}.sif \$COMMAND "\$@"
+EOF
+  chmod +x "bin/$cmd"
+done
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cd $APP
+cp 1.94.lua ${VER}.lua
 ```
 
 ### Module file template
