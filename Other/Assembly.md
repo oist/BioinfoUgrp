@@ -406,6 +406,7 @@ whatis("Keywords: ".."assembly")
 whatis("Description: ".."A single molecule sequence assembler for genomes large and small.")
 
 -- Package settings
+depends_on("samtools")
 prepend_path("PATH", apphome.."/bin")
 __END__
 ```
