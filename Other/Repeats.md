@@ -26,6 +26,8 @@ rm ${VER}.tar.gz
 cd ${VER}/Libraries
 ln -s /bucket/.deigo/BioinfoUgrp/DB/Dfam/3.9/RepeatPeps.lib
 ln -s /bucket/.deigo/BioinfoUgrp/DB/Dfam/3.9/Dfam-RepeatMasker.lib Dfam-curated.fa
+/bucket/BioinfoUgrp/Other/TETools/1.95/bin/makeblastdb -in /bucket/BioinfoUgrp/Other/DfamTEBrowser/1.0.0/Libraries/Dfam-curated.fa -dbtype nucl
+/bucket/BioinfoUgrp/Other/TETools/1.95/bin/makeblastdb -in /bucket/BioinfoUgrp/Other/DfamTEBrowser/1.0.0/Libraries/RepeatPeps.lib  -dbtype prot
 ```
 
 ### Module file template
@@ -62,7 +64,7 @@ APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 singularity pull docker://dfam/tetools:$VER
-CMDS="BuildDatabase famdb.py generateSeedAlignments.pl RepeatMasker RepeatModeler rmblastn makeblastdb blastx"
+CMDS="BuildDatabase calcDivergenceFromAlign.pl createRepeatLandscape.pl famdb.py generateSeedAlignments.pl RepeatMasker RepeatModeler rmblastn makeblastdb blastx"
 for cmd in $CMDS; do
   cat > "bin/$cmd" <<EOF
 #!/bin/sh
