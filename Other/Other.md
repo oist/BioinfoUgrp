@@ -1614,7 +1614,7 @@ whatis("Name: "..appname)
 whatis("Version: "..appversion)
 whatis("URL: ".."https://interproscan-docs.readthedocs.io/en/latest/index.html")
 whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."ASTER")
+whatis("Keywords: ".."InterPro")
 whatis("Description: ".." InterproScan to run the scanning algorithms from the InterPro database in an integrated way.")
 
 -- Package settings
