@@ -106,8 +106,7 @@ nextflow run nf-core/mag \
   --profile oist \
   --input samplesheet.csv \
   --outdir ${OUTDIR} \
-  --gtdb_db ${GTDBTK_DATA_ARCHIVED} \
-  -profile singularity
+  --gtdb_db ${GTDBTK_DATA_ARCHIVED} 
 ```
 
 ---
