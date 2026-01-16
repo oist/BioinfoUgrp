@@ -164,4 +164,5 @@ prepend_path("PYTHONPATH", apphome.."/lib/python3.11/site-packages/")
 depends_on("Nextflow2")
 depends_on("python/3.11.4")
 depends_on("Other/nf-test")
+depends_on("Other/prek")
 ```

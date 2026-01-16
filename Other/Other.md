@@ -1872,6 +1872,48 @@ prepend_path("PATH", apphome.."/envs/pf/bin")
 __END__
 ```
 
+## prek
+
+ - Home page: https://github.com/j178/prek
+ - Installation https://github.com/j178/prek/releases
+ - Note: Git utility needed by nf-core.
+
+### Installation on Deigo
+
+```bash
+APP=prek
+VER=0.2.28
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+curl -L -O "https://github.com/j178/prek/releases/download/v${VER}/prek-x86_64-unknown-linux-gnu.tar.gz"
+tar xvfz prek-x86_64-unknown-linux-gnu.tar.gz
+mv prek-x86_64-unknown-linux-gnu $VER
+rm prek-x86_64-unknown-linux-gnu.tar.gz
+chmod g+w -R $VER
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/j178/prek")
+whatis("Category: ".."Software development")
+whatis("Keywords: ".."Git, nf-core")
+whatis("Description: ".."A framework for managing and maintaining multi-language pre-commit hooks.")
+
+-- Package settings
+prepend_path("PATH", apphome)
+__END__
+```
+
 
 ## QIIME2-amplicon
 - Home page: https://github.com/qiime2/qiime2
