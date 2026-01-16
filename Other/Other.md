@@ -147,7 +147,7 @@ srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
 
 ```bash
 APP=ncbi-datasets-cli
-VER=18.5.0
+VER=18.10.2
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER
@@ -1581,13 +1581,13 @@ __END__
 ```
 
 ## InterProScan
-- Home page: https://interproscan-docs.readthedocs.io/en/latest/index.html
+- Home page: https://interproscan-docs.readthedocs.io/en/v5/
 - Source code: 
 
 ### Installation on Deigo
 ```bash
 APP=interproscan
-VER=5.73-104.0
+VER=5.76-107.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
@@ -1612,9 +1612,9 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 -- Package information
 whatis("Name: "..appname)
 whatis("Version: "..appversion)
-whatis("URL: ".."https://interproscan-docs.readthedocs.io/en/latest/index.html")
+whatis("URL: ".."https://interproscan-docs.readthedocs.io/en/v5/")
 whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."ASTER")
+whatis("Keywords: ".."InterPro")
 whatis("Description: ".." InterproScan to run the scanning algorithms from the InterPro database in an integrated way.")
 
 -- Package settings

@@ -37,6 +37,80 @@ FASTA=FULL/PATH/TO/YOUR/FASTA/FILE
 diamond blastp -db ${DIAMONDDB}/nr -q $FASTA -p ${SLURM_CPUS_PER_TASK} -out ${WORKDIR}/diamond.blastp.out -outfmt 6
 ```
 
+## GTDB DIAMOND Database (r226)
+
+The Genome Taxonomy Database (GTDB) DIAMOND database was constructed using DIAMOND v2.1.11. The ```bioinfo-ugrp-modules``` module needs to be loaded in order to use it. 
+
+### Available as Module
+
+Load the module to access the database path: `module load DB/diamondDB/GTDB/r226`
+
+
+**Use case**: Fast sequence similarity searches against GTDB reference genomes (BLAST-like functionality)
+
+##### Example script
+
+```bash
+# Load bioinfo-user group modules
+module load bioinfo-ugrp-modules
+# Load GTDB database module
+module load DB/diamondDB/GTDB/r226
+
+# Optional: set variables for output directory and fasta files path
+OUTDIR=/path/to/ouput/directory
+FASTA=/path/to/fasta/files
+
+# Create output directory if it does not exist
+mkdir -p ${OUTDIR}
+
+# Run search
+diamond blastp -d ${DIAMONDDB}/gtdb.dmnd -q ${FASTA} -p 4 -o ${OUTDIR}
+
+```
+
+## GTDB-Tk r226 Reference Data
+
+The GTDB-Tk r226 reference data package contains the auxiliary files required for taxonomic classification of bacterial and archaeal genomes. This is **the database only** - the GTDB-Tk software itself is not installed as a module, but is available through nf-core pipeline containers.The ```bioinfo-ugrp-modules``` module needs to be loaded in order to use it. 
+
+
+**Use case**: Provides the reference database path for GTDB-Tk when running nf-core pipelines (e.g., nf-core/mag)
+
+
+### Available as Module
+
+Load the module to access the database path: ```module load DB/GTDBTK/ref_data/226.0```
+
+This module sets `$GTDBTK_DATA_PATH` & `GTDBTK_DATA_ARCHIVED` environment variables pointing to the uncompressed and compressed reference data location.
+
+### Usage with nf-core Pipelines
+
+The GTDB-Tk r226 reference data is available for use with nf-core pipelines (e.g., nf-core/mag, nf-core/taxprofiler). Instead of downloading the ~100GB database, you simply specify the path to the pre-installed data.
+
+The nf-core pipeline will use its own containerized version of the GTDB-Tk software and access your local reference data.
+
+##### Example nf-core/mag pipeline
+
+```bash
+
+# Load bioinfo-user group modules
+module load bioinfo-ugrp-modules
+# Load the module to get database path
+module load bioinfo/gtdbtk/r226-full
+
+# Optional: set variables for output directory 
+OUTDIR=/path/to/ouput/directory
+
+# Run nf-core pipeline specifying the compressed database path
+# Note: for uncompressed use GTDBTK_DATA_PATH
+nextflow run nf-core/mag \
+  --profile oist \
+  --input samplesheet.csv \
+  --outdir ${OUTDIR} \
+  --gtdb_db ${GTDBTK_DATA_ARCHIVED} 
+```
+
+---
+
 ## Pfam
 
 Version 34.0:  Use `ml DB/Pfam/34.0` to invoke it in your scripts.

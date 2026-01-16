@@ -27,7 +27,7 @@ Source: https://github.com/nextflow-io/nextflow
 APP=Nextflow2
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=25.04.8
+VER=25.10.2
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-dist
@@ -74,7 +74,7 @@ Installation on deigo
 APP=nf-test
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=0.9.2
+VER=0.9.3
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/askimed/nf-test/releases/download/v${VER}/nf-test-${VER}.tar.gz
@@ -125,7 +125,7 @@ ml python/3.11.4
 APP=nf-core
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=3.4.1
+VER=3.5.1
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 
