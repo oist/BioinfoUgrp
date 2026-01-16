@@ -74,7 +74,7 @@ Installation on deigo
 APP=nf-test
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=0.9.2
+VER=0.9.3
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/askimed/nf-test/releases/download/v${VER}/nf-test-${VER}.tar.gz
