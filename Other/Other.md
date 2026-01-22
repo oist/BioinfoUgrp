@@ -92,6 +92,45 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
+
+## BFG Repo-Cleaner
+
+```bash
+APP=BFG
+VER=1.15.0
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+wget https://repo1.maven.org/maven2/com/madgag/bfg/${VER}/bfg-${VER}.jar
+cat <<__END__ > bfg
+#!/bin/sh
+java -jar $(realpath bfg-${VER}.jar) "\$@"
+__END__
+chmod 775 bfg
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://rtyley.github.io/bfg-repo-cleaner/")
+whatis("Category: ".."software")
+whatis("Keywords: ".."git")
+whatis("Description: ".."Removes large or troublesome blobs like git-filter-branch does.")
+
+-- Package settings
+prepend_path("PATH", apphome)
+depends_on("java-jdk")
+__END__
+```
+
 ## pbgzip
 
 - Home page: https://github.com/nh13/pbgzip
