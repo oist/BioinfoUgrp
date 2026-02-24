@@ -68,7 +68,7 @@ singularity exec ./RStudio_2025.09.2-418_R_4.5.2.sif rstudio
 Scripts like the following are installed on Deigo as a convenience for running `Rscript`
 
     #!/bin/sh
-    singularity exec /bucket/.deigo/BioinfoUgrp/Other/RStudio_server/2025.09.2-418_R_4.5.2/RStudio_2025.09.2-418_R_4.5.2.sif Rscript "$@"
+    singularity exec /bucket/BioinfoUgrp/Other/RStudio_server/2025.09.2-418_R_4.5.2/RStudio_2025.09.2-418_R_4.5.2.sif Rscript "$@"
 
 How to build a Singularity image
 --------------------------------

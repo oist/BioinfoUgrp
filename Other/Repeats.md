@@ -24,8 +24,9 @@ tar xvfz ${VER}.tar.gz
 mv DfamTEBrowser-$VER $VER
 rm ${VER}.tar.gz
 cd ${VER}/Libraries
-ln -s /bucket/.deigo/BioinfoUgrp/DB/Dfam/3.9/RepeatPeps.lib
-ln -s /bucket/.deigo/BioinfoUgrp/DB/Dfam/3.9/Dfam-RepeatMasker.lib Dfam-curated.fa
+ln -s /bucket/BioinfoUgrp/DB/Dfam/3.9/RepeatPeps.lib
+ln -s /bucket/BioinfoUgrp/DB/Dfam/3.9/Dfam-RepeatMasker.lib Dfam-curated.fa
+#### TODO #####  Depend on TETools for blastdb instead of hardcoding
 /bucket/BioinfoUgrp/Other/TETools/1.95/bin/makeblastdb -in /bucket/BioinfoUgrp/Other/DfamTEBrowser/1.0.0/Libraries/Dfam-curated.fa -dbtype nucl
 /bucket/BioinfoUgrp/Other/TETools/1.95/bin/makeblastdb -in /bucket/BioinfoUgrp/Other/DfamTEBrowser/1.0.0/Libraries/RepeatPeps.lib  -dbtype prot
 ```
@@ -58,7 +59,7 @@ Downloaded singularity image from <https://github.com/Dfam-consortium/TETools>:
 
 ```
 APP=TETools
-VER=1.95
+VER=1.96
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR/$VER/bin
@@ -70,7 +71,7 @@ for cmd in $CMDS; do
 #!/bin/sh
 VER=${VER}
 COMMAND=${cmd}
-LC_ALL=C singularity exec /bucket/.deigo/BioinfoUgrp/Other/TETools/\${VER}/tetools_\${VER}.sif \$COMMAND "\$@"
+LC_ALL=C singularity exec /bucket/BioinfoUgrp/Other/TETools/\${VER}/tetools_\${VER}.sif \$COMMAND "\$@"
 EOF
   chmod +x "bin/$cmd"
 done
