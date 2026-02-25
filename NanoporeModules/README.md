@@ -41,7 +41,7 @@ Example command to build the image:
  - Update instructions:
 
 ```
-VER=1.3.1
+VER=1.4.0
 cd /bucket/BioinfoUgrp/Nanopore/Dorado/
 FILE_TO_DOWNLOAD=dorado-${VER}-linux-x64.tar.gz
 wget https://cdn.oxfordnanoportal.com/software/analysis/$FILE_TO_DOWNLOAD 
