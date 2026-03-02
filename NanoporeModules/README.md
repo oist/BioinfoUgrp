@@ -317,44 +317,48 @@ Appears to be the successor of `pod5-format-tools`
  - Sourcecode: https://github.com/nanoporetech/pod5-file-format
 
 ```
+ml purge
+ml python/3.11.4
 APP=pod5
 MODROOT=/bucket/BioinfoUgrp/Nanopore
 APPDIR=$MODROOT/$APP
-VER=0.3.10
-mkdir -p $APPDIR/$VER/bin
-cd $APPDIR/$VER/bin
-ln -s ../../../Singularity/NanoporeModules_2024-12-02.sif pod5
+VER=0.3.36
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 
+PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user pre-commit
+cd $MODROOT/$APP/modulefiles/
+cp 0.3.36.lua ${VER}.lua
 ```
 
 Example modulefile:
 
 ```
-#%Module1.0##################################################################
-#
-set modulehome /bucket/BioinfoUgrp/Nanopore
-set appname    [lrange [split [module-info name] {/}] 0 0]
-set appversion [lrange [split [module-info name] {/}] 1 1]
-set apphome    $modulehome/$appname/$appversion
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp/Nanopore"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+-- setenv("Nextflow_MOD_HOME", apphome)
+-- setenv("Nextflow_MOD_VERSION", appversion)
 
-## URL of application homepage:
-set appurl     https://pypi.org/project/pod5/
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://pypi.org/project/pod5/")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."Nanopore, basecalling")
+whatis("Description: ".."Oxford Nanopore Technologies Pod5 File Format Python API and Tools")
 
-## Short description of package:
-module-whatis   "Oxford Nanopore Technologies POD5 tools"
+help([[pod5 tools installed with pip
 
-## Load any needed modules:
-module load singularity
+Seeh https://pypi.org/project/pod5/ for help.]])
 
-## Modify as needed, removing any variables not needed.  Non-path variables
-## can be set with "setenv VARIABLE value".
-prepend-path    PATH            $apphome/bin
-
-## These lines are for logging module usage.  Don't remove them:
-set modulefile [lrange [split [module-info name] {/}] 0 0]
-set version    [lrange [split [module-info name] {/}] 1 1]
-set action     [module-info mode]
-system logger -t module -p local6.info DATE=\$(date +%FT%T),USER=\$USER,JOB=\$\{SLURM_JOB_ID=NOJOB\},APP=$modulefile,VERSION=$version,ACTION=$action
-## Don't remove this line!  For some reason, it has to be here...
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome.."/bin")
+prepend_path("PYTHONPATH", apphome.."/lib/python3.11/site-packages/")
+depends_on("python/3.11.4")
 ```
 
 vbz compression plugin
