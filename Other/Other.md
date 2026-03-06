@@ -131,6 +131,66 @@ depends_on("java-jdk")
 __END__
 ```
 
+### Boltz
+
+<https://github.com/jwohlwend/boltz>
+
+Install on *Deigo* because Saion does not have Python 3.11.4 on the login nodes and
+the GPU nodes can not write to `/bucket`.
+
+```bash
+ml purge
+ml python/3.11.4
+APP=Boltz
+VER=2.2.1
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user ${APP}[cuda]
+sed -i.bak 's/free81/free88/' bin/*   # Fix to Saion's path
+cd $MODROOT/modulefiles/$APP
+cp 2.2.1.lua ${VER}.lua
+```
+
+Where `2.2.1.lua` contains:
+```
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/jwohlwend/boltz")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."protein, docking")
+whatis("Description: ".."biomolecular interaction prediction")
+
+-- Package settings
+depends_on("python/3.11.4", "cuda")
+prepend_path("PATH", apphome.."/bin")
+prepend_path("PYTHONPATH", apphome.."/lib/python3.11/site-packages")
+setenv("BOLTZ_CACHE",pathJoin(modroot, myModuleName()).."/BOLTZ_CACHE")
+```
+
+Cached models (MIT license)
+
+```bash
+APP=Boltz
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/BOLTZ_CACHE
+cd $APPDIR/BOLTZ_CACHE
+wget https://huggingface.co/boltz-community/boltz-1/resolve/main/ccd.pkl
+wget https://huggingface.co/boltz-community/boltz-2/resolve/main/mols.tar
+wget https://huggingface.co/boltz-community/boltz-1/resolve/main/boltz1_conf.ckpt
+wget https://huggingface.co/boltz-community/boltz-2/resolve/main/boltz2_conf.ckpt
+wget https://huggingface.co/boltz-community/boltz-2/resolve/main/boltz2_aff.ckpt
+```
+
 ## pbgzip
 
 - Home page: https://github.com/nh13/pbgzip
