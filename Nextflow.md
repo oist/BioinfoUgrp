@@ -131,10 +131,10 @@ cd $APPDIR/$VER
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user pre-commit
 cd $MODROOT/$APP/modulefiles/
-cp 3.1.2.lua ${VER}.lua
+cp 3.5.1.lua ${VER}.lua
 ```
 
-Contents of 3.1.2.lua:
+Contents of 3.5.1.lua:
 
 ```
 -- Default settings
