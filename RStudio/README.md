@@ -51,7 +51,7 @@ R_LIBS_USER="~/R/library/R_4.5_for_RStudio_Singularity"
 **Note that once a year, there is a major release of R that requires rebuild of
 the installed packages.  To stick the same version and ignore updates, load the
 module with the version name like in
-`Other/RStudio_server/2025.09.2-418_R_4.5.2` for instance.**
+`Other/RStudio_server/2026.01.1-403_R_4.5.3` for instance.**
 
 ### RStudio Desktop
 
@@ -59,8 +59,7 @@ The image also contains RStudio Desktop in case you need it.
 
 ```
 # On your desktop PC, not deigo:
-xhost +
-singularity exec ./RStudio_2025.09.2-418_R_4.5.2.sif rstudio
+singularity exec --bind $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/$(id -u)/$WAYLAND_DISPLAY  ./RStudio_2026.01.1-403_R_4.5.3.sif rstudio
 ```
 
 ### Rscript
@@ -68,7 +67,7 @@ singularity exec ./RStudio_2025.09.2-418_R_4.5.2.sif rstudio
 Scripts like the following are installed on Deigo as a convenience for running `Rscript`
 
     #!/bin/sh
-    singularity exec /bucket/BioinfoUgrp/Other/RStudio_server/2025.09.2-418_R_4.5.2/RStudio_2025.09.2-418_R_4.5.2.sif Rscript "$@"
+    singularity exec /bucket/BioinfoUgrp/Other/RStudio_server/2026.01.1-403_R_4.5.3/RStudio_2026.01.1-403_R_4.5.3.sif Rscript "$@"
 
 How to build a Singularity image
 --------------------------------
@@ -85,7 +84,7 @@ Lastly, let's install the latest tidyverse, as everybody wants it.
 
 Then build the image:
 
-    singularity build --fakeroot RStudio_2025.09.2-418_R_4.5.2.sif Singularity.def
+    singularity build --fakeroot RStudio_2026.01.1-403_R_4.5.3.sif Singularity.def
 
 Technical details
 -----------------
