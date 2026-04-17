@@ -29,7 +29,7 @@ From: debian:trixie
     apt install -y r-base
     
     # Install development packages
-    apt install -y r-base-dev git libssl-dev libclang-dev libxml2-dev \
+    apt install -y r-base-dev git git-lfs libssl-dev libclang-dev libxml2-dev \
       libcurl4-openssl-dev libssl-dev libfftw3-dev libtiff-dev libgsl-dev\
       libfontconfig1-dev libharfbuzz-dev libfreetype-dev libfribidi-dev \
       librsvg2-dev
