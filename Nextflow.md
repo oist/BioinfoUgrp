@@ -74,7 +74,7 @@ Installation on deigo
 APP=nf-test
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=0.9.3
+VER=0.9.5
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/askimed/nf-test/releases/download/v${VER}/nf-test-${VER}.tar.gz
@@ -125,7 +125,7 @@ ml python/3.11.4
 APP=nf-core
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=3.5.2
+VER=4.0.2
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 

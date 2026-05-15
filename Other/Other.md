@@ -191,6 +191,49 @@ wget https://huggingface.co/boltz-community/boltz-2/resolve/main/boltz2_conf.ckp
 wget https://huggingface.co/boltz-community/boltz-2/resolve/main/boltz2_aff.ckpt
 ```
 
+## cellxgene-vip
+
+- Home page: https://cellxgene.cziscience.com/ and https://github.com/interactivereport/cellxgene_VIP
+
+### Installation on Deigo
+
+The script to run the container is in this github repository.
+
+```bash
+module load singularity
+APP=cellxgene-vip
+VER=3.1.2
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP/$VER
+mkdir -p $APPDIR
+cd $APPDIR
+singularity pull $APP.sif docker://quay.io/bgruening/$APP:$VER
+
+cat <<'__END__' > $APP/$VER.lua
+
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/oist/BioinfoUgrp/tree/master/cellxgene-vip")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."cellxgene")
+whatis("Description: ".."Singularity image to run cellxgene-vip server on a compute node and access from your web browser.")
+
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome.."/")
+
+__END__
+
+```
+
+
 ## pbgzip
 
 - Home page: https://github.com/nh13/pbgzip
@@ -1981,7 +2024,7 @@ __END__
 
 ```bash
 APP=prek
-VER=0.2.28
+VER=0.3.13
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR

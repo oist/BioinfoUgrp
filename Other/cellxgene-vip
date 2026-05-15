@@ -1,0 +1,55 @@
+#!/bin/sh -e
+
+# ── Port selection ────────────────────────────────────────────────────────────
+if [ -z "$CELLXGENE_PORT" ]
+then
+    LOWERPORT=30000
+    UPPERPORT=50000
+    for CELLXGENE_PORT in $(seq $LOWERPORT $UPPERPORT);
+    do
+        CELLXGENE_PORT="`shuf -i $LOWERPORT-$UPPERPORT -n 1`"
+        ss -lpn | grep -q ":$CELLXGENE_PORT " || break
+    done
+fi
+
+# ── Hostname ──────────────────────────────────────────────────────────────────
+CELLXGENE_HOST=$(hostname -A | cut -f1 -d' ')
+CELLXGENE_HOST=${CELLXGENE_HOST:-localhost}
+
+# ── SSH tunnel instructions ───────────────────────────────────────────────────
+if [ ! $CELLXGENE_HOST = "localhost" ]
+then
+    printf "\nIf you remote work, you can forward the server to port 1665 on your computer with:\n"
+    printf "ssh ${USER}@${CELLXGENE_HOST} -J ${USER}@login.oist.jp,${USER}@deigo.oist.jp -L 1665:localhost:${CELLXGENE_PORT}\n"
+fi
+
+printf "\n"
+
+
+# ── Check input ───────────────────────────────────────────────────────────────
+DATA=${1:-}
+if [ -z "$DATA" ]
+then
+    echo "Usage: $0 <path-to-file.h5ad> [cellxgene options...]"
+    exit 1
+fi
+
+if [ ! -f "$DATA" ]
+then
+    echo "Error: file not found: $DATA"
+    exit 1
+fi
+
+shift  # remove $1 (DATA) so $@ is now just the extra flags
+
+# ── Launch via Singularity ────────────────────────────────────────────────────
+SIF=/bucket/BioinfoUgrp/Other/cellxgene-vip/3.1.2/cellxgene-vip_3.1.2.sif
+
+singularity exec \
+    --bind $(dirname $(realpath "$DATA")):/data \
+    "$SIF" \
+    cellxgene launch /data/$(basename "$DATA") \
+    --host ${CELLXGENE_HOST} \
+    --port ${CELLXGENE_PORT} \
+    "$@"
+
