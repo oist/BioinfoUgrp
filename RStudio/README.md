@@ -45,13 +45,13 @@ directory is:
 
 ```
 This image will build its packages in the following directory if it exists:
-R_LIBS_USER="~/R/library/R_4.5_for_RStudio_Singularity"
+R_LIBS_USER="~/R/library/R_4.6_for_RStudio_Singularity"
 ```
 
 **Note that once a year, there is a major release of R that requires rebuild of
 the installed packages.  To stick the same version and ignore updates, load the
 module with the version name like in
-`Other/RStudio_server/2026.01.2-418_R_4.5.3` for instance.**
+`Other/RStudio_server/2026.04.0-526_R_4.5.3` for instance.**
 
 ### RStudio Desktop
 
@@ -59,7 +59,7 @@ The image also contains RStudio Desktop in case you need it.
 
 ```
 # On your desktop PC, not deigo:
-singularity exec --bind $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/$(id -u)/$WAYLAND_DISPLAY  ./RStudio_2026.01.2-418_R_4.5.3.sif rstudio
+singularity exec --bind $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/$(id -u)/$WAYLAND_DISPLAY  ./RStudio_2026.04.0-526_R_4.6.0.sif rstudio
 ```
 
 ### Rscript
@@ -67,7 +67,7 @@ singularity exec --bind $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/$(id -u)/$WA
 Scripts like the following are installed on Deigo as a convenience for running `Rscript`
 
     #!/bin/sh
-    singularity exec /bucket/BioinfoUgrp/Other/RStudio_server/2026.01.2-418_R_4.5.3/RStudio_2026.01.1-403_R_4.5.3.sif Rscript "$@"
+    singularity exec /bucket/BioinfoUgrp/Other/RStudio_server/2026.04.0-526_R_4.6.0/RStudio_2026.04.0-526_R_4.6.0.sif Rscript "$@"
 
 How to build a Singularity image
 --------------------------------
@@ -84,7 +84,7 @@ Lastly, let's install the latest tidyverse, as everybody wants it.
 
 Then build the image:
 
-    singularity build --fakeroot RStudio_2026.01.2-418_R_4.5.3.sif Singularity.def
+    singularity build --fakeroot RStudio_2026.04.0-526_R_4.6.0.sif Singularity.def
 
 Technical details
 -----------------
