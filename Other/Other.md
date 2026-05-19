@@ -2067,7 +2067,7 @@ __END__
 
 ```bash
 APP=prek
-VER=0.3.13
+VER=0.4.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
