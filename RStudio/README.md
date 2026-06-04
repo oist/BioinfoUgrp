@@ -60,6 +60,8 @@ The image also contains RStudio Desktop in case you need it.
 ```
 # On your desktop PC, not deigo:
 singularity exec --bind $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/$(id -u)/$WAYLAND_DISPLAY  ./RStudio_2026.04.0-526_R_4.6.0.sif rstudio
+# Or if you want to share your SSH agent:
+singularity exec --bind $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/$(id -u)/$WAYLAND_DISPLAY --bind $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent ./RStudio_2026.04.0-526_R_4.6.0.sif rstudio
 ```
 
 ### Rscript
