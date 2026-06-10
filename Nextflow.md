@@ -9,7 +9,11 @@ version `21.10.6` in the `Nextflow` module on _deigo_.  Newer versions are in
 the `Nextflow2` module.  To use a _DSL1_ pipeline with the `Nextflow2` module,
 pass the `-dsl1` flag to the `nextflow` program.
 
-The `Nextflow2` module also limits the use of memory by setting the environment
+In 2026, _Nextflow_ had a backwards-incompatible change enforcint _"strict syntax"_;
+and many pipelines are not compatible with it.  Therefore newer versions of Nextflow
+are packaged in the `Nextflow3` module.
+
+The `Nextflow2` and `Nextflow3` modules also limits the use of memory by setting the environment
 variable `NXF_OPTS` to `-Xms500M -Xmx2G`.  Please contact us or open an issue
 if you hit the limit.
 
@@ -24,10 +28,10 @@ See also <https://groups.oist.jp/scs/install-software-your-unit>.
 Source: https://github.com/nextflow-io/nextflow
 
 ```
-APP=Nextflow2
+APP=Nextflow3
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=25.10.4
+VER=26.04.3
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-dist
