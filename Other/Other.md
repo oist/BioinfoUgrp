@@ -783,7 +783,7 @@ IPA was installed with conda before and we had to remove the module for that rea
 ```bash
 module load singularity
 APP=deepvariant
-VER=1.1.0
+VER=1.10.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
