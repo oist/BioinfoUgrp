@@ -31,7 +31,7 @@ Source: https://github.com/nextflow-io/nextflow
 APP=Nextflow3
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=26.04.4
+VER=26.04.6
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-dist
