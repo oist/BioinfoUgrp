@@ -191,6 +191,49 @@ wget https://huggingface.co/boltz-community/boltz-2/resolve/main/boltz2_conf.ckp
 wget https://huggingface.co/boltz-community/boltz-2/resolve/main/boltz2_aff.ckpt
 ```
 
+## cellxgene
+
+- Home page: https://cellxgene.cziscience.com/
+
+### Installation on Deigo
+
+The script to run the container is in this github repository.
+
+```bash
+module load singularity
+APP=cellxgene-vip
+VER=1.3.0
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP/$VER
+mkdir -p $APPDIR
+cd $APPDIR
+singularity pull $APP.sif docker://quay.io/ayush_praveen/$APP:$VER
+
+cat <<'__END__' > $APP/$VER.lua
+
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://github.com/oist/BioinfoUgrp/tree/master/cellxgene")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."cellxgene")
+whatis("Description: ".."Singularity image to run cellxgene server on a compute node and access from your web browser.")
+
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome.."/")
+
+__END__
+
+```
+
+
 ## cellxgene-vip
 
 - Home page: https://cellxgene.cziscience.com/ and https://github.com/interactivereport/cellxgene_VIP
@@ -740,7 +783,7 @@ IPA was installed with conda before and we had to remove the module for that rea
 ```bash
 module load singularity
 APP=deepvariant
-VER=1.1.0
+VER=1.10.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP/$VER
 mkdir -p $APPDIR
@@ -1486,6 +1529,45 @@ prepend_path("PATH", apphome.."/bin")
 __END__
 ```
 
+```bash
+DIS=iqtree3
+APP=iqtree3
+VER=3.1.3
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR
+cd $APPDIR
+wget -O - https://github.com/iqtree/iqtree3/archive/refs/tags/v3.1.3.tar.gz | tar xzvf -
+mv $DIS-$VER $VER && cd $VER
+git clone https://github.com/tothuhien/lsd2
+mkdir build && cd build 
+cmake -DUSE_LSD2=ON ..
+make -j
+cd $MODROOT/$APP/$VER
+mkdir -p binml 
+cd bin
+ln -s $MODROOT/$APP/$VER/build/iqtree3 .
+ln -s iqtree3
+cd $MODROOT/modulefiles/
+mkdir -p $APP
+cat <<'__END__' > $APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://www.iqtree.org")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."iqtree3")
+whatis("Description: ".."A fast and effective stochastic algorithm to infer phylogenetic trees by maximum likelihood")
+-- Package settings
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
 ## FastTree
 - Home page: http://www.microbesonline.org/fasttree/
 - Source code: http://www.microbesonline.org/fasttree/#Install
@@ -2024,7 +2106,7 @@ __END__
 
 ```bash
 APP=prek
-VER=0.3.13
+VER=0.4.0
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
