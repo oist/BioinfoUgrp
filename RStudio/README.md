@@ -135,3 +135,53 @@ whatis("Description: ".."Singularity image to run RStudio server on a compute no
 depends_on("singularity")
 prepend_path("PATH", apphome.."/")
 ```
+
+### Generate scripts
+
+```
+VERSION=2026.06.0-242_R_4.6.1
+BASE=/bucket/BioinfoUgrp/Other/RStudio_server/$VERSION
+IMAGE=$BASE/RStudio_${VERSION}.sif
+
+cat > RStudio_server <<EOF
+#!/bin/bash
+set -e
+
+VERSION="$VERSION"
+BASE="/bucket/BioinfoUgrp/Other/RStudio_server/\$VERSION"
+IMAGE="\$BASE/RStudio_\${VERSION}.sif"
+
+KEYDIR="\$HOME/.local/share/rstudio-server"
+
+mkdir -p "\$KEYDIR"
+chmod 700 "\$KEYDIR"
+
+for key in secure-cookie-key session-rpc-key
+do
+    if [ ! -s "\$KEYDIR/\$key" ]; then
+        openssl rand -hex 32 > "\$KEYDIR/\$key"
+        chmod 600 "\$KEYDIR/\$key"
+    fi
+done
+
+exec singularity exec \\
+    --bind "\$KEYDIR:/var/lib/rstudio-server" \\
+    "\$IMAGE" \\
+    launch_rserver "\$@"
+EOF
+
+chmod +x RStudio_server
+
+cat > Rscript <<EOF
+#!/bin/bash
+set -e
+
+VERSION="$VERSION"
+BASE="/bucket/BioinfoUgrp/Other/RStudio_server/\$VERSION"
+IMAGE="\$BASE/RStudio_\${VERSION}.sif"
+
+exec singularity exec "\$IMAGE" Rscript "\$@"
+EOF
+
+chmod +x Rscript
+```
