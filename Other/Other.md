@@ -277,6 +277,51 @@ __END__
 ```
 
 
+### DefensePredictor
+
+<https://pypi.org/project/defense-predictor/>
+
+Install on *Deigo* because Saion does not have Python 3.11.4 on the login nodes and
+the GPU nodes can not write to `/bucket`.
+
+```bash
+ml purge
+ml python/3.11.4
+APP=defense_predictor
+VER=1.1.2
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP
+mkdir -p $APPDIR/$VER
+cd $APPDIR/$VER
+PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user ${APP}[cuda]
+sed -i.bak 's/free81/free88/' bin/*   # Fix to Saion's path
+mkdir -p $MODROOT/modulefiles/$APP
+cd $MODROOT/modulefiles/$APP
+cp 1.1.2.lua ${VER}.lua
+```
+
+Where `1.1.2.lua` contains:
+```
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://pypi.org/project/defense-predictor/")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."protein, virus")
+whatis("Description: ".."Python module for running Defense Predictor, a machine learning model to predict antiphage defense systems")
+
+-- Package settings
+depends_on("python/3.11.4", "cuda")
+prepend_path("PATH", apphome.."/bin")
+prepend_path("PYTHONPATH", apphome.."/lib/python3.11/site-packages")
+```
+
 ## pbgzip
 
 - Home page: https://github.com/nh13/pbgzip
