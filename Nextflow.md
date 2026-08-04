@@ -129,7 +129,7 @@ ml python/3.11.4
 APP=nf-core
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=4.0.3
+VER=4.1.0
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 
