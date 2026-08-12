@@ -129,16 +129,16 @@ ml python/3.11.4
 APP=nf-core
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=4.0.2
+VER=4.1.0
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user pre-commit
 cd $MODROOT/$APP/modulefiles/
-cp 3.5.1.lua ${VER}.lua
+cp 4.0.2.lua ${VER}.lua
 ```
 
-Contents of 3.5.1.lua:
+Contents of `4.0.2.lua`:
 
 ```
 -- Default settings
@@ -165,7 +165,9 @@ See https://nf-co.re/ for help.]])
 depends_on("singularity")
 prepend_path("PATH", apphome.."/bin")
 prepend_path("PYTHONPATH", apphome.."/lib/python3.11/site-packages/")
-depends_on("Nextflow2")
+if not (isloaded("Nextflow2") or isloaded("Nextflow3")) then
+    load("Nextflow2")
+end
 depends_on("python/3.11.4")
 depends_on("Other/nf-test")
 depends_on("Other/prek")
