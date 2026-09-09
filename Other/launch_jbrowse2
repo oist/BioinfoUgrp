@@ -1,0 +1,152 @@
+#!/bin/sh -e
+#
+# launch_jbrowse -- start a JBrowse 2 web server on a compute node and open it
+#                   from your web browser.
+#
+# The server is started with `jbrowse admin-server` (shipped inside the
+# jbrowse2 singularity image via the neighbouring `jbrowse2` wrapper). It
+# listens on all network interfaces with NO authentication, so anyone who can
+# reach the printed host:port can view (and, through the admin-server, edit)
+# the instance. Only run it on a trusted network / port-forward it over SSH.
+#
+# Two ways to feed it data (choose exactly one):
+#
+#   1. A genome FASTA that already has a samtools .fai index beside it:
+#
+#          launch_jbrowse --fasta genome.fa
+#
+#      A reusable JBrowse installation is built next to it (or at --out) and
+#      the assembly is added by symlink (no copying of the FASTA).
+#
+#   2. A directory that already contains a JBrowse `config.json`:
+#
+#          launch_jbrowse --config /path/to/jbrowse2_dir
+#
+# No indexing is performed by this script -- the .fai (FASTA mode) or the
+# config.json and its data (config mode) must already exist.
+#
+# Usage:
+#   launch_jbrowse (--fasta FILE.fa | --config DIR) [--out DIR] [--port N]
+#
+# Options:
+#   -f, --fasta  FILE   Genome FASTA (needs FILE.fai next to it). Mode 1.
+#   -c, --config DIR    Directory containing a JBrowse config.json. Mode 2.
+#   -o, --out    DIR    (Mode 1 only) JBrowse install dir to build/reuse.
+#                       Default: ./jbrowse2_<fasta-basename> in the current dir.
+#   -p, --port   N      Port to serve on. Default: a random free port.
+#   -h, --help          Show this help and exit.
+
+PROG=$(basename "$0")
+JBDIR=$(cd "$(dirname "$0")" && pwd)
+
+# The singularity wrapper that runs the jbrowse CLI inside the image.
+JBROWSE="$JBDIR/jbrowse2"
+
+usage() {
+	sed -n '2,/^$/p' "$0" | sed 's/^#\{0,1\} \{0,1\}//'
+}
+
+die() {
+	printf '%s: error: %s\n' "$PROG" "$*" >&2
+	exit 1
+}
+
+# ---- Parse arguments --------------------------------------------------------
+FASTA=""
+CONFIG=""
+OUTDIR=""
+PORT=""
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		-f|--fasta)  FASTA="$2";  shift 2 ;;
+		-c|--config) CONFIG="$2"; shift 2 ;;
+		-o|--out)    OUTDIR="$2"; shift 2 ;;
+		-p|--port)   PORT="$2";   shift 2 ;;
+		-h|--help)   usage; exit 0 ;;
+		--) shift; break ;;
+		-*) die "unknown option: $1 (try --help)" ;;
+		*)  die "unexpected argument: $1 (try --help)" ;;
+	esac
+done
+
+# ---- Validate mode selection ------------------------------------------------
+if [ -n "$FASTA" ] && [ -n "$CONFIG" ]; then
+	die "give either --fasta or --config, not both"
+fi
+if [ -z "$FASTA" ] && [ -z "$CONFIG" ]; then
+	die "one of --fasta or --config is required (try --help)"
+fi
+if [ ! -x "$JBROWSE" ]; then
+	die "jbrowse2 wrapper not found or not executable: $JBROWSE"
+fi
+
+# ---- Build / locate the JBrowse installation (ROOT) -------------------------
+if [ -n "$FASTA" ]; then
+	# Mode 1: genome FASTA + existing .fai index.
+	[ -f "$FASTA" ] || die "FASTA not found: $FASTA"
+	[ -f "$FASTA.fai" ] || die "FASTA index not found: $FASTA.fai (index it first, e.g. samtools faidx $FASTA)"
+
+	FASTA=$(cd "$(dirname "$FASTA")" && pwd)/$(basename "$FASTA")
+
+	if [ -z "$OUTDIR" ]; then
+		base=$(basename "$FASTA")
+		base=${base%.gz}
+		base=${base%.fasta}
+		base=${base%.fa}
+		OUTDIR="$PWD/jbrowse2_$base"
+	fi
+
+	if [ ! -f "$OUTDIR/index.html" ]; then
+		printf 'Creating JBrowse installation at %s ...\n' "$OUTDIR"
+		"$JBROWSE" create "$OUTDIR"
+	fi
+
+	printf 'Adding assembly %s (symlink) ...\n' "$(basename "$FASTA")"
+	"$JBROWSE" add-assembly "$FASTA" --load symlink --out "$OUTDIR" --force
+
+	ROOT="$OUTDIR"
+else
+	# Mode 2: an existing directory containing a config.json.
+	[ -d "$CONFIG" ] || die "config directory not found: $CONFIG"
+	[ -f "$CONFIG/config.json" ] || die "no config.json in: $CONFIG"
+	ROOT=$(cd "$CONFIG" && pwd)
+fi
+
+# ---- Pick a port ------------------------------------------------------------
+port_in_use() {
+	ss -lnt 2>/dev/null | grep -q ":$1[[:space:]]"
+}
+
+if [ -z "$PORT" ]; then
+	LOWERPORT=50000
+	UPPERPORT=65535
+	for _ in $(seq 1 100); do
+		PORT=$(shuf -i "$LOWERPORT"-"$UPPERPORT" -n 1)
+		port_in_use "$PORT" || break
+	done
+	port_in_use "$PORT" && die "could not find a free port in $LOWERPORT-$UPPERPORT"
+elif port_in_use "$PORT"; then
+	die "port $PORT is already in use"
+fi
+
+# ---- Work out the host name for the URL -------------------------------------
+JB_HOST=$(hostname -A 2>/dev/null | cut -f1 -d' ')
+JB_HOST=${JB_HOST:-$(hostname)}
+JB_HOST=${JB_HOST:-localhost}
+
+# ---- Report and launch ------------------------------------------------------
+printf '\nJBrowse root:\t%s\n' "$ROOT"
+printf 'JBrowse URL:\thttp://%s:%s/\n' "$JB_HOST" "$PORT"
+
+if [ "$JB_HOST" != "localhost" ]; then
+	printf '\nTo reach it from your own computer, forward the port over SSH,\n'
+	printf 'then open http://localhost:1664/ in your browser:\n'
+	printf 'ssh %s@%s -J %s@login.oist.jp,%s@deigo.oist.jp -L 1664:localhost:%s\n' \
+		"$USER" "$JB_HOST" "$USER" "$USER" "$PORT"
+fi
+
+printf '\nThe server has NO password: anyone who can reach the URL can view it.\n'
+printf 'Press Ctrl-C to stop the server.\n\n'
+
+exec "$JBROWSE" admin-server --root "$ROOT" --port "$PORT"

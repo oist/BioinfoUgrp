@@ -322,6 +322,93 @@ prepend_path("PATH", apphome.."/bin")
 prepend_path("PYTHONPATH", apphome.."/lib/python3.11/site-packages")
 ```
 
+## jbrowse2
+- Home page: <https://jbrowse.org/jb2/>
+
+Provides `jbrowse2` (CLI in the image) and `launch_jbrowse2` (web server on a compute node).
+
+### Installation on Deigo
+
+On a login node (`/bucket` is read-only in jobs):
+
+```bash
+module load singularity
+APP=jbrowse2
+VER=4.3.0
+APPDIR=/bucket/BioinfoUgrp/Other/$APP/$VER
+MODFILEDIR=/bucket/BioinfoUgrp/Other/modulefiles
+
+umask 002
+mkdir -p $APPDIR
+cd $APPDIR
+
+export SINGULARITY_CACHEDIR=/flash/LuscombeU/$USER/sing_cache   # keep it off /home
+singularity pull $APP.sif docker://quay.io/biocontainers/jbrowse2:$VER--hdfd78af_0
+rm -rf $SINGULARITY_CACHEDIR
+
+cat <<'__END__' > jbrowse2
+#!/bin/sh
+JBDIR=$(cd "$(dirname "$0")" && pwd)
+exec singularity exec "$JBDIR/jbrowse2.sif" jbrowse "$@"
+__END__
+
+curl -fsSLO https://raw.githubusercontent.com/oist/BioinfoUgrp/master/Other/launch_jbrowse2
+chmod +x jbrowse2 launch_jbrowse2
+chmod -R g+rwX,o+rX $APPDIR
+
+mkdir -p $MODFILEDIR/$APP
+cat <<'__END__' > $MODFILEDIR/$APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."https://jbrowse.org/jb2/")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."jbrowse2")
+whatis("Description: ".."Singularity image to run jbrowse2 server on a compute node and access from your web browser.")
+help([[
+jbrowse2 -- JBrowse 2 genome browser in a Singularity image.
+
+  jbrowse2 <args>        JBrowse 2 CLI, e.g. `jbrowse2 --version`.
+  launch_jbrowse2 ...    Start a server on a compute node (no password):
+                             launch_jbrowse2 --fasta genome.fa       (needs .fai)
+                             launch_jbrowse2 --config jbrowse2_dir   (needs config.json)
+                         `--help` for all options. Run it in a job, from /flash.
+]])
+-- Package settings
+depends_on("singularity")
+prepend_path("PATH", apphome)
+__END__
+chmod g+rw,o+r $MODFILEDIR/$APP/$VER.lua
+```
+
+Check (`--ignore_cache` because the modulefile is not in Lmod's cache yet):
+
+```bash
+rm -rf ~/.lmod.d/.cache
+ml bioinfo-ugrp-modules
+module --ignore_cache load Other/jbrowse2/$VER
+which jbrowse2 launch_jbrowse2 && jbrowse2 --version
+```
+
+### Usage
+
+```bash
+srun -p short -t 2:00:00 -c 4 --mem 8G --pty bash
+ml bioinfo-ugrp-modules Other/jbrowse2
+cd /flash/LuscombeU/$USER            # JBrowse writes here; /bucket is read-only in jobs
+launch_jbrowse2 --fasta /path/to/genome.fa
+```
+
+It prints the URL and the `ssh -L` line to run locally. The server has no authentication
+and `admin-server` allows editing, so keep it behind the port-forward, and delete the
+JBrowse directory from `/flash` when done.
+
+
 ## pbgzip
 
 - Home page: https://github.com/nh13/pbgzip
