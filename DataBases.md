@@ -117,9 +117,9 @@ Version 34.0:  Use `ml DB/Pfam/34.0` to invoke it in your scripts.
 
 ## Dfam
 
-Version 3.9 downloaded from <https://www.dfam.org/releases/Dfam_3.9/families/> and <https://www.dfam.org/releases/Dfam_3.9/families/FamDB>.  HDF5 files were uncompressed after checking their MD5 sums.
+Version 4.0 downloaded from <https://www.dfam.org/releases/Dfam_4.0/families/> and <https://www.dfam.org/releases/Dfam_4.0/families/FamDB>.  HDF5 files were uncompressed after checking their MD5 sums.
 
-The command `ml DB/Dfam/3.9` exposes two environment variables
+The command `ml DB/Dfam/4.0` exposes two environment variables
  - `$BioinfoUgrp_Dfam` containing the path to the directory containing the HMM files, that can be passed to RepeatMasker through its `-libdir` argument.
  - `$BioinfoUgrp_FamDB` containing the path to the directory containing the HDF5 files, to be bind-mounted on `/opt/RepeatMasker/Libraries/famdb/` when using `TETools`.
  - `SINGULARITY_BINDPATH`, with a value to replace `/opt/RepeatMasker/Libraries/famdb` in the Singularity containers with the local full copy of Dfam.
