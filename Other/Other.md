@@ -335,6 +335,7 @@ On a login node (`/bucket` is read-only in jobs):
 module load singularity
 APP=jbrowse2
 VER=4.3.0
+TAG="$VER--hdfd78af_0"
 APPDIR=/bucket/BioinfoUgrp/Other/$APP/$VER
 MODFILEDIR=/bucket/BioinfoUgrp/Other/modulefiles
 
@@ -342,15 +343,15 @@ umask 002
 mkdir -p $APPDIR
 cd $APPDIR
 
-export SINGULARITY_CACHEDIR=/flash/LuscombeU/$USER/sing_cache   # keep it off /home
-singularity pull $APP.sif docker://quay.io/biocontainers/jbrowse2:$VER--hdfd78af_0
-rm -rf $SINGULARITY_CACHEDIR
+singularity pull $APP.sif "docker://quay.io/biocontainers/$APP:$TAG"
 
-cat <<'__END__' > jbrowse2
+cat <<__END__ > jbrowse2
 #!/bin/sh
-JBDIR=$(cd "$(dirname "$0")" && pwd)
-exec singularity exec "$JBDIR/jbrowse2.sif" jbrowse "$@"
+singularity exec $APPDIR/jbrowse2.sif jbrowse "\$@"
 __END__
+
+# TODO: download  https://github.com/GMOD/jbrowse-components/releases/download/v4.3.0/jbrowse-web-v4.3.0.zip
+# and create a wrapper for jbrowse2 create so that the launcher can just copy the files.
 
 curl -fsSLO https://raw.githubusercontent.com/oist/BioinfoUgrp/master/Other/launch_jbrowse2
 chmod +x jbrowse2 launch_jbrowse2
