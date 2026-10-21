@@ -15,7 +15,7 @@ If modules are new to you, read the [main page](README.md) first.
 Nextflow has twice changed in ways that break older pipelines, so there are
 three modules:
 
-Homepage: <https://www.nextflow.io>; releases:
+Nextflow [🏠](https://www.nextflow.io "Homepage"), releases:
 <https://github.com/nextflow-io/nextflow/releases>.
 
 | Module | Nextflow versions | Use for |
@@ -66,8 +66,8 @@ These are mostly useful if you write or modify pipelines.
 
 | Module | Provides |
 |---|---|
-| `nf-core` | the [`nf-core` command](https://nf-co.re/docs/nf-core-tools) (list, download, create and lint pipelines); loads `Nextflow2` unless `Nextflow2` or `Nextflow3` is already loaded, and also loads `Other/nf-test` and `Other/prek` |
-| `Other/nf-test` | [nf-test](https://www.nf-test.com/), a testing framework for Nextflow pipelines |
+| `nf-core` [🏠](https://nf-co.re/docs/nf-core-tools "Homepage") | the `nf-core` command (list, download, create and lint pipelines); loads `Nextflow2` unless `Nextflow2` or `Nextflow3` is already loaded, and also loads `Other/nf-test` and `Other/prek` |
+| `Other/nf-test` [🏠](https://www.nf-test.com/ "Homepage") | nf-test, a testing framework for Nextflow pipelines |
 
 To use the nf-core tools with `Nextflow3`, load `Nextflow3` first:
 
