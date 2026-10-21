@@ -41,7 +41,7 @@ the module.
 ```bash
 ml bioinfo-ugrp-modules Nextflow3
 nextflow run nf-core/<pipeline> -r <version> -profile oist \
-  --input samplesheet.csv --outdir /flash/<YourUnit>/results
+  --input samplesheet.csv --outdir /flash/YourUnitU/results
 ```
 
 The `oist` profile sends each step of the pipeline to Slurm as a separate job

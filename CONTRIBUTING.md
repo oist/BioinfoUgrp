@@ -57,7 +57,7 @@ them compatible with it, and prefer a link to a copy.
 | `/bucket/BioinfoUgrp/DB/…` | databases (`DB/` modules) |
 | `/bucket/BioinfoUgrp/DebianMed/<Debian version>/` | Debian Med image, wrappers and modulefiles |
 | `/bucket/BioinfoUgrp/Nanopore/`, `/bucket/BioinfoUgrp/<app>/` | Nanopore and older modules |
-| `/apps/.bioinfo-ugrp-modulefiles81/` | metamodules on Deigo, such as `DebianMed/<version>.lua`, which add directories to `MODULEPATH` |
+| `/apps/.bioinfo-ugrp-modulefiles81/` | on Deigo, the module directory that `bioinfo-ugrp-modules` adds to `MODULEPATH` (SCDA's module page shows the `DB/` and `Other/` modules listed from it); also holds metamodules such as `DebianMed/<version>.lua` |
 | `/apps/.bioinfo-ugrp-modulefiles/` | older modulefiles (Tcl), such as Guppy and Rerio |
 
 The recipes are the record of how each module was made; the installed tree
@@ -71,7 +71,7 @@ is not under version control.
   `pip install "$APP==$VER"`), not "latest" or a branch, so that the module
   version is true.
 - Recipes must run as written, by copy and paste, on a Deigo login node.
-- Write Lua modulefiles for Lmod, following the template used in
+- Write Lua modulefiles, following the template used in
   [dev/Alignment.md](dev/Alignment.md): `whatis` lines for name, version,
   URL, category, keywords and description, then the package settings.  The
   description is what users see with `ml whatis` and `ml key`, so make it
@@ -93,15 +93,28 @@ group-writable.
 
 ### Where to build
 
-`/bucket` is writable from the login nodes but read-only on compute nodes,
-which is why the recipes run on a login node.  Downloading and unpacking
-binaries or containers there is light work.  For compiled software, note
-SCDA's warning that programs built on Intel nodes (the login nodes are
-Intel) can crash on the AMD compute nodes, and their recommendation to build
-on an AMD node; a build made in `/flash` on a compute node can then be copied
-to `/bucket` from a login node.  See SCDA's guide for the current rules on
-[Deigo](https://scda-guide.oist.jp/deigo.html) and on
-[installing software for your unit](https://groups.oist.jp/scs/install-software-your-unit).
+SCDA's page
+[Install software for your unit](https://scda-guide.oist.jp/install-software-your-unit.html)
+says to build software on a compute node: an AMD node on Deigo for general
+software, because code compiled on an Intel node might not work properly on
+the AMD nodes, and a GPU node on Saion for GPU-accelerated software.  Their
+example:
+
+```bash
+srun -t 0-2 -p compute -C epyc -c 16 --mem=8G --pty bash
+```
+
+`/bucket` is read-only on compute nodes, and writable on the login nodes and
+through the `datacp` partition
+([research storage](https://scda-guide.oist.jp/research-storage.html)).  So
+compile and test in a directory on `/flash`, then copy the result to
+`/bucket` from a login node.  Downloading and unpacking prebuilt binaries or
+containers can be done from a login node.  Many existing recipes run `make`
+on a login node; follow SCDA's rule when you update them.
+
+The same page explains how to write modulefiles.  Lmod reads modulefiles in
+Lua (used for new modules here) and in Tcl (older modules here, and SCDA's
+examples).
 
 GPU software for Saion is installed from Deigo when it needs a Python
 module that Saion's login nodes lack (see the Boltz recipe in
@@ -109,9 +122,11 @@ module that Saion's login nodes lack (see the Boltz recipe in
 
 ### conda
 
-Anaconda and Miniconda are prohibited at OIST since 2025-04-01 (licensing).
-Use Miniforge, with the conda-forge and bioconda channels only; do not add
-Anaconda's `defaults` channel.  Pin the Miniforge version.
+Anaconda is prohibited on OIST systems since 2025-04-01, for licensing
+reasons ([SCDA page](https://scda-guide.oist.jp/anaconda-oist)); this covers
+Miniconda too.  Use conda from conda-forge (Miniforge), with the conda-forge
+and bioconda channels only; do not add Anaconda's `defaults` channel.  Pin
+the Miniforge version.
 
 ### Licences
 

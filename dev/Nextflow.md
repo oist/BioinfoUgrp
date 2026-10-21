@@ -9,7 +9,7 @@ Nextflow
 Installation on deigo
 ---------------------
 
-See also <https://groups.oist.jp/scs/install-software-your-unit>.
+See also <https://scda-guide.oist.jp/install-software-your-unit.html>.
 
 ### Release or edge versions from GitHub
 

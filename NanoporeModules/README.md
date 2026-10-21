@@ -2,8 +2,8 @@
 
 Modules for basecalling and processing Oxford Nanopore Technologies (ONT)
 data.  Basecalling needs GPUs, so it runs on Saion.  If modules are new to
-you, read the [main page](../README.md) first; note that on Saion the `ml`
-short form is not available.
+you, read the [main page](../README.md) first.  The examples use the long
+`module` form, which works on Saion.
 
 ```bash
 module load bioinfo-ugrp-modules

@@ -289,12 +289,12 @@ Dfam modules described in [DataBases.md](../DataBases.md#dfam).
 ### Web servers: jbrowse2 and cellxgene-vip
 
 Start the server inside a Slurm job, from a directory where it can write,
-such as `/flash/<YourUnit>/<you>`: `/bucket` is read-only on compute nodes.
+such as `/flash/YourUnitU/<your user name>`: `/bucket` is read-only on compute nodes.
 
 ```bash
 srun -p compute -t 2:00:00 -c 4 --mem 8G --pty bash
 ml bioinfo-ugrp-modules Other/jbrowse2
-cd /flash/<YourUnit>/$USER
+cd /flash/YourUnitU/$USER
 launch_jbrowse2 --fasta /path/to/genome.fa       # the .fai index must exist
 ```
 

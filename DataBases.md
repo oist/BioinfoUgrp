@@ -102,7 +102,7 @@ module load DB/GTDBTK/ref_data/226.0
 nextflow run nf-core/mag \
   -profile oist \
   --input samplesheet.csv \
-  --outdir /flash/<YourUnit>/mag_results \
+  --outdir /flash/YourUnitU/mag_results \
   --gtdb_db "$GTDBTK_DATA_ARCHIVED"
 ```
 

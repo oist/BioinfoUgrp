@@ -47,9 +47,10 @@ version of one program becomes usable.  _Unloading_ the module reverts the
 change.  Modules do not install or copy anything; they only change variables
 of your current shell.
 
-SCDA's page [Use the module system](https://scda-guide.oist.jp/use-module-system)
-describes the system in full.  The summary below is limited to what you need
-for our modules.
+SCDA's page [Use the module system](https://scda-guide.oist.jp/use-module-system.html)
+describes the system in full; the module system is
+[Lmod](https://lmod.readthedocs.io/en/latest/010_user.html).  The summary
+below is limited to what you need for our modules.
 
 ### Commands
 
@@ -59,7 +60,7 @@ for our modules.
 |---|---|---|
 | List modules you can load | `ml av` | `module avail` |
 | List modules whose name contains a word | `ml av samtools` | `module avail samtools` |
-| Search names and descriptions | `ml key assembly` | `module keyword assembly` |
+| Search names and descriptions | `ml key assembly` | `module key assembly` |
 | Find a module anywhere, with its versions (Deigo only) | `ml spider hifiasm` | `module spider hifiasm` |
 | Load the default version | `ml Other/hifiasm` | `module load Other/hifiasm` |
 | Load a given version | `ml Other/hifiasm/0.25.0` | `module load Other/hifiasm/0.25.0` |
@@ -86,8 +87,9 @@ ml bioinfo-ugrp-modules
 ml av
 ```
 
-SCDA use the same mechanism for other groups of modules; see their module
-page.  Inside our metamodule, some collections are again behind their own
+SCDA use the same mechanism for other groups of modules: `ml av` lists
+`bioinfo-ugrp-modules` among the metamodules, next to `amd-modules` and
+`intel-modules`.  See their module page.  Inside our metamodule, some collections are again behind their own
 metamodule, because they contain many modules (see
 [What we provide](#what-we-provide)):
 
@@ -102,10 +104,9 @@ program.
 
 ### Deigo and Saion differ
 
-The two clusters run different versions of the module system.  The basic
-commands (`module avail`, `module load`, `module list`, `module purge`) work
-on both, but the `ml` short form and some commands, such as `spider`, are
-only on Deigo.  On Saion, write the long form:
+Our instructions for Saion use the long `module` form, because the `ml`
+short form did not work there when they were written.  If an `ml` command
+fails on Saion, use the long form:
 
 ```bash
 module load bioinfo-ugrp-modules
@@ -132,8 +133,9 @@ be at a different version.
 ## Using modules in Slurm jobs
 
 Load the modules inside the job script, not only in the shell from which you
-submit it.  Starting with `module purge` makes the job independent of what
-was loaded when you submitted it, as SCDA recommend.
+submit it, as SCDA recommend: the script then records what the job needs.
+Starting with `module purge` makes the job independent of what was loaded
+when you submitted it.
 
 A batch script for Deigo (submit with `sbatch myjob.sh`):
 
@@ -148,7 +150,7 @@ module purge
 module load bioinfo-ugrp-modules
 module load Other/minimap2/2.20
 
-minimap2 -t "$SLURM_CPUS_PER_TASK" -a reference.fa reads.fq.gz > /flash/<YourUnit>/aln.sam
+minimap2 -t "$SLURM_CPUS_PER_TASK" -a reference.fa reads.fq.gz > /flash/YourUnitU/aln.sam
 ```
 
 An interactive session, for testing:
@@ -161,7 +163,10 @@ ml bioinfo-ugrp-modules Other/minimap2
 Things to keep in mind (details in the SCDA guide):
 
 - Always set the time (`-t`) and memory (`--mem`) of a job.  Ask for what the
-  program needs, not the maximum: smaller jobs start sooner.
+  program needs, not the maximum: smaller jobs start sooner.  The `ruse`
+  module measures what a program actually used.
+- Submit jobs from your home directory: Slurm writes its output files in the
+  directory you submit from, and a job submitted from `/bucket` fails.
 - On compute nodes, `/bucket` is read-only.  Read your input from `/bucket`,
   write output to `/flash` (Deigo) or `/work` (Saion), and copy the results
   back to `/bucket` at the end.
@@ -218,8 +223,11 @@ instance the `Issues` tab of its GitHub repository) or forum (for instance
 [Biostars](https://www.biostars.org) and
 [Stack Overflow](https://stackoverflow.com).
 
-For problems with the clusters themselves (accounts, storage, Slurm, SCDA's
-own modules), contact SCDA: `ask-scda@oist.jp`, or their Open Hours.
+SCDA also offer
+[Bioinformatics Open Hours](https://scda-answers.oist.jp/books/scda-open-hours/page/bioinformatics-open-hours)
+for one-on-one consultation.  For problems with the clusters themselves
+(accounts, storage, Slurm, SCDA's own modules), contact SCDA:
+`ask-scda@oist.jp`.
 
 
 ## Contributing
