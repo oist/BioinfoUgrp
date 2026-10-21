@@ -203,7 +203,8 @@ name.
 
 To ask for new software, a new version, or a database update, write on the
 Teams channel (see below) or open an
-[issue on GitHub](https://github.com/oist/BioinfoUgrp/issues).  We update
+[issue on GitHub](https://github.com/oist/BioinfoUgrp/issues).  If you open
+an issue, also post its link on the Teams channel to notify us.  We update
 databases at most once a year.  After an update, we ask whether the previous
 version is still needed; if nobody needs it, we delete it after 30 days.  At
 most two versions of a database are kept at the same time.

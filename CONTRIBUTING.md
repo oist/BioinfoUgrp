@@ -152,4 +152,5 @@ node.
 ## Communication
 
 Discuss changes on the Teams channel (see [README.md](README.md#getting-help))
-or in [GitHub issues](https://github.com/oist/BioinfoUgrp/issues).
+or in [GitHub issues](https://github.com/oist/BioinfoUgrp/issues).  When you
+open an issue, post its link on the Teams channel too.
