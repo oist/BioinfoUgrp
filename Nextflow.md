@@ -15,6 +15,9 @@ If modules are new to you, read the [main page](README.md) first.
 Nextflow has twice changed in ways that break older pipelines, so there are
 three modules:
 
+Homepage: <https://www.nextflow.io>; releases:
+<https://github.com/nextflow-io/nextflow/releases>.
+
 | Module | Nextflow versions | Use for |
 |---|---|---|
 | `Nextflow3` | 2026 and later, with the _strict syntax_ | current pipelines |

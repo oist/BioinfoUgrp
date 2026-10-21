@@ -113,7 +113,7 @@ local apphome    = pathJoin(modroot, myModuleFullName())
 -- Package information
 whatis("Name: "..appname)
 whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/chaoszhang/ASTER")
+whatis("URL: ".."https://github.com/asl/BandageNG")
 whatis("Category: ".."bioinformatics")
 whatis("Keywords: ".."BandageNG")
 whatis("Description: ".." a Bioinformatics Application for Navigating De novo Assembly Graphs Easily")

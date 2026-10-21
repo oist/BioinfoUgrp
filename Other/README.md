@@ -14,7 +14,9 @@ ml Other/seqkit               # load the default version
 The tables below list the modules by topic, with no version numbers because
 these change; `ml av Other` shows the versions installed.  Unless stated
 otherwise, a module puts the program of the same name in your `PATH`, and
-runs on Deigo.  Each name links to the program's own documentation.  The
+runs on Deigo.  Each name links to the program's homepage; on Deigo,
+`ml whatis <module>` also shows the homepage recorded in the module, as
+`URL`.  The
 [usage notes](#usage-notes) after the tables describe the modules that work
 differently.
 
@@ -144,13 +146,13 @@ The Dfam database is in [DataBases.md](../DataBases.md#dfam).
 |---|---|---|
 | [`Other/iqtree`](http://www.iqtree.org) | Maximum-likelihood phylogeny, IQ-TREE 2 | `iqtree2`, `iqtree` |
 | [`Other/iqtree3`](http://www.iqtree.org) | Maximum-likelihood phylogeny, IQ-TREE 3 | `iqtree3` |
-| [`Other/raxml-ng-mpi`](https://github.com/amkozlov/raxml-ng/) | Maximum-likelihood phylogeny, MPI version | |
+| [`Other/raxml-ng-mpi`](https://github.com/amkozlov/raxml-ng) | Maximum-likelihood phylogeny, MPI version | |
 | [`Other/fasttree`](http://www.microbesonline.org/fasttree/) | Approximately-maximum-likelihood phylogeny | |
 | [`Other/veryfasttree`](https://github.com/citiususc/veryfasttree) | FastTree reimplementation for large datasets | |
 | [`Other/astral`](https://github.com/smirarab/ASTRAL) | Species tree from gene trees | Java program: `java -jar $ASTRAL …` |
 | [`Other/aster`](https://github.com/chaoszhang/ASTER) | Species tree estimation (ASTRAL family, CASTER) | |
 | [`Other/BEAST`](https://beast.community/) | Bayesian phylogenetics (BEAST 1) | |
-| [`Other/paml`](http://abacus.gene.ucl.ac.uk/software/#paml-for-unixlinux) | Phylogenetic analysis by maximum likelihood (codeml, …) | |
+| [`Other/paml`](https://github.com/abacus-gene/paml) | Phylogenetic analysis by maximum likelihood (codeml, …) | |
 | [`Other/bamm`](https://github.com/macroevolution/bamm) | Speciation and trait evolution rates | |
 | [`Other/phyluce`](https://phyluce.readthedocs.io/) | Phylogenomics with ultraconserved elements | |
 

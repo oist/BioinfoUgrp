@@ -25,7 +25,8 @@ bcftools --version
 The modules are named after the Debian package, which is not always the name
 of the program: for instance, a package can provide several programs.  Look
 up a package on <https://packages.debian.org> (search the package contents)
-or with `ml show <module>`.
+or with `ml show <module>`.  The package's page there also links to the
+program's homepage.
 
 The versions are those of the Debian release the image is built from; run
 `ml av DebianMed` to see which releases are available.  Give the version of

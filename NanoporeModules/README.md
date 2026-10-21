@@ -16,13 +16,14 @@ names and the versions with `module avail`.
 | Module | Purpose |
 |---|---|
 | `Dorado` | [Dorado](https://github.com/nanoporetech/dorado), ONT's current basecaller; loads `Dorado-models` |
-| `Dorado-models` | Dorado basecalling models; sets `DORADO_MODELS` to their directory |
+| `Dorado-models` | [Dorado](https://github.com/nanoporetech/dorado) basecalling models; sets `DORADO_MODELS` to their directory |
 | `pod5` | [pod5](https://pypi.org/project/pod5/) tools for the POD5 raw data format |
 | `modkit` | [modkit](https://github.com/nanoporetech/modkit), analysis of modified bases |
 | `medaka` | [medaka](https://github.com/nanoporetech/medaka), consensus and variant calling (old version) |
 | `ont_fast5_api` | [ont_fast5_api](https://github.com/nanoporetech/ont_fast5_api), tools for the older FAST5 format |
-| `Other/vbz_compression` | HDF5 plugin needed to read VBZ-compressed FAST5 files; sets `HDF5_PLUGIN_PATH` |
-| `Guppy`, `Rerio` | the previous basecaller and its research models; kept only to reproduce old analyses |
+| `Other/vbz_compression` | [vbz_compression](https://github.com/nanoporetech/vbz_compression), HDF5 plugin needed to read VBZ-compressed FAST5 files; sets `HDF5_PLUGIN_PATH` |
+| `Guppy` | [Guppy](https://community.nanoporetech.com/protocols/Guppy-protocol), the previous basecaller; kept only to reproduce old analyses |
+| `Rerio` | [Rerio](https://github.com/nanoporetech/rerio), research models for Guppy; sets `RERIO_MODELS` |
 
 Dorado, Guppy and Rerio are not free software: read their licences before
 use.

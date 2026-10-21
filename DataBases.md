@@ -14,19 +14,21 @@ If modules are new to you, read the [main page](README.md) first.  For update
 requests and the policy on old versions, see
 [Requests](README.md#requests).
 
+Each database name links to its homepage.
+
 | Database | Module | Version | For |
 |---|---|---|---|
-| NCBI nt and nr | `DB/blastDB/ncbi/238` | release 238 | BLAST |
-| Swiss-Prot | `DB/blastDB/sprot/2020_06` | 2020_06 | BLAST |
-| UniRef90 | `DB/blastDB/uniref90/2020_06` | 2020_06 | BLAST |
-| NCBI nr | `DB/diamondDB/ncbi/238` | release 238 | DIAMOND |
-| Swiss-Prot | `DB/diamondDB/sprot/2020_06` | 2020_06 | DIAMOND |
-| UniRef90 | `DB/diamondDB/uniref90/2020_06` | 2020_06 | DIAMOND |
-| GTDB | `DB/diamondDB/GTDB/r226` | r226 | DIAMOND |
-| GTDB-Tk reference data | `DB/GTDBTK/ref_data/226.0` | r226 | GTDB-Tk, nf-core pipelines |
-| Pfam | `DB/Pfam/34.0` | 34.0 | HMMER and similar |
-| Dfam | `DB/Dfam/4.0` | 4.0 | RepeatMasker |
-| Dfam for RepeatMasker | `DB/Dfam_RepeatMasker/3.6__4.1.3` | see module name | RepeatMasker in TETools |
+| [NCBI nt and nr](https://ftp.ncbi.nlm.nih.gov/blast/db/) | `DB/blastDB/ncbi/238` | release 238 | BLAST |
+| [Swiss-Prot](https://www.uniprot.org) | `DB/blastDB/sprot/2020_06` | 2020_06 | BLAST |
+| [UniRef90](https://www.uniprot.org/help/uniref) | `DB/blastDB/uniref90/2020_06` | 2020_06 | BLAST |
+| [NCBI nr](https://ftp.ncbi.nlm.nih.gov/blast/db/) | `DB/diamondDB/ncbi/238` | release 238 | DIAMOND |
+| [Swiss-Prot](https://www.uniprot.org) | `DB/diamondDB/sprot/2020_06` | 2020_06 | DIAMOND |
+| [UniRef90](https://www.uniprot.org/help/uniref) | `DB/diamondDB/uniref90/2020_06` | 2020_06 | DIAMOND |
+| [GTDB](https://gtdb.ecogenomic.org) | `DB/diamondDB/GTDB/r226` | r226 | DIAMOND |
+| [GTDB-Tk](https://ecogenomics.github.io/GTDBTk/) reference data | `DB/GTDBTK/ref_data/226.0` | r226 | GTDB-Tk, nf-core pipelines |
+| [Pfam](https://www.ebi.ac.uk/interpro/entry/pfam/) | `DB/Pfam/34.0` | 34.0 | HMMER and similar |
+| [Dfam](https://dfam.org) | `DB/Dfam/4.0` | 4.0 | RepeatMasker |
+| [Dfam](https://dfam.org) for RepeatMasker | `DB/Dfam_RepeatMasker/3.6__4.1.3` | see module name | RepeatMasker in TETools |
 
 The BLAST, DIAMOND (except GTDB) and Pfam databases date from 2020.
 
