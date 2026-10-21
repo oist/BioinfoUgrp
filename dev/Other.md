@@ -1,14 +1,8 @@
-# A collection of general bioinformatics modules
+# Installation recipes: various tools
 
-To use the modules, load the `bioinfo-ugrp-modules` metamodule first.
-
-```bash
-ml bioinfo-ugrp-modules
-ml av Other
-ml Other/<your-favorite-module>
-```
-
-Here are installation snippets to help the members of the bioinfo user group to update the modules.
+Recipes used by the maintainers to install the `Other/` modules listed in
+[Other/README.md](../Other/README.md).  Read [CONTRIBUTING.md](../CONTRIBUTING.md)
+for the conventions.  Users do not need this page.
 
 ## ASTRAL
 - Home page: https://github.com/smirarab/ASTRAL
@@ -396,20 +390,6 @@ module --ignore_cache load Other/jbrowse2/$VER
 which jbrowse2 launch_jbrowse2 && jbrowse2 --version
 ```
 
-### Usage
-
-```bash
-srun -p short -t 2:00:00 -c 4 --mem 8G --pty bash
-ml bioinfo-ugrp-modules Other/jbrowse2
-cd /flash/LuscombeU/$USER            # JBrowse writes here; /bucket is read-only in jobs
-launch_jbrowse2 --fasta /path/to/genome.fa
-```
-
-It prints the URL and the `ssh -L` line to run locally. The server has no authentication
-and `admin-server` allows editing, so keep it behind the port-forward, and delete the
-JBrowse directory from `/flash` when done.
-
-
 ## pbgzip
 
 - Home page: https://github.com/nh13/pbgzip
@@ -450,17 +430,6 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
-### Example commands for running pbgzip on Deigo
-
-```bash
-module load Other/pbgzip
-srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
-    pbgzip <arguments>
-```
-
-
-- Home page: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/download-and-install/
-
 ### Installation on Deigo
 
 ```bash
@@ -495,15 +464,6 @@ whatis("Description: ".."Use datasets to download biological sequence data acros
 prepend_path("PATH", apphome)
 __END__
 ```
-
-### Example commands for running pairtools on Deigo
-
-```bash
-module load Other/pairtools
-srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
-    pairtools parse -c example.chrom.sizes -o example_R1.pairs.gz --drop-sam example_R1.bam 
-```
-
 
 ## pairtools
 
@@ -549,14 +509,6 @@ prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
 __END__
 ```
 
-### Example commands for running pairtools on Deigo
-
-```bash
-module load Other/pairtools
-srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
-    pairtools parse -c example.chrom.sizes -o example_R1.pairs.gz --drop-sam example_R1.bam 
-```
-
 ## preseq
 
 - Home page: http://smithlabresearch.org/software/preseq/
@@ -597,15 +549,6 @@ prepend_path("PATH", apphome.."/bin")
 __END__
 ```
 
-### Example commands for running preseq on Deigo
-
-```bash
-module load Other/preseq
-srun -p compute -c 128 --mem 20G -t 1:00:00 --pty \
-    preseq c_curve -o output.txt input.sort.bed
-```
-
-
 ## seqkit
 
 - Home page: https://bioinf.shenwei.me/seqkit/
@@ -641,14 +584,6 @@ whatis("Description: ".."A cross-platform and ultrafast toolkit for FASTA/Q file
 -- Package settings
 prepend_path("PATH", apphome)
 __END__
-```
-
-### Example commands for running seqkit on Deigo
-
-```bash
-module load Other/seqkit
-srun -p compute -c 1 --mem 40G -t 24:00:00 --pty \
-    seqkit <subcommand> <arguments>
 ```
 
 ## GNU parallel
@@ -689,14 +624,6 @@ prepend_path("PATH", apphome.."/bin")
 __END__
 ```
 
-### Example commands for running GNU parallel on Deigo
-
-```bash
-module load Other/parallel
-srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
-    parallel <arguments>
-```
-
 ## mosdepth
 
 - Home page: https://github.com/brentp/mosdepth
@@ -732,14 +659,6 @@ whatis("Description: ".."fast BAM/CRAM depth calculation for WGS, exome, or targ
 -- Package settings
 prepend_path("PATH", apphome)
 __END__
-```
-
-### Example commands for running mosdepth on Deigo
-
-```bash
-module load Other/mosdepth
-srun -p compute -c 1 --mem 100G -t 24:00:00 --pty \
-    mosdepth <arguments>
 ```
 
 ## Meryl
@@ -778,14 +697,6 @@ whatis("Description: ".."A genomic k-mer counter (and sequence utility) with nic
 -- Package settings
 prepend_path("PATH", apphome.."/bin")
 __END__
-```
-
-### Example commands for running Meryl on Deigo
-
-```bash
-module load Other/meryl
-srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
-    meryl <arguments>
 ```
 
 ## Merqury
@@ -833,14 +744,6 @@ setenv("MERQURY", apphome)
 __END__
 ```
 
-### Example commands for running Merqury on Deigo
-
-```bash
-module load Other/merqury
-srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
-    merqury.sh <arguments>
-```
-
 ## Peregrine
 
 - Home page: https://github.com/cschin/Peregrine
@@ -879,24 +782,6 @@ whatis("Description: ".."Fast Genome Assembler Using SHIMMER Index.")
 depends_on("singularity")
 prepend_path("PATH", apphome)
 __END__
-```
-
-### Example commands for running Peregeine on Deigo
-
-The following command executes `$ pg_run.py asm` using the Singularity image:
-
-```bash
-module load Other/peregrine
-srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
-    peregrine.sif asm <arguments> 
-```
-
-For simplicity and to skip the interactive prompt message, we also provide a command `peregrine` that is effectively the same as above:
-
-```bash
-module load Other/peregrine
-srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
-    peregrine <arguments>
 ```
 
 ## IPA (Improved Phased Assembler)
@@ -946,24 +831,6 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
-### Example commands for running DeepVariant on Deigo
-
-The following command executes `$ run_deepvariant` using the Singularity image:
-
-```bash
-module load Other/deepvariant
-srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
-    deepvariant.sif <arguments> 
-```
-
-We also provide a command `run_deepvariant` that is effectively the same as above:
-
-```bash
-module load Other/deepvariant
-srun -p compute -c 128 --mem 500G -t 24:00:00 --pty \
-    run_deepvariant <arguments>
-```
-
 ## arima_pipeline (ArimaGenomics Hi-C mapping pipeline)
 
 - Home page: https://github.com/ArimaGenomics/mapping_pipeline
@@ -1003,22 +870,6 @@ depends_on("samtools", "picard", "bwa")
 prepend_path("PATH", apphome)
 __END__
 ```
-
-### Example commands for running arima_pipeline on Deigo
-
-To load the module, run:
-
-```bash
-module load Other/arima_pipeline
-```
-
-Then, the following executables become available as commands:
-
-- `filter_five_end.pl`
-- `two_read_bam_combiner.pl`
-- `get_stats.pl`
-
-See the pipeline script ([01_mapping_arima.sh](https://github.com/ArimaGenomics/mapping_pipeline/blob/master/01_mapping_arima.sh)) written by the developer for details about how to use the Perl scripts.
 
 ## SALSA
 
@@ -1071,24 +922,6 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
-### Example commands for running SALSA on Deigo
-
-The main routine is executed as follows:
-
-```bash
-module load Other/SALSA
-srun -p compute -c 1 --mem 500G -t 48:00:00 --pty \
-    run_pipeline.py <arguments>
-```
-
-Some hard-coded values specific to the developers' environment in (`convert.sh`; see SALSA's README for what the script itself does) are replaced so that it works in our environment:
-
-```bash
-module load Other/SALSA
-srun -p compute -c 16 --mem 500G -t 48:00:00 --pty \
-    convert.sh <salsa-out-dir>
-```
-
 ## Juicer
 
 - Home page: https://github.com/aidenlab/juicer
@@ -1134,28 +967,6 @@ depends_on("java-jdk/14", "bwa")
 prepend_path("PATH", apphome)
 __END__
 ```
-
-### Example commands for running Juicer on Deigo
-
-Juicer (and other tools by Aiden lab) adopts a very unique approach to run programs. Read carefully e.g. [their wiki](https://github.com/aidenlab/juicer/wiki/Installation) to understand their assumptions.
-
-To copy the `scripts/` directory (of the CPU mode), we provide the following command:
-
-```bash
-module load Other/juicer
-juicer_copy_scripts_dir   # A symlink `scripts` will be generated in the current directory
-```
-
-Note that `scripts/common/juicer_tools.jar` is already downloaded and put in the appropriate directory in the module.
-Then, after creating some directories required, you will need to run the main shell script as follows:
-
-```bash
-module load Other/juicer
-srun -p compute -c 128 --mem 500G -t 48:00:00 --pty \
-    ./scripts/juicer.sh <arguments>
-```
-
-Note that the default path of the option `-D` is replaced from `/opt/juicer` to `.` (i.e. the directory you ran `juicer.sh`).
 
 ## 3D-DNA
 
@@ -1205,40 +1016,6 @@ prepend_path("PATH", apphome.."/visualize")
 __END__
 ```
 
-### Example commands for running 3D-DNA on Deigo
-
-3D-DNA (and other tools by Aiden lab) adopts a very unique approach to run programs. Read carefully e.g. [their manual](http://aidenlab.org/assembly/manual_180322.pdf) to understand their assumptions.
-
-By loading the module, the following main commands become available via `PATH`. Additionally, we provide alias names for these programs to make it easier to remember the commands:
-
-- `run-asm-pipeline.sh` (alias: `3d-dna`)
-- `run-asm-pipeline-post-review.sh` (alias: `3d-dna-post-review`)
-- `run-assembly-visualizer.sh` (alias: `3d-dna-run-assembly-visualizer`)
-
-These commands can be executed like this:
-
-```bash
-module load Other/3d-dna
-srun -p compute -c 128 --mem 500G -t 48:00:00 --pty \
-    run-asm-pipeline.sh <arguments>
-```
-
-or using their alias names:
-
-```bash
-module load Other/3d-dna
-srun -p compute -c 128 --mem 500G -t 48:00:00 --pty \
-    3d-dna <arguments>   # This is exactly same as the previous example
-```
-
-We also provide a command `3d-dna-fasta2assembly`, which is an alias of `$ awk -f /path/to/utils/generate-assembly-file-from-fasta.awk`. A usage example of this command is as follows:
-
-```bash
-module load Other/3d-dna
-srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
-    3d-dna-fasta2assembly ${YOUR_ASSEMBLY}.fasta > ${YOUR_ASSEMBLY}.assembly
-```
-
 ## hic2cool
 
 - Home page: https://github.com/4dn-dcic/hic2cool
@@ -1284,15 +1061,6 @@ prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
 __END__
 ```
 
-### Example commands for running hic2cool on Deigo
-
-```bash
-module load Other/hic2cool
-srun -p compute -c 128 --mem 500G -t 12:00:00 --pty \
-    hic2cool <arguments>
-```
-
-
 ## make_telomere_bed
 
 - Home page: https://github.com/yoshihikosuzuki/make_telomere_bed
@@ -1335,18 +1103,6 @@ prepend_path("PATH", apphome.."/bin")
 prepend_path("PYTHONPATH", apphome.."/lib/python3.7/site-packages")
 __END__
 ```
-
-### Example commands for running make_telomere_bed on Deigo
-
-```bash
-module load Other/make_telomere_bed
-srun -p compute -c 1 --mem 100G -t 12:00:00 --pty \
-    make_telomere_bed <arguments>
-```
-
-
-- Home page: https://github.com/thegenemyers/GENESCOPE.FK
-- Source code: https://github.com/thegenemyers/GENESCOPE.FK
 
 ### Installation on Deigo
 
@@ -1394,14 +1150,6 @@ prepend_path("R_LIBS", apphome.."/lib/R")
 __END__
 ```
 
-### Example commands for running GeneScope on Deigo
-
-```bash
-module load Other/genescope
-srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
-    GeneScopeFK.R <arguments>
-```
-
 ## KMC (for GenomeScope 2.0 and Smudgeplot)
 
 - Home page: https://github.com/tbenavi1/KMC
@@ -1439,23 +1187,6 @@ whatis("Description: ".."Fast and frugal disk based k-mer counter (version for G
 prepend_path("PATH", apphome.."/bin")
 __END__
 ```
-
-### Example commands for running KMC (for GenomeScope/Smudgeplot) on Deigo
-
-To load the module, run:
-
-```bash
-module load Other/KMC/genomescope
-```
-
-Then, the following commands become available:
-
-- `kmc`
-- `kmc_dump`
-- `kmc_tools`
-- `smudge_pairs`
-
-Visit the [GitHub page](https://github.com/tbenavi1/KMC) for details about how to use the programs.
 
 ## GenomeScope 2.0
 
@@ -1502,14 +1233,6 @@ prepend_path("R_LIBS", apphome.."/lib/R")
 __END__
 ```
 
-### Example commands for running GenomeScope 2.0 on Deigo
-
-```bash
-module load Other/genomescope/2.0
-srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
-    genomescope.R <arguments>
-```
-
 ## Smudgeplot
 
 - Home page: https://github.com/KamilSJaron/smudgeplot
@@ -1553,14 +1276,6 @@ depends_on("R/4.0.4", "Other/KMC/genomescope", "Other/genomescope/2.0")
 prepend_path("PATH", apphome.."/exec")
 prepend_path("R_LIBS", apphome.."/lib/R")
 __END__
-```
-
-### Example commands for running Smudgeplot on Deigo
-
-```bash
-module load Other/smudeplot
-srun -p compute -c 1 --mem 100G -t 24:00:00 --pty \
-    smudgeplot.py <arguments>
 ```
 
 ## iqtree2

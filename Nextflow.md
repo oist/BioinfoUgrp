@@ -1,174 +1,80 @@
-Nextflow
-========
+# Nextflow and nf-core
 
-A DSL for data-driven computational pipelines <http://nextflow.io>.
+[Nextflow](https://www.nextflow.io/) runs computational pipelines, and
+[nf-core](https://nf-co.re/) is a community collection of Nextflow
+pipelines.  On Deigo we provide Nextflow, the nf-core helper tools and the
+nf-test framework as modules.  We also maintain the
+[OIST configuration profile](https://github.com/nf-core/configs/blob/master/docs/oist.md)
+in nf-core, so that nf-core pipelines run on Deigo with the option
+`-profile oist`.
 
-In 2022, _Nextflow_ had a backwards-incompatible change that depreacated an old
-syntax called _DSL1_ in favor of the _DSL2_ syntax.  We still provide the old
-version `21.10.6` in the `Nextflow` module on _deigo_.  Newer versions are in
-the `Nextflow2` module.  To use a _DSL1_ pipeline with the `Nextflow2` module,
-pass the `-dsl1` flag to the `nextflow` program.
+If modules are new to you, read the [main page](README.md) first.
 
-In 2026, _Nextflow_ had a backwards-incompatible change enforcint _"strict syntax"_;
-and many pipelines are not compatible with it.  Therefore newer versions of Nextflow
-are packaged in the `Nextflow3` module.
+## Which Nextflow module?
 
-The `Nextflow2` and `Nextflow3` modules also limits the use of memory by setting the environment
-variable `NXF_OPTS` to `-Xms500M -Xmx2G`.  Please contact us or open an issue
-if you hit the limit.
+Nextflow has twice changed in ways that break older pipelines, so there are
+three modules:
 
+| Module | Nextflow versions | Use for |
+|---|---|---|
+| `Nextflow3` | 2026 and later, with the _strict syntax_ | current pipelines |
+| `Nextflow2` | DSL2, before the strict syntax | pipelines not yet compatible with the strict syntax |
+| `Nextflow` | 21.10.6 only | old _DSL1_ pipelines |
 
-Installation on deigo
----------------------
+DSL1 pipelines can also run with `Nextflow2` if you pass `-dsl1` to
+`nextflow`.  Load only one of the three at a time.
 
-See also <https://groups.oist.jp/scs/install-software-your-unit>.
-
-### Release or edge versions from GitHub
-
-Source: https://github.com/nextflow-io/nextflow
-
-```
-APP=Nextflow3
-MODROOT=/bucket/BioinfoUgrp/Other
-APPDIR=$MODROOT/$APP
-VER=26.04.7
-mkdir -p $APPDIR/$VER/bin
-cd $APPDIR/$VER
-wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-dist
-mv nextflow-${VER}-dist bin/nextflow
-chmod 775 bin/nextflow
-mkdir -p $MODROOT/$APP/modulefiles/
-cd $MODROOT/$APP/modulefiles/
-cat <<'__END__' > $VER.lua
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp/Other"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/nextflow-io/nextflow/releases")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."pipeline, SLURM")
-whatis("Description: ".." Data-driven computational pipelines.")
-
-help([[Nextflow version downloaded from GitHub
-
-See https://www.nextflow.io/ for help.]])
-
--- Package settings
-depends_on("singularity")
-depends_on("java-jdk/17")
-setenv("NXF_OPTS", "-Xms500M -Xmx2G")
-prepend_path("PATH", apphome.."/bin")
-__END__
+```bash
+ml bioinfo-ugrp-modules
+ml av Nextflow               # list the modules and versions
+ml Nextflow3
+nextflow -version
 ```
 
-nf-test
-=======
+`Nextflow2` and `Nextflow3` limit the memory of the `nextflow` program itself
+(not of the pipeline's jobs) by setting `NXF_OPTS` to `-Xms500M -Xmx2G`.  If a
+large pipeline needs more, tell us, or set `NXF_OPTS` yourself after loading
+the module.
 
-Testing framework for Nextflow pipelines (<https://www.nf-test.com/>).
+## Running an nf-core pipeline
 
-Installation on deigo
----------------------
-
-```
-APP=nf-test
-MODROOT=/bucket/BioinfoUgrp/Other
-APPDIR=$MODROOT/$APP
-VER=0.9.5
-mkdir -p $APPDIR/$VER/bin
-cd $APPDIR/$VER
-wget https://github.com/askimed/nf-test/releases/download/v${VER}/nf-test-${VER}.tar.gz
-pushd bin
-tar xvfz ../nf-test-${VER}.tar.gz
-chmod 775 nf-test
-chmod 664 nf-test.jar
-popd
-rm nf-test-${VER}.tar.gz
-cd $MODROOT/modulefiles/
-mkdir -p $APP
-cat <<'__END__' > $APP/$VER.lua
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/askimed/nf-test/releases")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."pipeline, SLURM")
-whatis("Description: ".."Testing framework for Nextflow pipelines.")
-
-help([[nf-test version downloaded from GitHub
-
-See https://www.nf-test.com/ for help.]])
-
--- Package settings
-depends_on("Nextflow2")
-prepend_path("PATH", apphome.."/bin")
-__END__
+```bash
+ml bioinfo-ugrp-modules Nextflow3
+nextflow run nf-core/<pipeline> -r <version> -profile oist \
+  --input samplesheet.csv --outdir /flash/<YourUnit>/results
 ```
 
-nf-core
-=======
+The `oist` profile sends each step of the pipeline to Slurm as a separate job
+and runs the software in Singularity containers.  Read
+[its documentation](https://github.com/nf-core/configs/blob/master/docs/oist.md)
+for what it sets and how to change it, and the pipeline's page on
+<https://nf-co.re> for its parameters.  Give `-r` a release number, so that
+you can rerun the same version later.
 
-Python package with helper tools for the nf-core community (<https://nf-co.re/docs/nf-core-tools>).
+Note the single dash in `-profile`: options with one dash are for Nextflow,
+options with two dashes are parameters of the pipeline.
 
-To install a new latest version, update the `VER` variable below and run the commands.
+Some reference data that pipelines would otherwise download are already on
+Deigo; see [DataBases.md](DataBases.md).
 
+## nf-core tools and nf-test
+
+These are mostly useful if you write or modify pipelines.
+
+| Module | Provides |
+|---|---|
+| `nf-core` | the [`nf-core` command](https://nf-co.re/docs/nf-core-tools) (list, download, create and lint pipelines); loads `Nextflow2` unless `Nextflow2` or `Nextflow3` is already loaded, and also loads `Other/nf-test` and `Other/prek` |
+| `Other/nf-test` | [nf-test](https://www.nf-test.com/), a testing framework for Nextflow pipelines |
+
+To use the nf-core tools with `Nextflow3`, load `Nextflow3` first:
+
+```bash
+ml bioinfo-ugrp-modules Nextflow3 nf-core
+ml                           # check which modules are loaded
 ```
-ml purge
-ml bioinfo-ugrp-modules Nextflow2
-ml python/3.11.4
-APP=nf-core
-MODROOT=/bucket/BioinfoUgrp/Other
-APPDIR=$MODROOT/$APP
-VER=4.1.0
-mkdir -p $APPDIR/$VER
-cd $APPDIR/$VER
-PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 
-PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user pre-commit
-cd $MODROOT/$APP/modulefiles/
-cp 4.0.2.lua ${VER}.lua
-```
 
-Contents of `4.0.2.lua`:
+Known problem: the `Other/nf-test` module loads `Nextflow2` even when
+`Nextflow3` is loaded, so you may end up with both.  If `ml` lists both, run
+`ml -Nextflow2` and check `nextflow -version`.
 
-```
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp/Other"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
--- setenv("Nextflow_MOD_HOME", apphome)
--- setenv("Nextflow_MOD_VERSION", appversion)
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://nf-co.re/docs/nf-core-tools")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."pipeline, SLURM")
-whatis("Description: ".." Python package with helper tools for the nf-core community.")
-
-help([[nf-core tools installed with pip
-
-See https://nf-co.re/ for help.]])
-
--- Package settings
-depends_on("singularity")
-prepend_path("PATH", apphome.."/bin")
-prepend_path("PYTHONPATH", apphome.."/lib/python3.11/site-packages/")
-if not (isloaded("Nextflow2") or isloaded("Nextflow3")) then
-    load("Nextflow2")
-end
-depends_on("python/3.11.4")
-depends_on("Other/nf-test")
-depends_on("Other/prek")
-```
+Installation recipes are in [dev/Nextflow.md](dev/Nextflow.md).

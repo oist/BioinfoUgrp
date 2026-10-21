@@ -1,14 +1,8 @@
-# A collection of general bioinformatics modules
+# Installation recipes: sequence alignment
 
-To use the modules, load the `bioinfo-ugrp-modules` metamodule first.
-
-```bash
-ml bioinfo-ugrp-modules
-ml av Other
-ml Other/<your-favorite-module>
-```
-
-Here are installation snippets to help the members of the bioinfo user group to update the modules.
+Recipes used by the maintainers to install the `Other/` modules listed in
+[Other/README.md](../Other/README.md).  Read [CONTRIBUTING.md](../CONTRIBUTING.md)
+for the conventions.  Users do not need this page.
 
 ## BWA
 
@@ -50,15 +44,6 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
-### Example commands for running bwa on Deigo
-
-```bash
-module load Other/bwa
-srun -p compute -c 128 --mem 100G -t 1:00:00 --pty \
-    bwa mem <arguments>
-```
-
-
 ## samblaster
 
 - Home page: https://academic.oup.com/bioinformatics/article/30/17/2503/2748175
@@ -96,14 +81,6 @@ whatis("Description: ".."samblaster is a fast and flexible program for marking d
 -- Package settings
 prepend_path("PATH", apphome)
 __END__
-```
-
-### Example commands for running samblaster on Deigo
-
-```bash
-module load Other/samblaster
-srun -p compute -c 1 --mem 40G -t 1:00:00 --pty \
-    bwa mem <idxbase> samp.r1.fq samp.r2.fq | samblaster | samtools view -Sb - > samp.out.bam
 ```
 
 ## hal
@@ -192,14 +169,6 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
-### Example commands for running minimap2 on Deigo
-
-```bash
-module load Other/k8
-srun -p compute -c 1 --mem 40G -t 10:00:00 --pty \
-    k8 <arguments>
-```
-
 ## minimap2
 
 - Home page: https://github.com/lh3/minimap2
@@ -241,22 +210,6 @@ prepend_path("PATH", apphome.."/misc")
 __END__
 ```
 
-### Example commands for running minimap2 on Deigo
-
-```bash
-module load Other/minimap2
-srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
-    minimap2 <arguments>
-```
-
-The `paftools.js` command is also available:
-
-```bash
-module load Other/minimap2
-srun -p compute -c 1 --mem 100G -t 24:00:00 --pty \
-    paftools.js <arguments>
-```
-
 ## winnowmap
 
 - Home page: https://github.com/marbl/Winnowmap
@@ -296,15 +249,6 @@ prepend_path("PATH", apphome.."/bin")
 __END__
 ```
 
-### Example commands for running winnowmap on Deigo
-
-```bash
-module load Other/winnowmap
-srun -p compute -c 64 --mem 500G -t 24:00:00 --pty \
-    winnowmap <arguments>
-```
-
-
 ## DAZZ_DB
 
 - Home page: https://github.com/thegenemyers/DAZZ_DB
@@ -343,41 +287,6 @@ prepend_path("PATH", apphome)
 __END__
 ```
 
-### Example commands for running DAZZ_DB on Deigo
-
-To load the module, run:
-
-```bash
-module load Other/DAZZ_DB
-```
-
-Then the following commands become available:
-
-- `arrow2DB`
-- `Catrack`
-- `DAM2fasta`
-- `DB2arrow`
-- `DB2fasta`
-- `DB2quiva`
-- `DBa2b`
-- `DBb2a`
-- `DBdump`
-- `DBdust`
-- `DBmv`
-- `DBrm`
-- `DBshow`
-- `DBsplit`
-- `DBstats`
-- `DBtrim`
-- `DBwipe`
-- `fasta2DAM`
-- `fasta2DB`
-- `quiva2DB`
-- `rangen`
-- `simulator`
-
-See the [README](https://github.com/thegenemyers/DAZZ_DB) written by the developer for details about how to use the programs.
-
 ## FASTK
 
 - Home page: https://github.com/thegenemyers/FASTK
@@ -415,32 +324,6 @@ whatis("Description: ".."A fast K-mer counter for high-fidelity shotgun datasets
 prepend_path("PATH", apphome)
 __END__
 ```
-
-### Example commands for running FASTK on Deigo
-
-To load the module, run:
-
-```bash
-module load Other/FASTK
-```
-
-Then the following commands become available:
-
-- `Fastcp`
-- `FastK`
-- `Fastmv`
-- `Fastrm`
-- `Haplex`
-- `Histex`
-- `Homex`
-- `Logex`
-- `Profex`
-- `Symmex`
-- `Tabex`
-- `Vennex`
-
-See the [README](https://github.com/thegenemyers/FASTK) written by the developer for details about how to use the programs.
-
 
 ## SAMtools
 - Home page: http://www.htslib.org

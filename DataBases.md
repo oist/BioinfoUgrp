@@ -1,162 +1,138 @@
 # Databases
 
-## Taxified BLAST databases
-The following databases were constructed using ncbi-blast v2.10.0+. The module `ncbi-blast/2.10.0+` has to be loaded in order to use these databases.
-- NCBI NT and NR databases (release 238) : `ml DB/blastDB/ncbi/238`. To be used with the arguments `nt` or `nr` supplied to `-db` in the commands of your scripts. Example script to get a taxified blast report:
+Large reference databases installed on Deigo by the Bioinformatics User
+Group, so that you do not need to download your own copy.  Each database is
+a module whose name starts with `DB/`.  Loading it sets environment variables
+pointing to the files; it does not copy anything.
+
+```bash
+ml bioinfo-ugrp-modules
+ml av DB
 ```
+
+If modules are new to you, read the [main page](README.md) first.  For update
+requests and the policy on old versions, see
+[Requests](README.md#requests).
+
+| Database | Module | Version | For |
+|---|---|---|---|
+| NCBI nt and nr | `DB/blastDB/ncbi/238` | release 238 | BLAST |
+| Swiss-Prot | `DB/blastDB/sprot/2020_06` | 2020_06 | BLAST |
+| UniRef90 | `DB/blastDB/uniref90/2020_06` | 2020_06 | BLAST |
+| NCBI nr | `DB/diamondDB/ncbi/238` | release 238 | DIAMOND |
+| Swiss-Prot | `DB/diamondDB/sprot/2020_06` | 2020_06 | DIAMOND |
+| UniRef90 | `DB/diamondDB/uniref90/2020_06` | 2020_06 | DIAMOND |
+| GTDB | `DB/diamondDB/GTDB/r226` | r226 | DIAMOND |
+| GTDB-Tk reference data | `DB/GTDBTK/ref_data/226.0` | r226 | GTDB-Tk, nf-core pipelines |
+| Pfam | `DB/Pfam/34.0` | 34.0 | HMMER and similar |
+| Dfam | `DB/Dfam/4.0` | 4.0 | RepeatMasker |
+| Dfam for RepeatMasker | `DB/Dfam_RepeatMasker/3.6__4.1.3` | see module name | RepeatMasker in TETools |
+
+The BLAST, DIAMOND (except GTDB) and Pfam databases date from 2020.
+
+
+## BLAST databases
+
+The databases were built with BLAST+ 2.10.0 and include taxonomy
+information.  Load the `ncbi-blast/2.10.0+` module with them.  Give the
+database name (`nt`, `nr`, …) to the `-db` option.
+
+```bash
 module load ncbi-blast/2.10.0+
+module load bioinfo-ugrp-modules
 module load DB/blastDB/ncbi/238
-WORKDIR="$PWD"
-FASTA=FULL/PATH/TO/YOUR/FASTA/FILE
-blastn -task megablast -db nt -query $FASTA -num_threads ${SLURM_CPUS_PER_TASK} -out ${WORKDIR}/megablastn.out \
-	-outfmt '6 qseqid bitscore evalue length qlen qcovs pident sseqid sgi sacc staxid ssciname scomname stitle sseq' \
-	-max_target_seqs 1
-```
-- Swiss-Prot (version 2020_06): `ml DB/blastDB/sprot/2020_06`
-- UniRef90 (version 2020_06): `ml DB/blastDB/uniref90/2020_06`
 
-## Taxified DIAMOND databases
-The following databases were constructed using DIAMOND v2.0.4.142. The module `Other/DIAMOND/2.0.4.142` has to be loaded in order to use them.
-- the NCBI-NR database (release 238): `ml DB/diamondDB/ncbi/238`
-- Swiss-Prot (version 2020_06): `ml DB/diamondDB/sprot/2020_06`
-- UniRef90 (version 2020_06): `ml DB/diamondDB/uniref90/2020_06`
-
-Unlike ncbi-blast, DIAMOND requires full path of the databases. The database module automatically create an environment variable "DIAMONDDB" which specifies full path to the DIAMOND database. So you need to prepend `${DIAMONDDB}` to the name of database. 
-Example script to run diamond with the database module:
+blastn -task megablast -db nt -query /path/to/query.fasta \
+  -num_threads "$SLURM_CPUS_PER_TASK" -max_target_seqs 1 \
+  -outfmt '6 qseqid bitscore evalue length qlen qcovs pident sseqid sgi sacc staxid ssciname scomname stitle sseq' \
+  -out megablastn.out
 ```
-# load ncbi database for DIAMOND (proper version of DIAMOND is automatically loaded)
+
+
+## DIAMOND databases
+
+The NCBI, Swiss-Prot and UniRef90 databases were built with DIAMOND
+2.0.4.142, and their modules load that version of `Other/DIAMOND`.  The GTDB
+database was built with DIAMOND 2.1.11.
+
+DIAMOND needs the full path of the database.  The modules set the variable
+`DIAMONDDB` to the directory that contains it.
+
+```bash
+module load bioinfo-ugrp-modules
 module load DB/diamondDB/ncbi/238
+diamond --version           # check which DIAMOND is loaded
+echo "$DIAMONDDB"
 
-# check the loaded DIAMOND version and ${DIAMONDDB} variable
-diamond --version
-echo ${DIAMONDDB}
-
-# run diamond search
-WORKDIR="$PWD"
-FASTA=FULL/PATH/TO/YOUR/FASTA/FILE
-diamond blastp -db ${DIAMONDDB}/nr -q $FASTA -p ${SLURM_CPUS_PER_TASK} -out ${WORKDIR}/diamond.blastp.out -outfmt 6
+diamond blastp -d "$DIAMONDDB/nr" -q /path/to/query.fasta \
+  -p "$SLURM_CPUS_PER_TASK" -f 6 -o diamond.blastp.tsv
 ```
 
-## GTDB DIAMOND Database (r226)
-
-The Genome Taxonomy Database (GTDB) DIAMOND database was constructed using DIAMOND v2.1.11. The ```bioinfo-ugrp-modules``` module needs to be loaded in order to use it. 
-
-### Available as Module
-
-Load the module to access the database path: `module load DB/diamondDB/GTDB/r226`
-
-
-**Use case**: Fast sequence similarity searches against GTDB reference genomes (BLAST-like functionality)
-
-##### Example script
+For GTDB, the database file is `$DIAMONDDB/gtdb.dmnd`:
 
 ```bash
-# Load bioinfo-user group modules
 module load bioinfo-ugrp-modules
-# Load GTDB database module
 module load DB/diamondDB/GTDB/r226
-
-# Optional: set variables for output directory and fasta files path
-OUTDIR=/path/to/ouput/directory
-FASTA=/path/to/fasta/files
-
-# Create output directory if it does not exist
-mkdir -p ${OUTDIR}
-
-# Run search
-diamond blastp -d ${DIAMONDDB}/gtdb.dmnd -q ${FASTA} -p 4 -o ${OUTDIR}
-
+diamond blastp -d "$DIAMONDDB/gtdb.dmnd" -q /path/to/query.fasta \
+  -p "$SLURM_CPUS_PER_TASK" -o gtdb.blastp.tsv
 ```
 
-## GTDB-Tk r226 Reference Data
 
-The GTDB-Tk r226 reference data package contains the auxiliary files required for taxonomic classification of bacterial and archaeal genomes. This is **the database only** - the GTDB-Tk software itself is not installed as a module, but is available through nf-core pipeline containers.The ```bioinfo-ugrp-modules``` module needs to be loaded in order to use it. 
+## GTDB-Tk reference data (r226)
 
+The reference data needed by GTDB-Tk for the taxonomic classification of
+bacterial and archaeal genomes.  This module contains **only the data**:
+GTDB-Tk itself is not installed as a module, but nf-core pipelines bring it
+in their own containers.
 
-**Use case**: Provides the reference database path for GTDB-Tk when running nf-core pipelines (e.g., nf-core/mag)
+The module sets two variables:
 
+- `GTDBTK_DATA_PATH`: the uncompressed data;
+- `GTDBTK_DATA_ARCHIVED`: the compressed archive.
 
-### Available as Module
-
-Load the module to access the database path: ```module load DB/GTDBTK/ref_data/226.0```
-
-This module sets `$GTDBTK_DATA_PATH` & `GTDBTK_DATA_ARCHIVED` environment variables pointing to the uncompressed and compressed reference data location.
-
-### Usage with nf-core Pipelines
-
-The GTDB-Tk r226 reference data is available for use with nf-core pipelines (e.g., nf-core/mag, nf-core/taxprofiler). Instead of downloading the ~100GB database, you simply specify the path to the pre-installed data.
-
-The nf-core pipeline will use its own containerized version of the GTDB-Tk software and access your local reference data.
-
-##### Example nf-core/mag pipeline
+Example with [nf-core/mag](https://nf-co.re/mag), which then does not need
+to download the database (about 100 GB); see [Nextflow.md](Nextflow.md) for
+how to run nf-core pipelines:
 
 ```bash
-
-# Load bioinfo-user group modules
 module load bioinfo-ugrp-modules
-# Load the module to get database path
-module load bioinfo/gtdbtk/r226-full
+module load Nextflow3
+module load DB/GTDBTK/ref_data/226.0
 
-# Optional: set variables for output directory 
-OUTDIR=/path/to/ouput/directory
-
-# Run nf-core pipeline specifying the compressed database path
-# Note: for uncompressed use GTDBTK_DATA_PATH
 nextflow run nf-core/mag \
-  --profile oist \
+  -profile oist \
   --input samplesheet.csv \
-  --outdir ${OUTDIR} \
-  --gtdb_db ${GTDBTK_DATA_ARCHIVED} 
+  --outdir /flash/<YourUnit>/mag_results \
+  --gtdb_db "$GTDBTK_DATA_ARCHIVED"
 ```
 
----
+Use `$GTDBTK_DATA_PATH` instead if the pipeline expects the uncompressed
+data.
+
 
 ## Pfam
 
-Version 34.0:  Use `ml DB/Pfam/34.0` to invoke it in your scripts.
+Version 34.0: `ml DB/Pfam/34.0`.  Run `ml show DB/Pfam/34.0` to see the
+variables it sets.
+
 
 ## Dfam
 
-Version 4.0 downloaded from <https://www.dfam.org/releases/Dfam_4.0/families/> and <https://www.dfam.org/releases/Dfam_4.0/families/FamDB>.  HDF5 files were uncompressed after checking their MD5 sums.
+`DB/Dfam/4.0` contains Dfam 4.0, downloaded from
+<https://www.dfam.org/releases/Dfam_4.0/families/>, with the HDF5 files
+uncompressed after checking their MD5 sums.  It sets:
 
-The command `ml DB/Dfam/4.0` exposes two environment variables
- - `$BioinfoUgrp_Dfam` containing the path to the directory containing the HMM files, that can be passed to RepeatMasker through its `-libdir` argument.
- - `$BioinfoUgrp_FamDB` containing the path to the directory containing the HDF5 files, to be bind-mounted on `/opt/RepeatMasker/Libraries/famdb/` when using `TETools`.
- - `SINGULARITY_BINDPATH`, with a value to replace `/opt/RepeatMasker/Libraries/famdb` in the Singularity containers with the local full copy of Dfam.
+- `BioinfoUgrp_Dfam`: the directory of the HMM files, to pass to RepeatMasker
+  with its `-libdir` option;
+- `BioinfoUgrp_FamDB`: the directory of the HDF5 (FamDB) files;
+- `SINGULARITY_BINDPATH`: makes the Singularity containers of `Other/TETools`
+  see this full copy of Dfam in place of the partial one they contain.
 
-This is done with the following Lua module file.
+`DB/Dfam_RepeatMasker/3.6__4.1.3` changes the behaviour of the RepeatMasker
+and RepeatModeler commands of `Other/TETools` so that they use the full
+Dfam database instead of the "curated only" version bundled in the
+container.
 
-```
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://dfam.org")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."annotation, transposon, repeat")
-whatis("Description: ".."The Dfam open collection of Transposable Element DNA sequence alignments")
-
--- Package settings
-LmodMessage("You can find the Dfam database HMMs in the directory pointed to\nby the environment variable $BioinfoUgrp_Dfam, and the\nHDF5 files in $BioinfoUgrp_FamDB.")
-setenv("BioinfoUgrp_Dfam", apphome)
-setenv("BioinfoUgrp_FamDB", apphome .. "/FamDB")
-setenv("SINGULARITY_BINDPATH", apphome.."/FamDB:/opt/RepeatMasker/Libraries/famdb")
-```
-
-## Dfam for RepeatMasker
-
-The command `ml DB/Dfam_RepeatMasker/3.6__4.1.3` will set an environmental variable that changes the behaviour of the `repeatmodeler` module, so that it will use the full Dfam database provided by us instead of the “_curated only_” version provided by default.
-
-### Developer details
-
-The RepeatMasker program does not follow symbolic links and the Dfam database is large (160 Gb), so I had to use hard links to the files of the `Dfam` module instead.  Also, the modulefile contains:
-
-```
-setenv("BioinfoUgrp_Dfam_Rmsk_4_1_3", apphome.."/RepeatMasker_4.1.3/Libraries")
-setenv("SINGULARITY_BINDPATH", apphome.."/Libraries:/opt/RepeatMasker/Libraries")
-```
+Load only one of the two Dfam modules at a time: both set
+`SINGULARITY_BINDPATH`, so the second replaces the value set by the first.
+This also replaces any value you set yourself.

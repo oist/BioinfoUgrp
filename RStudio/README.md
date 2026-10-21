@@ -1,19 +1,26 @@
-RStudio server
-==============
+# RStudio server
 
-How to use
-----------
+Run [RStudio](https://posit.co/products/open-source/rstudio/) server on a
+Deigo compute node, and use it from the web browser of your computer.  The
+server runs from a Singularity image containing R, RStudio, the tidyverse,
+and the libraries most often needed to install CRAN and Bioconductor
+packages.
 
-### Start the server
+If modules are new to you, read the [main page](../README.md) first.
 
-On _deigo_, load the `singularity` module, and use `srun` to start a _RStudio sever_ instance on a _compute_ node.
-Do not run it on a _login_ node.
+## Start the server
 
-```
+On Deigo, load the module and use `srun` to start an RStudio server on a
+compute node.  Do not run it on a login node.
+
+```bash
 ml bioinfo-ugrp-modules Other/RStudio_server
-# Change --mem and add -c according to your needs
-srun -pcompute --mem 10G RStudio_server
+# Adapt the time (-t), memory (--mem) and cores (-c) to your needs
+srun -p compute -t 0-08:00:00 -c 2 --mem 10G RStudio_server
 ```
+
+The server stops when the job reaches its time limit, or when you stop
+`srun` with Ctrl-C.
 
 The running server will output its URL and a password unique to the session such as:
 
@@ -23,165 +30,57 @@ RStudio Username:	charles-plessy
 RStudio Password:	f0731f0e01d3b2f2
 ```
 
-If applicable, it will also give an example command on how to run a SSH tunnel,
-for people who remote work outside our network.
+It also prints a command that opens an SSH tunnel from your computer to the
+server, for use from outside OIST's network:
 
 ```
 If you remote work, you can forward the server to port 1664 on your computer with:
 ssh charles-plessy@deigo010902.oist.jp -J charles-plessy@login.oist.jp,charles-plessy@deigo.oist.jp -L 1664:localhost:54279
 ```
 
-The server creates temporary files:
+The server creates temporary files in your home directory, which you need
+to delete when you have finished:
 
 ```
 You will need to clean your temporary files by yourself:
 RStudio temporary files:	/home/c/charles-plessy/tmp.zv3bC383g1
 ```
 
-The _R_ packages that you will install from RStudio will be stored in a
-specific location in your home directory, because they can not be mixed with
-the packages built directly on _deigo_ or in other images.  At the moment this
-directory is:
+The R packages that you install from RStudio are stored in a separate
+directory of your home directory, because they cannot be mixed with packages
+built for other R installations on Deigo.  At the moment this directory is:
 
 ```
 This image will build its packages in the following directory if it exists:
 R_LIBS_USER="~/R/library/R_4.6_for_RStudio_Singularity"
 ```
 
-**Note that once a year, there is a major release of R that requires rebuild of
-the installed packages.  To stick the same version and ignore updates, load the
-module with the version name like in
-`Other/RStudio_server/2026.08.2-200_R_4.6.1` for instance.**
+Once a year, a new major release of R requires reinstalling your packages.
+To keep using the same version, load the module with its version, for
+instance `Other/RStudio_server/2026.08.2-200_R_4.6.1`; `ml av RStudio_server`
+lists the versions.
 
-### RStudio Desktop
+## RStudio Desktop
 
-The image also contains RStudio Desktop in case you need it.
+The image also contains RStudio Desktop, which you can run on a Linux
+computer with Singularity (or Apptainer) and a Wayland display, after
+copying the image from `/bucket/BioinfoUgrp/Other/RStudio_server/<version>/`:
 
 ```
-# On your desktop PC, not deigo:
+# On your own computer, not on Deigo:
 singularity exec --bind $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/$(id -u)/$WAYLAND_DISPLAY  ./RStudio_2026.08.2-200_R_4.6.1.sif rstudio
 # Or if you want to share your SSH agent:
 singularity exec --bind $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/$(id -u)/$WAYLAND_DISPLAY --bind $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent ./RStudio_2026.08.2-200_R_4.6.1.sif rstudio
 ```
 
-### Rscript
+## Rscript
 
-Scripts like the following are installed on Deigo as a convenience for running `Rscript`
+The module also provides `Rscript`, which runs R scripts with the R of the
+image, for instance in batch jobs:
 
-    #!/bin/sh
-    singularity exec /bucket/BioinfoUgrp/Other/RStudio_server/2026.08.2-200_R_4.6.1/RStudio_2026.06.0-242_R_4.6.1.sif Rscript "$@"
-
-How to build a Singularity image
---------------------------------
-
-Our [singularity image](./Singularity.def) contains the latest RStudio server
-on a Debian unstable (Sid) base, which we know contains the latest `R` stable
-release.
-
-We also install some development libraries that are likely to be needed
-to compile some CRAN or bioconductor packages, as well as packages
-needed by RMarkdown and `R CMD check`.
-
-Lastly, let's install the latest tidyverse, as everybody wants it.
-
-Then build the image:
-
-    singularity build --fakeroot RStudio_2026.08.2-200_R_4.6.1.sif Singularity.def
-
-Technical details
------------------
-
-Inspired by https://gitlab.oit.duke.edu/chsi-informatics/containers/singularity-rstudio-base and a couple of other repositories.
-
-The _RStudio_ server needs to write in three different places,
-each configured by a different command line argument.
-
- - `--server-working-dir`: _“The default working directory of the rserver process.”_
- - `--server-data-dir`: _“Path to the data directory where RStudio Server will write run-time state.”_
- - `--database-config-file`: Overrides the default path to the SQLite database that RStudio server needs, which by default is in the Singularity image, therefore non-writable.
-
-At the moment I found no problem to make `--server-working-dir` and
-`--server-data-dir` point to the same directory in `$HOME`, but it was not tested extensively.
-
-The SQLite database itself can be in the server working dir.  Its configuration
-file is generated on the fly for each run.  For instance its contents look like:
-
-    provider=sqlite
-    directory=/home/c/charles-plessy/tmp.J7UkdHFppy/db.sqlite3
-
-The server needs to run under your user name `--server-user=$USER`.
-
-An available port number is picked randomly between 50000 and 65535 and passed
-to `rserver` with the `--www-port` option.
-
-### Lmod modulefile
-
-```
--- Default settings
-local modroot    = "/bucket/BioinfoUgrp"
-local appname    = myModuleName()
-local appversion = myModuleVersion()
-local apphome    = pathJoin(modroot, myModuleFullName())
-
--- Package information
-whatis("Name: "..appname)
-whatis("Version: "..appversion)
-whatis("URL: ".."https://github.com/oist/BioinfoUgrp/tree/master/RStudio")
-whatis("Category: ".."bioinformatics")
-whatis("Keywords: ".."R, RStudio, server")
-whatis("Description: ".."Singularity image to run RStudio server on a compute node and access from your web browser.")
-
--- Package settings
-depends_on("singularity")
-prepend_path("PATH", apphome.."/")
+```bash
+ml bioinfo-ugrp-modules Other/RStudio_server
+Rscript myscript.R
 ```
 
-### Generate scripts
-
-```
-VERSION=2026.08.2-200_R_4.6.1
-BASE=/bucket/BioinfoUgrp/Other/RStudio_server/$VERSION
-IMAGE=$BASE/RStudio_${VERSION}.sif
-
-cat > RStudio_server <<EOF
-#!/bin/bash
-set -e
-
-VERSION="$VERSION"
-BASE="/bucket/BioinfoUgrp/Other/RStudio_server/\$VERSION"
-IMAGE="\$BASE/RStudio_\${VERSION}.sif"
-
-KEYDIR="\$HOME/.local/share/rstudio-server"
-
-mkdir -p "\$KEYDIR"
-chmod 700 "\$KEYDIR"
-
-for key in secure-cookie-key session-rpc-key
-do
-    if [ ! -s "\$KEYDIR/\$key" ]; then
-        openssl rand -hex 32 > "\$KEYDIR/\$key"
-        chmod 600 "\$KEYDIR/\$key"
-    fi
-done
-
-exec singularity exec \\
-    --bind "\$KEYDIR:/var/lib/rstudio-server" \\
-    "\$IMAGE" \\
-    launch_rserver "\$@"
-EOF
-
-chmod +x RStudio_server
-
-cat > Rscript <<EOF
-#!/bin/bash
-set -e
-
-VERSION="$VERSION"
-BASE="/bucket/BioinfoUgrp/Other/RStudio_server/\$VERSION"
-IMAGE="\$BASE/RStudio_\${VERSION}.sif"
-
-exec singularity exec "\$IMAGE" Rscript "\$@"
-EOF
-
-chmod +x Rscript
-```
+Maintenance notes are in [dev/RStudio.md](../dev/RStudio.md).
