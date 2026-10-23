@@ -54,7 +54,8 @@ them compatible with it, and prefer a link to a copy.
 |---|---|
 | `/bucket/BioinfoUgrp/Other/<app>/<version>` | the `Other/` modules |
 | `/bucket/BioinfoUgrp/Other/modulefiles/<app>/<version>.lua` | their modulefiles |
-| `/bucket/BioinfoUgrp/DB/…` | databases (`DB/` modules) |
+| `/bucket/BioinfoUgrp/DB/<name>/<version>` | databases (`DB/` modules) |
+| `/bucket/BioinfoUgrp/DB/modulefiles/<name>/<version>.lua` | their modulefiles |
 | `/bucket/BioinfoUgrp/DebianMed/<Debian version>/` | Debian Med image, wrappers and modulefiles |
 | `/bucket/BioinfoUgrp/Nanopore/`, `/bucket/BioinfoUgrp/<app>/` | Nanopore and older modules |
 | `/apps/.bioinfo-ugrp-modulefiles81/` | on Deigo, the module directory that `bioinfo-ugrp-modules` adds to `MODULEPATH` (SCDA's module page shows the `DB/` and `Other/` modules listed from it); also holds metamodules such as `DebianMed/<version>.lua` |
@@ -120,6 +121,34 @@ GPU software for Saion is installed from Deigo when it needs a Python
 module that Saion's login nodes lack (see the Boltz recipe in
 [dev/Other.md](dev/Other.md)).
 
+### Python programs from PyPI
+
+Install each program in its own virtual environment, as SCDA's page on
+installing software suggests, instead of `pip install --user` with
+`PYTHONUSERBASE` and `PYTHONPATH` (the pattern of older recipes):
+
+```bash
+umask 002
+ml purge
+ml python/3.11.4
+APP=<package>
+VER=<version>
+APPDIR=/bucket/BioinfoUgrp/Other/$APP/$VER
+python3 -m venv $APPDIR
+$APPDIR/bin/pip install "$APP==$VER"
+$APPDIR/bin/pip freeze > $APPDIR/requirements.lock
+```
+
+The modulefile then needs `depends_on("python/3.11.4")` and
+`prepend_path("PATH", apphome.."/bin")` only: no `PYTHONPATH`, so the
+packages of one module do not leak into programs of another.  The
+environment's `python3` comes first in `PATH` while the module is loaded.
+`requirements.lock` records the versions of all dependencies.
+
+If a package pins dependency versions that do not install, install it with
+`--no-deps` followed by working versions of its dependencies, and record
+this in the recipe.  Example: eggnog-mapper in [dev/Other.md](dev/Other.md).
+
 ### conda
 
 Anaconda is prohibited on OIST systems since 2025-04-01, for licensing
@@ -137,11 +166,11 @@ restricts the use of its results (examples: Dorado, Guppy, AlphaFold 3).
 ## Testing a new module
 
 Lmod caches the list of modules, so a new modulefile may not be visible at
-once:
+once.  `--ignore_cache` makes Lmod read the modulefiles directly:
 
 ```bash
-rm -rf ~/.lmod.d/.cache
-ml bioinfo-ugrp-modules
+ml purge
+module --ignore_cache load bioinfo-ugrp-modules
 module --ignore_cache load Other/<app>/<version>
 ```
 

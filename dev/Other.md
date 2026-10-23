@@ -1652,6 +1652,85 @@ setenv("TCSF_IMRA", apphome)
 __END__
 ```
 
+## eggnog-mapper
+
+- Home page: http://eggnog-mapper.embl.de
+- Source code: https://github.com/eggnogdb/eggnog-mapper
+- Database: `DB/eggnog-mapper/5.0.2`, see [dev/Databases.md](Databases.md#eggnog-mapper)
+
+Installed in a Python virtual environment (see "Python programs from PyPI" in
+[CONTRIBUTING.md](../CONTRIBUTING.md)).  The wheel contains its own diamond,
+MMseqs2, HMMER and Prodigal binaries, so nothing is compiled and a login node
+is fine.
+
+eggnog-mapper 2.1.13 pins `biopython==1.76`, which does not build with
+Python 3.11.  It is therefore installed with `--no-deps`, followed by current
+versions of its three dependencies.  pip then prints an "ERROR" about the
+dependency conflicts; the installation succeeds nevertheless.
+
+The `download_eggnog_data.py` of release 2.1.13 downloads from
+`eggnogdb.embl.de`, which no longer exists; the `master` branch upstream uses
+`eggnog5.embl.de`.  The `sed` below applies that change; remove it when a
+release includes it.
+
+### Installation on Deigo
+
+```bash
+umask 002
+ml purge
+ml python/3.11.4
+APP=eggnog-mapper
+VER=2.1.13
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP/$VER
+python3 -m venv $APPDIR
+$APPDIR/bin/pip install --no-deps "$APP==$VER"
+$APPDIR/bin/pip install biopython==1.88 psutil==7.2.2 xlsxwriter==3.2.9
+$APPDIR/bin/pip freeze > $APPDIR/requirements.lock
+sed -i.orig 's#eggnogdb\.embl\.de#eggnog5.embl.de#' $APPDIR/bin/download_eggnog_data.py
+$APPDIR/bin/emapper.py --version   # complains about the database until it is installed
+mkdir -p $MODROOT/modulefiles/$APP
+cat <<'__END__' > $MODROOT/modulefiles/$APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://eggnog-mapper.embl.de")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."annotation, orthology")
+whatis("Description: ".."Functional annotation of sequences by orthology assignment")
+
+help([[
+eggnog-mapper in a Python virtual environment, with its own diamond,
+MMseqs2, HMMER and Prodigal.  Loads the eggNOG database module, which sets
+EGGNOG_DATA_DIR.
+
+  emapper.py -i proteins.faa -o prefix --output_dir /flash/YourUnitU/out --cpu $SLURM_CPUS_PER_TASK
+
+emapper.py uses the diamond, mmseqs, hmmscan or prodigal found first in
+PATH, so loading other modules that provide them changes the versions used.
+]])
+
+-- Package settings
+depends_on("python/3.11.4", "DB/eggnog-mapper/5.0.2")
+prepend_path("PATH", apphome.."/bin")
+__END__
+```
+
+### Check
+
+```bash
+ml purge
+module --ignore_cache load bioinfo-ugrp-modules
+module --ignore_cache load Other/eggnog-mapper/2.1.13
+emapper.py --version   # "Installed eggNOG DB version: 5.0.2"
+```
+
 ## InterProScan
 - Home page: https://interproscan-docs.readthedocs.io/en/v5/
 - Source code: 

@@ -62,6 +62,15 @@ Module listings:
   when it is correct.
 - Mark non-free software and restrictive licences on the user page.
 
+Recipes:
+
+- New Python programs from PyPI go in a virtual environment per module,
+  with the version pinned and a `requirements.lock`; the modulefile adds
+  only `bin/` to `PATH` (see `CONTRIBUTING.md`).  eggnog-mapper (2026-10) was
+  the first module installed this way.
+- Databases are separate `DB/` modules, loaded by the program's module with
+  `depends_on()`, not stored inside the program's installation.
+
 Communication:
 
 - Users request software on the Teams channel or in GitHub issues; when they

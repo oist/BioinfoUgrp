@@ -50,3 +50,55 @@ The RepeatMasker program does not follow symbolic links and the Dfam database is
 setenv("BioinfoUgrp_Dfam_Rmsk_4_1_3", apphome.."/RepeatMasker_4.1.3/Libraries")
 setenv("SINGULARITY_BINDPATH", apphome.."/Libraries:/opt/RepeatMasker/Libraries")
 ```
+
+## eggnog-mapper
+
+eggNOG 5.0.2 for `Other/eggnog-mapper` (2.1.x expects this version), in
+`/bucket/BioinfoUgrp/DB/eggnog-mapper/5.0.2` (49 GB, 2026-10).  Downloaded
+with eggnog-mapper's own script, after the `sed` fix described in the
+eggnog-mapper recipe in [dev/Other.md](Other.md#eggnog-mapper).  The script
+prints "Finished." even when downloads fail: read the log for `wget` errors.
+
+Run from the home directory (the `datacp` partition can write to `/bucket`):
+
+```bash
+mkdir -p /bucket/BioinfoUgrp/DB/eggnog-mapper/5.0.2
+sbatch -p datacp -c 1 --mem 4G -t 2-00:00:00 -J eggnogdb --wrap '
+umask 002
+module purge
+module load python/3.11.4
+/bucket/BioinfoUgrp/Other/eggnog-mapper/2.1.13/bin/download_eggnog_data.py -y -F -P -M \
+  --data_dir /bucket/BioinfoUgrp/DB/eggnog-mapper/5.0.2'
+```
+
+`-F`: novel families; `-P`: Pfam; `-M`: MMseqs2.  The per-taxon HMMER
+databases (`-H -d <taxid>`) are not installed.
+
+The archives keep their stored permissions, which `umask` does not change.
+Afterwards, make everything group-writable:
+
+```bash
+cd /bucket/BioinfoUgrp/DB/eggnog-mapper/5.0.2
+find . ! -perm -g+w -exec chmod g+w {} +
+```
+
+Modulefile `/bucket/BioinfoUgrp/DB/modulefiles/eggnog-mapper/5.0.2.lua`:
+
+```
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."http://eggnog5.embl.de")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."annotation, orthology, database")
+whatis("Description: ".."eggNOG database for eggnog-mapper")
+
+-- Package settings
+setenv("EGGNOG_DATA_DIR", apphome)
+```

@@ -26,6 +26,7 @@ requests and the policy on old versions, see
 | UniRef90 [🏠](https://www.uniprot.org/help/uniref "Homepage") | `DB/diamondDB/uniref90/2020_06` | 2020_06 | DIAMOND |
 | GTDB [🏠](https://gtdb.ecogenomic.org "Homepage") | `DB/diamondDB/GTDB/r226` | r226 | DIAMOND |
 | GTDB-Tk reference data [🏠](https://ecogenomics.github.io/GTDBTk/ "Homepage") | `DB/GTDBTK/ref_data/226.0` | r226 | GTDB-Tk, nf-core pipelines |
+| eggNOG [🏠](http://eggnog5.embl.de "Homepage") | `DB/eggnog-mapper/5.0.2` | 5.0.2 | eggnog-mapper |
 | Pfam [🏠](https://www.ebi.ac.uk/interpro/entry/pfam/ "Homepage") | `DB/Pfam/34.0` | 34.0 | HMMER and similar |
 | Dfam [🏠](https://dfam.org "Homepage") | `DB/Dfam/4.0` | 4.0 | RepeatMasker |
 | Dfam for RepeatMasker [🏠](https://dfam.org "Homepage") | `DB/Dfam_RepeatMasker/3.6__4.1.3` | see module name | RepeatMasker in TETools |
@@ -110,6 +111,14 @@ nextflow run nf-core/mag \
 
 Use `$GTDBTK_DATA_PATH` instead if the pipeline expects the uncompressed
 data.
+
+
+## eggNOG
+
+The database of [eggnog-mapper](Other/README.md#eggnog-mapper), version
+5.0.2, with the Pfam, MMseqs2 and novel-families files.  The
+`Other/eggnog-mapper` module loads it.  It sets `EGGNOG_DATA_DIR`, which
+`emapper.py` reads; other programs can use the files in that directory.
 
 
 ## Pfam

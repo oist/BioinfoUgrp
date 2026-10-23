@@ -120,6 +120,7 @@ See also `Other/bcftools` above.
 
 | Module | Purpose | Notes |
 |---|---|---|
+| `Other/eggnog-mapper` [🏠](http://eggnog-mapper.embl.de "Homepage") | Functional annotation by orthology (eggNOG) | [notes](#eggnog-mapper); loads its database |
 | `Other/interproscan` [🏠](https://interproscan-docs.readthedocs.io/en/v5/ "Homepage") | Protein domain and family annotation | [notes](#interproscan) |
 | `Other/prokka` [🏠](https://github.com/tseemann/prokka "Homepage") | Prokaryotic genome annotation | |
 | `Other/defense_predictor` [🏠](https://pypi.org/project/defense-predictor/ "Homepage") | Predicts antiphage defence systems | needs a GPU: use on Saion |
@@ -269,6 +270,23 @@ modes).  The module provides:
 - `3d-dna-fasta2assembly`, which runs the developers'
   `generate-assembly-file-from-fasta.awk`:
   `3d-dna-fasta2assembly genome.fasta > genome.assembly`.
+
+### eggnog-mapper
+
+The module also loads `DB/eggnog-mapper/5.0.2`, which sets `EGGNOG_DATA_DIR`,
+so `emapper.py` finds the eggNOG database without options.  The Pfam,
+MMseqs2 and novel-families databases are installed; the per-taxon HMMER
+databases are not (ask us if you need one).
+
+```bash
+ml bioinfo-ugrp-modules Other/eggnog-mapper
+emapper.py -i proteins.faa -o myrun --output_dir /flash/YourUnitU/emapper \
+  --cpu "$SLURM_CPUS_PER_TASK"
+```
+
+eggnog-mapper comes with its own DIAMOND, MMseqs2, HMMER and Prodigal, but
+uses the ones first in your `PATH` if other modules provide them.  Load only
+this module to use the bundled versions.
 
 ### InterProScan
 
