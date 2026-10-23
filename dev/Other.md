@@ -4,6 +4,14 @@ Recipes used by the maintainers to install the `Other/` modules listed in
 [Other/README.md](../Other/README.md).  Read [CONTRIBUTING.md](../CONTRIBUTING.md)
 for the conventions.  Users do not need this page.
 
+Installed modules without a recipe here (listed in `Other/README.md` from
+`ml whatis` on Deigo, 2026-10-23): bioawk, compleasm, dovetail_tools,
+edirect, FASconCAT-G, FigTree, gminer-cli, juicebox, MerquryFK, mummer,
+ncbi-blast, rcorrector, toga, Tracer, yahs.  Their modulefiles need fixes:
+bioawk, compleasm, edirect, FigTree, ncbi-blast and rcorrector have no `URL`
+or `Description` in `ml whatis`; FASconCAT-G and Tracer have `URL: NA`; and
+Tracer's description ("Alignment concatenation") is copied from FASconCAT-G.
+
 ## ASTRAL
 - Home page: https://github.com/smirarab/ASTRAL
 - Source code: https://github.com/smirarab/ASTRAL

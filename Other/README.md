@@ -37,6 +37,8 @@ To run a program, load its module in a Slurm job; see
 | `Other/cactus` [🏠](https://github.com/ComparativeGenomicsToolkit/cactus "Homepage") | Reference-free whole-genome alignment | `cactus`, `cactus-pangenome` |
 | `Other/hal` [🏠](https://github.com/ComparativeGenomicsToolkit/hal "Homepage") | Tools for HAL alignment files (made by Cactus) | |
 | `Other/mugsy` [🏠](https://mugsy.sourceforge.net "Homepage") | Multiple whole-genome alignment | |
+| `Other/mummer` [🏠](https://mummer4.github.io/ "Homepage") | Alignment of large DNA sequences and whole genomes | `nucmer`, `dnadiff`, … |
+| `Other/ncbi-blast` [🏠](https://blast.ncbi.nlm.nih.gov "Homepage") | BLAST+ sequence similarity search | SCDA also provide `ncbi-blast` modules; databases in [DataBases.md](../DataBases.md) |
 
 
 ## SAM, BAM, VCF and sequence files
@@ -51,6 +53,8 @@ To run a program, load its module in a Slurm job; see
 | `Other/seqkit` [🏠](https://bioinf.shenwei.me/seqkit/ "Homepage") | FASTA/FASTQ manipulation | |
 | `Other/DAZZ_DB` [🏠](https://github.com/thegenemyers/DAZZ_DB "Homepage") | Dazzler database for long reads | [several commands](#packages-with-several-commands) |
 | `Other/ncbi-datasets-cli` [🏠](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/ "Homepage") | Downloads genomes and annotations from NCBI | `datasets`, `dataformat` |
+| `Other/bioawk` [🏠](https://github.com/lh3/bioawk "Homepage") | awk with support for FASTA, FASTQ, SAM, BED, GFF and VCF |  |
+| `Other/edirect` [🏠](https://www.ncbi.nlm.nih.gov/books/NBK179288/ "Homepage") | Entrez Direct: command-line queries to NCBI's databases | `esearch`, `efetch`, … |
 
 
 ## k-mers and genome profiling
@@ -64,6 +68,8 @@ To run a program, load its module in a Slurm job; see
 | `Other/genomescope` [🏠](https://github.com/tbenavi1/genomescope2.0 "Homepage") | Genome size, heterozygosity and ploidy from k-mer spectra | `genomescope.R` |
 | `Other/genescope` [🏠](https://github.com/thegenemyers/GENESCOPE.FK "Homepage") | GenomeScope for FASTK output | `GeneScopeFK.R` |
 | `Other/smudgeplot` [🏠](https://github.com/KamilSJaron/smudgeplot "Homepage") | Ploidy and heterozygosity structure | `smudgeplot.py` |
+| `Other/MerquryFK` [🏠](https://github.com/thegenemyers/MERQURY.FK "Homepage") | Merqury based on FastK k-mer tables |  |
+| `Other/rcorrector` [🏠](https://github.com/mourisl/Rcorrector "Homepage") | k-mer based error correction of RNA-seq reads |  |
 
 
 ## Genome assembly
@@ -93,6 +99,7 @@ was installed with Anaconda.  Tell us if you need it.
 | `Other/purge_dups` [🏠](https://github.com/dfguan/purge_dups "Homepage") | Removes haplotypic duplications | [several commands](#packages-with-several-commands); no runner script, no k-mer plot |
 | `Other/asset` [🏠](https://github.com/dfguan/asset "Homepage") | Assembly evaluation | [several commands](#packages-with-several-commands); no runner script |
 | `Other/make_telomere_bed` [🏠](https://github.com/yoshihikosuzuki/make_telomere_bed "Homepage") | BED file of telomeric repeats in contigs | |
+| `Other/compleasm` [🏠](https://github.com/huangnengCSU/compleasm "Homepage") | Assembly completeness with BUSCO gene sets, using miniprot |  |
 
 
 ## Hi-C and scaffolding
@@ -105,6 +112,9 @@ was installed with Anaconda.  Tell us if you need it.
 | `Other/3d-dna` [🏠](https://github.com/aidenlab/3d-dna "Homepage") | Hi-C scaffolding (normal mode only) | [notes](#3d-dna) |
 | `Other/hic2cool` [🏠](https://github.com/4dn-dcic/hic2cool "Homepage") | Converts `.hic` to `.cool` | |
 | `Other/pairtools` [🏠](https://pairtools.readthedocs.io/ "Homepage") | Processing of Hi-C read pairs | |
+| `Other/yahs` [🏠](https://github.com/c-zhou/yahs "Homepage") | Hi-C scaffolding |  |
+| `Other/juicebox` [🏠](https://github.com/aidenlab/Juicebox "Homepage") | Visualisation and analysis of Hi-C data | graphical: needs a display (X11 forwarding or remote desktop) |
+| `Other/dovetail_tools` [🏠](https://github.com/dovetail-genomics/dovetail_tools "Homepage") | Quality control of Dovetail Omni-C libraries |  |
 
 
 ## Variants
@@ -123,6 +133,7 @@ See also `Other/bcftools` above.
 | `Other/eggnog-mapper` [🏠](http://eggnog-mapper.embl.de "Homepage") | Functional annotation by orthology (eggNOG) | [notes](#eggnog-mapper); loads its database |
 | `Other/interproscan` [🏠](https://interproscan-docs.readthedocs.io/en/v5/ "Homepage") | Protein domain and family annotation | [notes](#interproscan) |
 | `Other/prokka` [🏠](https://github.com/tseemann/prokka "Homepage") | Prokaryotic genome annotation | |
+| `Other/toga` [🏠](https://github.com/hillerlab/TOGA "Homepage") | Annotation by orthology: classifies genes as intact or lost |  |
 | `Other/defense_predictor` [🏠](https://pypi.org/project/defense-predictor/ "Homepage") | Predicts antiphage defence systems | needs a GPU: use on Saion |
 | `Other/Boltz` [🏠](https://github.com/jwohlwend/boltz "Homepage") | Biomolecular structure and interaction prediction | needs a GPU: use on Saion; model weights are pre-installed |
 
@@ -156,6 +167,9 @@ The Dfam database is in [DataBases.md](../DataBases.md#dfam).
 | `Other/paml` [🏠](https://github.com/abacus-gene/paml "Homepage") | Phylogenetic analysis by maximum likelihood (codeml, …) | |
 | `Other/bamm` [🏠](https://github.com/macroevolution/bamm "Homepage") | Speciation and trait evolution rates | |
 | `Other/phyluce` [🏠](https://phyluce.readthedocs.io/ "Homepage") | Phylogenomics with ultraconserved elements | |
+| `Other/FASconCAT-G` [🏠](https://github.com/PatrickKueck/FASconCAT-G "Homepage") | Concatenation of sequence alignments |  |
+| `Other/FigTree` [🏠](https://github.com/rambaut/figtree "Homepage") | Phylogenetic tree viewer | graphical: needs a display |
+| `Other/Tracer` [🏠](https://github.com/beast-dev/tracer "Homepage") | Analysis of MCMC output, for instance from BEAST | graphical: needs a display |
 
 
 ## Microbial ecology
@@ -188,6 +202,7 @@ For RStudio, see [RStudio/README.md](../RStudio/README.md).
 | `Other/parallel` [🏠](https://www.gnu.org/software/parallel "Homepage") | GNU parallel: runs commands in parallel | |
 | `Other/BFG` [🏠](https://rtyley.github.io/bfg-repo-cleaner/ "Homepage") | Removes large files from Git history | |
 | `Other/prek` [🏠](https://github.com/j178/prek "Homepage") | Runs pre-commit hooks | used by nf-core tools |
+| `Other/gminer-cli` [🏠](https://github.com/tupacbio/gminer-cli "Homepage") | Transfers data to the GenomeMiner platform |  |
 
 For Nextflow, nf-core and nf-test, see [Nextflow.md](../Nextflow.md).
 
