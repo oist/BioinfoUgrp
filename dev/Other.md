@@ -1710,7 +1710,11 @@ eggnog-mapper in a Python virtual environment, with its own diamond,
 MMseqs2, HMMER and Prodigal.  Loads the eggNOG database module, which sets
 EGGNOG_DATA_DIR.
 
-  emapper.py -i proteins.faa -o prefix --output_dir /flash/YourUnitU/out --cpu $SLURM_CPUS_PER_TASK
+  emapper.py -i proteins.faa -o prefix --output_dir /flash/YourUnitU/out \
+    --temp_dir /flash/YourUnitU/out --cpu $SLURM_CPUS_PER_TASK
+
+Without --cpu, emapper.py uses one core; without --temp_dir, DIAMOND writes
+temporary files in the current directory.
 
 emapper.py uses the diamond, mmseqs, hmmscan or prodigal found first in
 PATH, so loading other modules that provide them changes the versions used.
@@ -1730,6 +1734,11 @@ module --ignore_cache load bioinfo-ugrp-modules
 module --ignore_cache load Other/eggnog-mapper/2.1.13
 emapper.py --version   # "Installed eggNOG DB version: 5.0.2"
 ```
+
+Tested 2026-10-23 on Deigo (`short` partition) with 8 UniProt proteins
+(yeast ENO1, E. coli GroEL, RecA, LpdA, EF-Tu, human ACTB, H4, NEMO); the
+first five were annotated with the expected gene names (ENO1, groL, recA,
+lpdA, tuf); 436 s on one core.
 
 ## InterProScan
 - Home page: https://interproscan-docs.readthedocs.io/en/v5/

@@ -280,9 +280,16 @@ databases are not (ask us if you need one).
 
 ```bash
 ml bioinfo-ugrp-modules Other/eggnog-mapper
+mkdir -p /flash/YourUnitU/emapper
 emapper.py -i proteins.faa -o myrun --output_dir /flash/YourUnitU/emapper \
-  --cpu "$SLURM_CPUS_PER_TASK"
+  --temp_dir /flash/YourUnitU/emapper --cpu "$SLURM_CPUS_PER_TASK"
 ```
+
+Give `--cpu` explicitly: by default `emapper.py` uses one core, whatever the
+job requested.  Give `--temp_dir` too: by default DIAMOND writes its temporary
+files in the current directory, which is often your slow and small home
+directory.  Reading the 8.7 GB DIAMOND database takes several minutes even
+for a few proteins (7 minutes for 8 proteins on one core, in our test).
 
 eggnog-mapper comes with its own DIAMOND, MMseqs2, HMMER and Prodigal, but
 uses the ones first in your `PATH` if other modules provide them.  Load only
