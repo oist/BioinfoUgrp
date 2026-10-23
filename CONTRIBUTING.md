@@ -129,20 +129,56 @@ installing software suggests, instead of `pip install --user` with
 
 ```bash
 umask 002
+PYMOD=python/3.11.4
 ml purge
-ml python/3.11.4
+ml $PYMOD
 APP=<package>
 VER=<version>
-APPDIR=/bucket/BioinfoUgrp/Other/$APP/$VER
+URL=<homepage>
+KEYWORDS="<keyword>, <keyword>"
+DESC="<one-line description>"
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP/$VER
 python3 -m venv $APPDIR
 $APPDIR/bin/pip install "$APP==$VER"
 $APPDIR/bin/pip freeze > $APPDIR/requirements.lock
+mkdir -p $MODROOT/modulefiles/$APP
+cat <<__END__ > $MODROOT/modulefiles/$APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."$URL")
+whatis("Category: ".."bioinformatics")
+whatis("Keywords: ".."$KEYWORDS")
+whatis("Description: ".."$DESC")
+
+help([[
+$APP $VER, installed from PyPI in a Python virtual environment.
+See $URL for help.
+]])
+
+-- Package settings
+depends_on("$PYMOD")
+prepend_path("PATH", apphome.."/bin")
+__END__
+cat $MODROOT/modulefiles/$APP/$VER.lua    # check the substituted values
 ```
 
-The modulefile then needs `depends_on("python/3.11.4")` and
-`prepend_path("PATH", apphome.."/bin")` only: no `PYTHONPATH`, so the
-packages of one module do not leak into programs of another.  The
-environment's `python3` comes first in `PATH` while the module is loaded.
+The here-document is not quoted, so that the shell fills in `$APP`, `$VER`,
+`$URL`, `$KEYWORDS`, `$DESC` and `$PYMOD`; the Lua code itself contains no
+`$`.  Add `depends_on()` lines for other modules the program needs (`cuda`, a
+`DB/` module…), and complete the `help` text with anything users must know.
+
+The modulefile needs only `depends_on()` for the Python module and
+`prepend_path("PATH", apphome.."/bin")`: no `PYTHONPATH`, so the packages of
+one module do not leak into programs of another.  The environment's
+`python3` comes first in `PATH` while the module is loaded.
 `requirements.lock` records the versions of all dependencies.
 
 If a package pins dependency versions that do not install, install it with
