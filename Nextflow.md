@@ -31,7 +31,7 @@ Source: https://github.com/nextflow-io/nextflow
 APP=Nextflow3
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=26.04.7
+VER=26.10.4
 mkdir -p $APPDIR/$VER/bin
 cd $APPDIR/$VER
 wget https://github.com/nextflow-io/nextflow/releases/download/v${VER}/nextflow-${VER}-dist
@@ -129,7 +129,7 @@ ml python/3.11.4
 APP=nf-core
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
-VER=4.1.0
+VER=4.2.1
 mkdir -p $APPDIR/$VER
 cd $APPDIR/$VER
 PYTHONUSERBASE=$(pwd) pip3 install --no-warn-script-location --user $APP 
