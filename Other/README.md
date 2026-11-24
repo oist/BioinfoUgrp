@@ -200,6 +200,7 @@ For RStudio, see [RStudio/README.md](../RStudio/README.md).
 | Module | Purpose | Notes |
 |---|---|---|
 | `Other/parallel` [🏠](https://www.gnu.org/software/parallel "Homepage") | GNU parallel: runs commands in parallel | |
+| `Other/openalex-official` [🏠](https://github.com/ourresearch/openalex-official "Homepage") | Downloads metadata and full texts of scholarly works from OpenAlex | `openalex`; needs an API key ([notes](#openalex-official)) |
 | `Other/BFG` [🏠](https://rtyley.github.io/bfg-repo-cleaner/ "Homepage") | Removes large files from Git history | |
 | `Other/prek` [🏠](https://github.com/j178/prek "Homepage") | Runs pre-commit hooks | used by nf-core tools |
 | `Other/gminer-cli` [🏠](https://github.com/tupacbio/gminer-cli "Homepage") | Transfers data to the GenomeMiner platform |  |
@@ -244,6 +245,34 @@ BUSCO runs from a read-only Singularity image; the `busco` command calls it
 for you.  If you need to change the AUGUSTUS configuration, the module
 prints, when loaded, the commands to copy it to `$HOME/augustus_config` and
 to point `AUGUSTUS_CONFIG_PATH` to that copy.
+
+### openalex-official
+
+The module provides `openalex`, the official command-line tool of
+[OpenAlex](https://openalex.org), an open catalogue of scholarly works.  It
+downloads work metadata as JSON files, and optionally the full texts (PDF or
+TEI XML) when OpenAlex has them.  Its
+[documentation](https://docs.openalex.org/download/openalex-official) lists
+the filters.
+
+It needs a personal API key from OpenAlex.  Keep the key in a file that only
+you can read, and pass it through the environment variable
+`OPENALEX_API_KEY`, which `openalex` reads:
+
+```bash
+install -m 600 /dev/null ~/.openalex_api_key   # then write your key in this file
+export OPENALEX_API_KEY=$(cat ~/.openalex_api_key)
+ml bioinfo-ugrp-modules Other/openalex-official
+openalex status                                # checks the key and your credits
+openalex download --filter "topics.id:T10325" -o /flash/YourUnitU/openalex
+```
+
+Small downloads can run from a login node.  Run large ones in a Slurm job:
+on a compute node, write to `/flash` (Deigo) or `/work` (Saion); a job on
+Deigo's `datacp` partition can write to `/bucket` directly.  `--workers`
+sets the number of parallel downloads, and `--nested` spreads the files in
+subdirectories, which the tool recommends above 10,000 files.  Full texts
+remain under their publishers' licences.
 
 ### Peregrine and DeepVariant
 

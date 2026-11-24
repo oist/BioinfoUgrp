@@ -1748,6 +1748,86 @@ Tested 2026-10-23 on Deigo (`short` partition) with 8 UniProt proteins
 first five were annotated with the expected gene names (ENO1, groL, recA,
 lpdA, tuf); 436 s on one core.
 
+## openalex-official
+
+- Home page: https://github.com/ourresearch/openalex-official
+- Documentation: https://docs.openalex.org/download/openalex-official
+- Licence: MIT
+
+Official command-line tool of OpenAlex, which downloads work metadata (JSON)
+and optionally full texts (PDF, TEI XML), with parallel downloads,
+checkpoints and rate limiting.  Installed in a Python virtual environment
+with the template of [CONTRIBUTING.md](../CONTRIBUTING.md); pure Python, so a
+login node is fine.  It needs a personal OpenAlex API key, which users pass
+with `--api-key` or the variable `OPENALEX_API_KEY`; never put a key in the
+modulefile.
+
+Release 0.3.3 reports itself as 0.3.2 with `openalex --version`.
+
+### Installation on Deigo
+
+```bash
+umask 002
+PYMOD=python/3.11.4
+ml purge
+ml $PYMOD
+APP=openalex-official
+VER=0.3.3
+URL=https://github.com/ourresearch/openalex-official
+KEYWORDS="bibliography, literature, metadata"
+DESC="Official command-line tool to download data from OpenAlex"
+MODROOT=/bucket/BioinfoUgrp/Other
+APPDIR=$MODROOT/$APP/$VER
+python3 -m venv $APPDIR
+$APPDIR/bin/pip install "$APP==$VER"
+$APPDIR/bin/pip freeze > $APPDIR/requirements.lock
+mkdir -p $MODROOT/modulefiles/$APP
+cat <<__END__ > $MODROOT/modulefiles/$APP/$VER.lua
+-- Default settings
+local modroot    = "/bucket/BioinfoUgrp"
+local appname    = myModuleName()
+local appversion = myModuleVersion()
+local apphome    = pathJoin(modroot, myModuleFullName())
+
+-- Package information
+whatis("Name: "..appname)
+whatis("Version: "..appversion)
+whatis("URL: ".."$URL")
+whatis("Category: ".."bibliography")
+whatis("Keywords: ".."$KEYWORDS")
+whatis("Description: ".."$DESC")
+
+help([[
+$APP $VER, installed from PyPI in a Python virtual environment.
+Provides the command 'openalex'.  It needs your personal OpenAlex API key,
+given with --api-key or in the environment variable OPENALEX_API_KEY.
+
+  openalex status
+  openalex download --filter "publication_year:2024,type:article" -o /flash/YourUnitU/openalex
+
+See $URL for help.
+]])
+
+-- Package settings
+depends_on("$PYMOD")
+prepend_path("PATH", apphome.."/bin")
+__END__
+cat $MODROOT/modulefiles/$APP/$VER.lua    # check the substituted values
+```
+
+### Check
+
+```bash
+ml purge
+module --ignore_cache load bioinfo-ugrp-modules
+module --ignore_cache load Other/openalex-official/0.3.3
+openalex --help
+```
+
+Tested in a Python 3.11 virtual environment outside Deigo (2026-11-24):
+installs, and `openalex --help`, `openalex download --help` and
+`openalex status --help` work.  Not yet tested with an API key.
+
 ## InterProScan
 - Home page: https://interproscan-docs.readthedocs.io/en/v5/
 - Source code: 
@@ -2050,7 +2130,7 @@ __END__
 
 ```bash
 APP=prek
-VER=0.4.11
+VER=0.5.9
 MODROOT=/bucket/BioinfoUgrp/Other
 APPDIR=$MODROOT/$APP
 mkdir -p $APPDIR
