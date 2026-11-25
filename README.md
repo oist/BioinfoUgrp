@@ -39,24 +39,14 @@ you need, use it in a Slurm job, as shown
 
 ## Environment modules: the basics
 
-The clusters have hundreds of programs, often in several versions that
-cannot be used at the same time.  To keep them apart, none of them is in your
-`PATH` by default.  A _module_ is a small file that, when _loaded_, changes
-your environment (mainly `PATH`, sometimes other variables) so that one
-version of one program becomes usable.  _Unloading_ the module reverts the
-change.  Modules do not install or copy anything; they only change variables
-of your current shell.
-
-SCDA's page [Use the module system](https://scda-guide.oist.jp/use-module-system.html)
-describes the system in full; the module system is
-[Lmod](https://lmod.readthedocs.io/en/latest/010_user.html).  The summary
-below is limited to what you need for our modules.
+SCDA's page [Use the module system](https://scda-guide.oist.jp/use-module-system.html) describes the system in full. 
+The summary below is limited to what you need for our modules.
 
 ### Commands
 
 `module` is the command; on Deigo, `ml` is a shorter form of it.
 
-| Task | Deigo (`ml` form) | Long form (Deigo and Saion) |
+| Task | Shortcut (`ml` form) | Long form |
 |---|---|---|
 | List modules you can load | `ml av` | `module avail` |
 | List modules whose name contains a word | `ml av samtools` | `module avail samtools` |
@@ -71,7 +61,9 @@ below is limited to what you need for our modules.
 | Unload all modules | `ml purge` | `module purge` |
 
 When you do not give a version, the module system picks the default one,
-which is usually the newest.  The default changes when we install a newer
+which is usually the newest.  
+
+The default changes when we install a newer
 version, so give the version explicitly when you need reproducible results,
 and write it in your notes and methods sections.
 
@@ -87,33 +79,10 @@ ml bioinfo-ugrp-modules
 ml av
 ```
 
-SCDA use the same mechanism for other groups of modules: `ml av` lists
-`bioinfo-ugrp-modules` among the metamodules, next to `amd-modules` and
-`intel-modules`.  See their module page.  Inside our metamodule, some collections are again behind their own
-metamodule, because they contain many modules (see
-[What we provide](#what-we-provide)):
-
-```bash
-ml bioinfo-ugrp-modules DebianMed     # loads the two metamodules in turn
-ml av
-```
-
-If you use our modules every day, you can add `ml bioinfo-ugrp-modules` to
-your `~/.bashrc`.  This only makes the modules visible; it does not load any
-program.
 
 ### Deigo and Saion differ
 
-Our instructions for Saion use the long `module` form, because the `ml`
-short form did not work there when they were written.  If an `ml` command
-fails on Saion, use the long form:
-
-```bash
-module load bioinfo-ugrp-modules
-module avail
-```
-
-The two clusters also do not have the same modules: most of ours are for
+The two clusters do not have the same modules: most of ours are for
 Deigo, and a few, which need GPUs, are for Saion.  Run `module avail` on the
 cluster you use; a module seen on one cluster may be missing on the other or
 be at a different version.
@@ -153,26 +122,12 @@ module load Other/minimap2/2.20
 minimap2 -t "$SLURM_CPUS_PER_TASK" -a reference.fa reads.fq.gz > /flash/YourUnitU/aln.sam
 ```
 
-An interactive session, for testing:
+An interactive session, for testing on a compute node:
 
 ```bash
 srun --partition=compute --time=0-02:00:00 --cpus-per-task=4 --mem=16G --pty bash
 ml bioinfo-ugrp-modules Other/minimap2
 ```
-
-Things to keep in mind (details in the SCDA guide):
-
-- Always set the time (`-t`) and memory (`--mem`) of a job.  Ask for what the
-  program needs, not the maximum: smaller jobs start sooner.  The `ruse`
-  module measures what a program actually used.
-- Submit jobs from your home directory: Slurm writes its output files in the
-  directory you submit from, and a job submitted from `/bucket` fails.
-- On compute nodes, `/bucket` is read-only.  Read your input from `/bucket`,
-  write output to `/flash` (Deigo) or `/work` (Saion), and copy the results
-  back to `/bucket` at the end.
-- On Saion, start batch scripts with `#!/bin/bash -l` and interactive jobs
-  with `bash -l`, otherwise the module system is not set up.  GPU jobs need a
-  GPU partition and `--gres`.
 
 SCDA pages: [Use Slurm](https://scda-guide.oist.jp/use-slurm),
 [Deigo](https://scda-guide.oist.jp/deigo.html),
