@@ -2,12 +2,12 @@
 
 OIST's Bioinformatics User Group (BioinfoUgrp) installs bioinformatics
 software and databases on OIST's two clusters: _Deigo_ (CPUs) and _Saion_
-(GPUs).  This software comes as _environment modules_, which you load before
+(GPUs). This software comes as _environment modules_, which you load before
 running a program.  This page explains how to use the modules and lists what
 we provide.
 
 The clusters are run by the Scientific Computing and Data Analysis section
-(SCDA).  Their [guide](https://scda-guide.oist.jp) is the reference for
+(SCDA). Their [guide](https://scda-guide.oist.jp) is the reference for
 accounts, storage, Slurm and the module system.  Where this page and the SCDA
 guide disagree, the SCDA guide is correct; please tell us so that we can fix
 this page.
@@ -20,7 +20,18 @@ this page.
 - [Contributing](#contributing)
 
 
-## Quick start
+## Before you start: Our modules are behind a _metamodule_
+
+Our modules are not visible until you load the metamodule
+`bioinfo-ugrp-modules`.  Loading it adds our module directories to the list
+where the module system searches. it does not load
+any program by itself.
+
+```bash
+ml bioinfo-ugrp-modules
+ml av
+```
+### Other commands:
 
 On a Deigo login node:
 
@@ -66,18 +77,6 @@ which is usually the newest.
 The default changes when we install a newer
 version, so give the version explicitly when you need reproducible results,
 and write it in your notes and methods sections.
-
-### Our modules are behind a _metamodule_
-
-Our modules are not visible until you load the metamodule
-`bioinfo-ugrp-modules`.  Loading it adds our module directories to the list
-where the module system searches (the `MODULEPATH` variable); it does not load
-any program by itself.
-
-```bash
-ml bioinfo-ugrp-modules
-ml av
-```
 
 
 ### Deigo and Saion differ
@@ -162,7 +161,7 @@ Teams channel (see below) or open an
 an issue, also post its link on the Teams channel to notify us.  We update
 databases at most once a year.  After an update, we ask whether the previous
 version is still needed; if nobody needs it, we delete it after 30 days.  At
-most two versions of a database are kept at the same time.
+most two versions of a database are kept at the same time. 
 
 
 ## Getting help
