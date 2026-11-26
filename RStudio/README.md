@@ -24,11 +24,11 @@ The server stops when the job reaches its time limit, or when you stop
 
 The running server will output its URL and a password unique to the session such as:
 
-```
-RStudio URL:		http://deigo010902.oist.jp:54279/
-RStudio Username:	charles-plessy
-RStudio Password:	f0731f0e01d3b2f2
-```
+![screenshot_RstudioURL](/RStudio/CLICK%20HERE%20(1).png)
+
+Click the RStudio URL to open the login page, then sign in with the username and password that the server printed.
+
+![screenshot_RStudioServer](/RStudio/server_Screenshot.png)
 
 It also prints a command that opens an SSH tunnel from your computer to the
 server, for use from outside OIST's network:
