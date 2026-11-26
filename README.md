@@ -29,7 +29,6 @@ any program by itself.
 
 ```bash
 ml bioinfo-ugrp-modules
-ml av
 ```
 ### Other commands:
 
