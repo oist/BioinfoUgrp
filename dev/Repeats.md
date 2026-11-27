@@ -1,14 +1,8 @@
-# A collection of general bioinformatics modules
+# Installation recipes: repeats
 
-To use the modules, load the `bioinfo-ugrp-modules` metamodule first.
-
-```bash
-ml bioinfo-ugrp-modules
-ml av Other
-ml Other/<your-favorite-module>
-```
-
-Here are installation snippets to help the members of the bioinfo user group to update the modules.
+Recipes used by the maintainers to install the `Other/` modules listed in
+[Other/README.md](../Other/README.md).  Read [CONTRIBUTING.md](../CONTRIBUTING.md)
+for the conventions.  Users do not need this page.
 
 ## DfamTEBrowser
 
@@ -138,14 +132,6 @@ whatis("Description: ".."Tandem Repeats Finder: a program to analyze DNA sequenc
 -- Package settings
 prepend_path("PATH", apphome.."")
 __END__
-```
-
-### Example commands for running Tandem Repeat Finder on Deigo
-
-```bash
-module load Other/trf
-srun -p compute -c 1 --mem 40G -t 10:00:00 --pty \
-    trf <arguments>
 ```
 
 ## ULTRA

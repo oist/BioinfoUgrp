@@ -1,80 +1,190 @@
-# OIST's bioinformatics user group
+# Bioinformatics software on Deigo and Saion
 
-## Communication channel
-Prioritized communication channel is on Microsoft Teams: [BioinfoUgrp](https://teams.microsoft.com/l/team/19%3a3183bd7fe2844138a49996a2bd376873%40thread.tacv2/conversations?groupId=cc78e114-c544-43e2-b4b1-29c7428aa305&tenantId=d8c0fb8d-bb56-44bb-9f4a-c58e7465652e). Do not hesitate to use the ping function (putting `@` and then the name, like in other chat systems), because the discussions on the Team app are a bit easy to miss otherwise.
-Please "Google" the issues prior to contacting us. Very often, the main issues will already be reported and the solution available on the reference webpage of the program: in the `Issues` tab of `GitHub` for some, in `GoogleGroups` for others (e.g. for [IQ-TREE](https://groups.google.com/g/iqtree)). Other great platforms are [StackOverflow](https://stackoverflow.com), or [Biostars](https://www.biostars.org).
+OIST's Bioinformatics User Group (BioinfoUgrp) installs bioinformatics
+software and databases on OIST's two clusters: _Deigo_ (CPUs) and _Saion_
+(GPUs). This software comes as _environment modules_, which you load before
+running a program.  This page explains how to use the modules and lists what
+we provide.
 
-## Finding modules
-Search with a keyword, for instance `ml key clustal`.
+The clusters are run by the Scientific Computing and Data Analysis section
+(SCDA). Their [guide](https://scda-guide.oist.jp) is the reference for
+accounts, storage, Slurm and the module system.  Where this page and the SCDA
+guide disagree, the SCDA guide is correct; please tell us so that we can fix
+this page.
 
-## Loading installed modules
-Execute `ml bioinfo-ugrp-modules` to make available the modules installed by the OIST Bioinfo user group. This line can be appended to your `~/.bashrc` to make them available by default.
+- [Quick start](#quick-start)
+- [Environment modules: the basics](#environment-modules-the-basics)
+- [Using modules in Slurm jobs](#using-modules-in-slurm-jobs)
+- [What we provide](#what-we-provide)
+- [Getting help](#getting-help)
+- [Contributing](#contributing)
 
-### Debian Med modules
-We autogenerate many modules from softwares packaged the Debian distribution.  To see them, execute `ml bioinfo-ugrp-modules DebianMed`.  More information is available on the [DebianMedModules](DebianMedModules.md) page.
-To load a module in DebianMed (an example for loading bcftools):
+
+## Before you start: Our modules are behind a _metamodule_
+
+Our modules are not visible until you load the metamodule
+`bioinfo-ugrp-modules`.  Loading it adds our module directories to the list
+where the module system searches. it does not load
+any program by itself.
+
+```bash
+ml bioinfo-ugrp-modules
 ```
-# load DebianMed module first
-ml bioinfo-ugrp-modules DebianMed
+### Other commands:
 
-# now you can see the list of module installed in DebianMed.
-ml avail
+On a Deigo login node:
 
-# load module
-ml bcftools
-
-# check the installation
-bcftools --version
+```bash
+ml bioinfo-ugrp-modules      # make our modules visible
+ml key minimap               # search the descriptions of all modules for a keyword
+ml spider minimap2           # find a module and list its versions
+ml Other/minimap2            # load it
+minimap2 --version           # the program is now in your PATH
 ```
 
-### Unix goodies
+Do not run computations on the login nodes: once you have found the module
+you need, use it in a Slurm job, as shown
+[below](#using-modules-in-slurm-jobs).
 
-We provide some modules for Unix tools useful to everybody including bioinformaticians.
 
-```
-ml bioinfo-ugrp-modules UnixGoodies
-ml av
-```
+## Environment modules: the basics
 
-Check [oist/BioinfoUgrp_UnixGoodies_Images](https://github.com/oist/BioinfoUgrp_UnixGoodies_Images) for details.
+SCDA's page [Use the module system](https://scda-guide.oist.jp/use-module-system.html) describes the system in full. 
+The summary below is limited to what you need for our modules.
 
-### Nextflow pipelines
+### Commands
 
-We have prepared a [Nextflow](https://www.nextflow.io/) module (`ml bioinfo-ugrp-modules Nextflow2`) and registered [OIST's profile](https://github.com/nf-core/configs/blob/master/docs/oist.md) to the [nf-core](https://nf-co.re/) community so that you can run their pipelines with the `-profile oist` option on _Deigo_.  A _nf-core_ [module](https://github.com/nf-core/modules) is also available (`ml bioinfo-ugrp-modules nf-core`).
+`module` is the command; on Deigo, `ml` is a shorter form of it.
 
-### Other tools
+| Task | Shortcut (`ml` form) | Long form |
+|---|---|---|
+| List modules you can load | `ml av` | `module avail` |
+| List modules whose name contains a word | `ml av samtools` | `module avail samtools` |
+| Search names and descriptions | `ml key assembly` | `module key assembly` |
+| Find a module anywhere, with its versions (Deigo only) | `ml spider hifiasm` | `module spider hifiasm` |
+| Load the default version | `ml Other/hifiasm` | `module load Other/hifiasm` |
+| Load a given version | `ml Other/hifiasm/0.25.0` | `module load Other/hifiasm/0.25.0` |
+| List the modules you have loaded | `ml` | `module list` |
+| Read a module's description and help | `ml whatis Other/hifiasm`, `ml help Other/hifiasm` | `module whatis …`, `module help …` |
+| See what a module changes | `ml show Other/hifiasm` | `module show Other/hifiasm` |
+| Unload one module | `ml -Other/hifiasm` | `module unload Other/hifiasm` |
+| Unload all modules | `ml purge` | `module purge` |
 
-Under the `Other/` namespace, we also provide some general bioinformatics tools such as:
+When you do not give a version, the module system picks the default one,
+which is usually the newest.  
 
-- DIAMOND (`ml Other/DIAMOND/2.0.4.142`)
-- InterProScan and its database (`ml Other/interproscan/5.48-83.0`)
-- … and more !
+The default changes when we install a newer
+version, so give the version explicitly when you need reproducible results,
+and write it in your notes and methods sections.
 
-See [this page](Other/README.md) for the full list of modules and for more information.
 
-## Databases
+### Deigo and Saion differ
 
-Widely used databases were installed locally. Upon request by users, we plan on upgrading databases (not more than once a year). After upgrading a specific database, users will be asked if the older database should still remain available (completion of projects,...): it will be deleted after 30 days except if still required. At one time, a maximum of two versions of the same database will be available.
+The two clusters do not have the same modules: most of ours are for
+Deigo, and a few, which need GPUs, are for Saion.  Run `module avail` on the
+cluster you use; a module seen on one cluster may be missing on the other or
+be at a different version.
 
-Check [DataBases](DataBases.md) for details.
+### When something goes wrong
 
-## RStudio
+- _Module not found_: load `bioinfo-ugrp-modules` first, then check the exact
+  name and capitalisation with `ml spider <name>` (Deigo) or
+  `module avail <name>`.
+- _A module recently installed does not appear_: Lmod, the module system on
+  Deigo, keeps a cache in your home directory.  Delete it with
+  `rm -rf ~/.lmod.d/.cache` and try again.
+- _Conflicting versions_: if a program behaves unexpectedly, run `ml purge`
+  and load only the modules you need.
 
-[Here is how you can run RStudio](./RStudio) on a compute node.
 
-## Modules on Saion
+## Using modules in Slurm jobs
 
-We have some modules on _Saion_ for GPU-accelerated computations such that can not be run on _Deigo_.  Please remember that the _modules_ system on _Saion_ is older, so the `ml` shortcuts will not work.  To list the available modules, do:
+Load the modules inside the job script, not only in the shell from which you
+submit it, as SCDA recommend: the script then records what the job needs.
+Starting with `module purge` makes the job independent of what was loaded
+when you submitted it.
 
-```
+A batch script for Deigo (submit with `sbatch myjob.sh`):
+
+```bash
+#!/bin/bash
+#SBATCH --partition=compute
+#SBATCH --time=0-04:00:00
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=32G
+
+module purge
 module load bioinfo-ugrp-modules
-module available
+module load Other/minimap2/2.20
+
+minimap2 -t "$SLURM_CPUS_PER_TASK" -a reference.fa reads.fq.gz > /flash/YourUnitU/aln.sam
 ```
 
-### AlphaFold
+An interactive session, for testing on a compute node:
 
-We have a basic module for [AlphaFold 2.1.1](AlphaFold/AlphaFold2.md).  For a basic usage, you can do something similar to the example script in `/bucket/BioinfoUgrp/alphafold/2.1.1/bin/alphafold_example_script.sh`.
+```bash
+srun --partition=compute --time=0-02:00:00 --cpus-per-task=4 --mem=16G --pty bash
+ml bioinfo-ugrp-modules Other/minimap2
+```
 
-### Nanopore
+SCDA pages: [Use Slurm](https://scda-guide.oist.jp/use-slurm),
+[Deigo](https://scda-guide.oist.jp/deigo.html),
+[the Saion system](https://scda-guide.oist.jp/saion-system.html),
+[resource limits](https://scda-guide.oist.jp/resource-limits.html),
+[rules and guidelines](https://scda-guide.oist.jp/support-services.html).
 
-We have modules for [basecalling Nanopore](NanoporeModules/README.md) data, in particular for _Guppy_ and _Rerio_.
+
+## What we provide
+
+| Collection | How to see it | Cluster | Documentation |
+|---|---|---|---|
+| General bioinformatics tools (aligners, assemblers, phylogeny, Hi-C, repeats, …) | `ml bioinfo-ugrp-modules`, then `ml av Other` | Deigo | [Other/README.md](Other/README.md) |
+| Hundreds of tools packaged by Debian Med, one module each | `ml bioinfo-ugrp-modules DebianMed`, then `ml av` | Deigo | [DebianMedModules.md](DebianMedModules.md) |
+| Unix command-line utilities | `ml bioinfo-ugrp-modules UnixGoodies`, then `ml av` | Deigo | [oist/BioinfoUgrp_UnixGoodies_Images](https://github.com/oist/BioinfoUgrp_UnixGoodies_Images) |
+| Nextflow, nf-core tools, nf-test, and the `-profile oist` for nf-core pipelines | `ml bioinfo-ugrp-modules Nextflow3` | Deigo | [Nextflow.md](Nextflow.md) |
+| Databases: BLAST, DIAMOND, GTDB, Pfam, Dfam | `ml bioinfo-ugrp-modules`, then `ml av DB` | Deigo | [DataBases.md](DataBases.md) |
+| RStudio server on a compute node, and `Rscript` | `ml bioinfo-ugrp-modules Other/RStudio_server` | Deigo | [RStudio/README.md](RStudio/README.md) |
+| Nanopore basecalling (Dorado) and related tools | `module load bioinfo-ugrp-modules`, then `module avail` | Saion (Deigo for CPU-only tools) | [NanoporeModules/README.md](NanoporeModules/README.md) |
+| AlphaFold 2 protein structure prediction | `module load bioinfo-ugrp-modules`, then `module avail` | Saion | [AlphaFold/README.md](AlphaFold/README.md) |
+
+The same program can exist in several collections, and in SCDA's own
+modules.  They can differ in version and in the way they were built; use
+`ml spider <name>` to see them all, and load the one you want by its full
+name.
+
+### Requests
+
+To ask for new software, a new version, or a database update, write on the
+Teams channel (see below) or open an
+[issue on GitHub](https://github.com/oist/BioinfoUgrp/issues).  If you open
+an issue, also post its link on the Teams channel to notify us.  We update
+databases at most once a year.  After an update, we ask whether the previous
+version is still needed; if nobody needs it, we delete it after 30 days.  At
+most two versions of a database are kept at the same time. 
+
+
+## Getting help
+
+Our main channel is the
+[BioinfoUgrp team on Microsoft Teams](https://teams.microsoft.com/l/team/19%3a3183bd7fe2844138a49996a2bd376873%40thread.tacv2/conversations?groupId=cc78e114-c544-43e2-b4b1-29c7428aa305&tenantId=d8c0fb8d-bb56-44bb-9f4a-c58e7465652e)
+(OIST login needed).  Messages there are easy to miss, so mention the people
+you address with `@` followed by their name.
+
+Before asking, search the web for the error message: many problems are
+already reported, with a solution, in the program's own issue tracker (for
+instance the `Issues` tab of its GitHub repository) or forum (for instance
+[IQ-TREE's Google group](https://groups.google.com/g/iqtree)), or on
+[Biostars](https://www.biostars.org) and
+[Stack Overflow](https://stackoverflow.com).
+
+SCDA also offer
+[Bioinformatics Open Hours](https://scda-answers.oist.jp/books/scda-open-hours/page/bioinformatics-open-hours)
+for one-on-one consultation.  For problems with the clusters themselves
+(accounts, storage, Slurm, SCDA's own modules), contact SCDA:
+`ask-scda@oist.jp`.
+
+
+## Contributing
+
+The installation recipes and maintenance notes are separate from the user
+documentation: see [CONTRIBUTING.md](CONTRIBUTING.md).
